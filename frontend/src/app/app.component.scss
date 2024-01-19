@@ -1,0 +1,7 @@
+.app-page-content{
+  height: 100%;
+  ion-app{
+    top: var(--hms-topbar-height);
+    left: var(--hms-sibar-width);
+  }
+}

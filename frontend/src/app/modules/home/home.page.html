@@ -1,0 +1,28 @@
+<div class="home-page">
+  <div class="status__list-content">
+    <ng-template ngFor [ngForOf]="status" let-statusItem>
+      <div class="status__content">
+        <div class="status__top">
+          <h6>{{statusItem.name}}</h6>
+        </div>
+        <div class="status__card-list">
+          <ng-template ngFor [ngForOf]="statusItem.cards" let-card>
+            <card [data]="card"></card>
+          </ng-template>
+        </div>
+        <div class="add-task__content" [class.creating]="namingNewTask">
+          <button (click)="handleClickNewTaskButton()">Adicionar tarefa</button>
+          <div class="add-task__new-card-content">
+            <input [(ngModel)]="creatingNewTaskName" />
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <div class="add-status_content" [class.creating]="namingNewStatus">
+      <button (click)="handleClickNewStatusButton()">Adicionar status</button>
+      <div class="add-status__new-status-content">
+        <input [(ngModel)]="creatingNewStatusName" />
+      </div>
+    </div>
+  </div>
+</div>
