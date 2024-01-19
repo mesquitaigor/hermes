@@ -12,5 +12,14 @@ services:
       MYSQL_DATABASE: hermesDb
     ports:
       - "3306:3306"
+  backend:
+   build: ./api
+   command: npm run start:dev
+   volumes:
+     - ./api:/usr/src/app
+   ports:
+     - "3000:3000"
+   depends_on:
+     - mysql
 volumes:
  todo-mysql-data:
