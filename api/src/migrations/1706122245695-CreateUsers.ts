@@ -1,29 +1,43 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class BoardCards1703364824702 implements MigrationInterface {
+export class CreateUsers1706122245695 implements MigrationInterface {
+  private readonly tableName = 'users';
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'board_cards',
+        name: this.tableName,
         columns: [
           {
             name: 'id',
             type: 'int',
+            unsigned: true,
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
-            name: 'name',
+            name: 'firstName',
+            type: 'varchar',
+            length: '80',
+            isNullable: false,
+          },
+          {
+            name: 'lastName',
+            type: 'varchar',
+            length: '80',
+            isNullable: false,
+          },
+          {
+            name: 'email',
             type: 'varchar',
             length: '255',
+            isNullable: false,
           },
           {
-            name: 'boardStatusId',
-            type: 'int',
+            name: 'password',
+            type: 'varchar',
+            length: '255',
+            isNullable: false,
           },
           {
             name: 'createdAt',
@@ -41,25 +55,13 @@ export class BoardCards1703364824702 implements MigrationInterface {
             type: 'datetime',
             default: 'CURRENT_TIMESTAMP',
           },
-          {
-            name: 'statusId',
-            type: 'int',
-          },
         ],
       }),
-    );
-    await queryRunner.createForeignKey(
-      'board_cards',
-      new TableForeignKey({
-        columnNames: ['boardStatusId'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'board_status',
-        onDelete: 'CASCADE',
-      }),
+      true,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('board_cards');
+    await queryRunner.dropTable(this.tableName, true, true, true);
   }
 }

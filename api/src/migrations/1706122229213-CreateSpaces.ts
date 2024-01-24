@@ -1,14 +1,16 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class BoardStatus1703364754137 implements MigrationInterface {
+export class CreateSpaces1706122229213 implements MigrationInterface {
+  private readonly tableName = 'spaces';
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'board_status',
+        name: this.tableName,
         columns: [
           {
             name: 'id',
             type: 'int',
+            unsigned: true,
             isPrimary: true,
             isGenerated: true,
             generationStrategy: 'increment',
@@ -36,10 +38,11 @@ export class BoardStatus1703364754137 implements MigrationInterface {
           },
         ],
       }),
+      true,
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('board_status');
+    await queryRunner.dropTable(this.tableName, true, true, true);
   }
 }
