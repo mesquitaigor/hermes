@@ -6,5 +6,6 @@
   },
   "prettier.tabWidth": 1,
   "prettier.useTabs": true,
-  "editor.detectIndentation": false
+  "editor.detectIndentation": false,
+  "compile-hero.disable-compile-files-on-did-save-code": false
 }

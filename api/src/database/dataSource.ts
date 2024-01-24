@@ -8,7 +8,7 @@ const AppDataSource = new DataSource({
   password: 'tsCz6fmhAJErn3R',
   database: 'hermesDb',
   entities: [`${__dirname}/**/*.entity{.js,.ts}`],
-  migrations: [`src/migrations/**/*{.js,.ts}`],
+  migrations: [`src/database/migrations/**/*{.js,.ts}`],
   logging: true,
   migrationsRun: true,
 });
