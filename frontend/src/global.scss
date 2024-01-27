@@ -25,14 +25,22 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+@import "./theme/reset.scss";
+
 
 @font-face {
   font-family: "Ubuntu";
   src:  url('./assets/fonts/Ubuntu-Regular.ttf'),
 }
 
+@font-face {
+  font-family: "Nunito";
+  src: url('./assets/fonts/NunitoSans_10pt_SemiExpanded-SemiBold.ttf');
+}
+
 body{
   font-family: "Ubuntu";
+  color: #211c33;
 }
 
 h1, h2, h3, h4, h5, h6, p{
@@ -41,7 +49,8 @@ h1, h2, h3, h4, h5, h6, p{
 
 button{
   background-color: transparent;
-  border: 0px
+  border: 0px;
+  cursor: pointer;
 }
 
 input{
@@ -50,6 +59,18 @@ input{
   padding: 10px;
   border-radius: 5px;
   outline: none;
-  color: black;
+  color: #211c33;
+  &::placeholder{
+    color: #4a3f6eb6;
+  }
 }
 
+input:autofill {
+  background-color: red;
+  color: inherit
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s;
+}

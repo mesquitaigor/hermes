@@ -1,6 +1,10 @@
-<topbar></topbar>
-<div class="app-page-content">
-  <sidebar></sidebar>
+<ng-container *ngIf="authenticated">
+  <topbar></topbar>
+</ng-container>
+<div class="app-page-content" [class.inside-system]="true">
+  <ng-container *ngIf="authenticated">
+    <sidebar></sidebar>
+  </ng-container>
   <ion-app>
     <ion-router-outlet></ion-router-outlet>
   </ion-app>

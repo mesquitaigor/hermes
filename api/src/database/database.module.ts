@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { User } from '../domains/user/user.entity';
 
 @Module({
   imports: [
@@ -8,7 +9,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        console.log(configService.get<string>('DATABASE_USER'));
         return {
           type: 'mysql',
           host: configService.get<string>('DATABASE_HOST'),
@@ -17,6 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           password: configService.get<string>('DATABASE_PASSWORD'),
           database: configService.get<string>('DATABASE_NAME'),
           migrations: [`./migrations/**/*{.js,.ts}`],
+          entities: [User],
           logging: true,
           migrationsRun: true,
           timezone: 'Z',
