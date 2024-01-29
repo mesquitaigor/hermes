@@ -52,43 +52,7 @@
               <input (focus)="handleShowPopup()" (blur)="handleHiddenPopup()" formControlName="password" placeholder="Digite sua senha" type="Digite uma senha">
               <img src="./../../../assets/icons/alert.svg">
             </div>
-            <div class="password-popup" [class.show]="showPasswordPopup">
-              <div class="password-complex-status">
-                <div class="complex-bar-list">
-                  <div class="complex-bar" [class.up]="completedProgressBar >= 1"><div class="progress-bar"></div></div>
-                  <div class="complex-bar" [class.up]="completedProgressBar >= 2"><div class="progress-bar"></div></div>
-                  <div class="complex-bar" [class.up]="completedProgressBar >= 3"><div class="progress-bar"></div></div>
-                  <div class="complex-bar" [class.up]="completedProgressBar >= 4"><div class="progress-bar"></div></div>
-                  <div class="complex-bar" [class.up]="completedProgressBar >= 5"><div class="progress-bar"></div></div>
-                </div>
-                <p *ngIf="completedProgressBar === 0">Nível da sua senha</p>
-                <p *ngIf="completedProgressBar === 1">Tá fraca.</p>
-                <p *ngIf="completedProgressBar === 2">Tá começando a melhorar.</p>
-                <p *ngIf="completedProgressBar === 3">Tá indo...</p>
-                <p *ngIf="completedProgressBar === 4">Tá ficando boa em!</p>
-                <p *ngIf="completedProgressBar === 5">Agora sim!</p>
-              </div>
-              <div class="require-password-item" [class.ok]="!registerForm.get('password')?.errors?.['shouldHaveUpperLetters'] && !registerForm.get('password')?.pristine">
-                <div class="status-item-circle"></div>
-                <p>Possui letras maiusculas</p>
-              </div>
-              <div class="require-password-item" [class.ok]="!registerForm.get('password')?.errors?.['shouldHaveLowerLetters'] && !registerForm.get('password')?.pristine">
-                <div class="status-item-circle"></div>
-                <p>Possui letras mínusculas</p>
-              </div>
-              <div class="require-password-item" [class.ok]="!registerForm.get('password')?.errors?.['shouldHaveNumbers'] && !registerForm.get('password')?.pristine">
-                <div class="status-item-circle"></div>
-                <p>Possui números</p>
-              </div>
-              <div class="require-password-item" [class.ok]="!registerForm.get('password')?.errors?.['shouldHavespecialCharacters'] && !registerForm.get('password')?.pristine">
-                <div class="status-item-circle"></div>
-                <p>Possui carácteres expeciais</p>
-              </div>
-              <div class="require-password-item" [class.ok]="!registerForm.get('password')?.errors?.['minlength'] && !registerForm.get('password')?.pristine">
-                <div class="status-item-circle"></div>
-                <p>Possui mais de 8 dígitos</p>
-              </div>
-            </div>
+            
             <p class="error-message">{{ errors.password.messages[errors.password.index] }}</p>
           </div>
           <div class="input-box" [class.error]="registerForm.get('passwordConfirmation')?.errors && (!registerForm.get('passwordConfirmation')?.pristine || registerForm.get('passwordConfirmation')?.touched)">

@@ -182,12 +182,28 @@
         "hash": "11124474718971320356"
       },
       {
+        "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.html",
+        "hash": "950744561967471466"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.module.ts",
+        "hash": "5165383690895383454"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.scss",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.ts",
+        "hash": "13053135005810803147"
+      },
+      {
         "file": "src/app/modules/login/login-routing.page.module.ts",
         "hash": "5086538756093690585"
       },
       {
         "file": "src/app/modules/login/login.page.html",
-        "hash": "8505870688281511271"
+        "hash": "16932492309336511056"
       },
       {
         "file": "src/app/modules/login/login.page.module.ts",
@@ -195,7 +211,7 @@
       },
       {
         "file": "src/app/modules/login/login.page.scss",
-        "hash": "1157095411502712506"
+        "hash": "12313979256401195706"
       },
       {
         "file": "src/app/modules/login/login.page.spec.ts",
@@ -203,7 +219,7 @@
       },
       {
         "file": "src/app/modules/login/login.page.ts",
-        "hash": "8681584282354919864"
+        "hash": "1466967343872788916"
       },
       {
         "file": "src/app/shared/components/root/sidebar/sidebar.component.html",
@@ -242,8 +258,8 @@
         "hash": "975251209249146728"
       },
       {
-        "file": "src/app/shared/validators/passwordConfirmationValidator.ts",
-        "hash": "8453798432298348730"
+        "file": "src/app/shared/validators/PasswordValidation.ts",
+        "hash": "10374145636959672681"
       },
       {
         "file": "src/assets/fonts/NunitoSans_10pt-Black.ttf",

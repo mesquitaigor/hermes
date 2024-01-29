@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['password-level-popup.component.scss'],
 })
 export default class PasswordLevelPopupComponent{
+  show = false
+  completedLevelProgressBar = 0
 
+  rules: [{condition: () => boolean, label: string}] = []
 }
