@@ -1,0 +1,47 @@
+.hms-input{
+  .error-message{
+    color: #ed2860;
+    text-align: center;
+    height: 0;
+    transition: .2s;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  .input-email-content{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 15px;
+    transition: .3s ease-in;
+    img{
+      position: absolute;
+      right: 15px;
+      width: 16px;
+      opacity: 0;
+    }
+    input{
+      width: 100%;
+      background: transparent;
+      border-bottom: 2px solid rgba(0,0,0,.1);
+      padding: 15px;
+      transition: .2s;
+      text-align: center;
+      &:focus{
+        border-color: #2b818c;
+      }
+    }
+  }
+  &.error{
+    .error-message{
+      height: 16px;
+    }
+    .input-email-content{
+      img{
+        opacity: 1;
+      }
+      input{
+        border-color: #ed2860;
+      }
+    }
+  }
+}

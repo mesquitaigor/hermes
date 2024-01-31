@@ -5,68 +5,13 @@
     </figure>
   </div>
   <div class="login-form-content">
+
     <form [formGroup]="registerForm">
       <div class="initial-container">
-        <div class="logo">
-          <h1>Hermes</h1>
-        </div>
-        <div class="inputs-content">
-          <div class="register-email-input-content" [class.error]="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
-            <div class="input-email-content">
-              <input autofocus placeholder="Digite seu melhor email" formControlName="email">
-              <img src="./../../../assets/icons/alert.svg">
-            </div>
-            <ng-container *ngIf="errors.email.index >= 0 && registerForm.get('email')?.touched">
-              <p class="error-message">{{ errors.email.messages[errors.email.index] }}</p>
-            </ng-container>
-          </div>
-          <button class="register" (click)="handleShowRegisterContent()" [class.verifying-email]="validatingEmail">
-            {{validatingEmail ? 'Verificando email...' : 'Criar conta'}}
-          </button>
-          <button class="login" (click)="handleShowRegisterContent()">Já possuo uma conta</button>
-        </div>
+        <initial-container (createAccount)="handleDisplayRegisterContainer()" [registerForm]="registerForm"></initial-container>
       </div>
       <div class="register-container">
-        <div class="title-content">
-          <img (click)="handleBackToInitialContent()" src="./../../../assets/icons/arrow-to-left.svg">
-          <h2>Criar conta</h2>
-        </div>
-        <hr>
-        <div class="register-form-content">
-          <div class="input-box" [class.error]="registerForm.get('firstName')?.errors && registerForm.get('firstName')?.touched">
-            <div class="input-register-form">
-              <input autofocus formControlName="firstName" placeholder="Como podemos te chamar?">
-              <img src="./../../../assets/icons/alert.svg">
-            </div>
-            <p class="error-message">{{ errors.firstName.messages[errors.firstName.index] }}</p>
-          </div>
-          <div class="input-box" [class.error]="registerForm.get('lastName')?.errors && registerForm.get('lastName')?.touched">
-            <div class="input-register-form">
-              <input formControlName="lastName" placeholder="Sobrenome">
-              <img src="./../../../assets/icons/alert.svg">
-            </div>
-            <p class="error-message">{{ errors.lastName.messages[errors.lastName.index] }}</p>
-          </div>
-          <div class="input-box password" [class.error]="(registerForm.errors?.['differentPasswords'] || registerForm.get('password')?.errors) && (!registerForm.get('password')?.pristine || registerForm.get('password')?.touched)">
-            <div class="input-register-form">
-              <input (focus)="handleShowPopup()" (blur)="handleHiddenPopup()" formControlName="password" placeholder="Digite sua senha" type="Digite uma senha">
-              <img src="./../../../assets/icons/alert.svg">
-            </div>
-            
-            <p class="error-message">{{ errors.password.messages[errors.password.index] }}</p>
-          </div>
-          <div class="input-box" [class.error]="registerForm.get('passwordConfirmation')?.errors && (!registerForm.get('passwordConfirmation')?.pristine || registerForm.get('passwordConfirmation')?.touched)">
-            <div class="input-register-form">
-              <input formControlName="passwordConfirmation" placeholder="Confirmar senha" type="Confirme sua senha">
-              <img src="./../../../assets/icons/alert.svg">
-            </div>
-            <p class="error-message">{{ errors.passwordConfirmation.messages[errors.passwordConfirmation.index] }}</p>
-          </div>
-          <div class="footer-buttons-content">
-            <button class="back" (click)="handleBackToInitialContent()">Voltar</button>
-            <button class="send" (click)="handleSendRegister()">Enviar</button>
-          </div>
-        </div>
+        <register-container [registerForm]="registerForm" (back)="handleBackToInitialContent()"></register-container>
       </div>
     </form>
   </div>

@@ -1,0 +1,14 @@
+<div class="initial-container-component">
+  <div class="logo">
+    <h1>Hermes</h1>
+  </div>
+  <div class="inputs-content">
+    <div class="input-email-content">
+      <hms-input [autofocus]="true" placeholder="Digite seu melhor email" [errorsList]="errors" [formOptions]="emailFormControll" (formControllOutput)="handleGetEmailFormControl($event)"></hms-input>
+    </div>
+    <button class="register" (click)="handleCreateAccount()" [class.verifying-email]="validatingEmail">
+      {{validatingEmail ? 'Verificando email...' : 'Criar conta'}}
+    </button>
+    <button class="login" (click)="handleCreateAccount()">Já possuo uma conta</button>
+  </div>
+</div>

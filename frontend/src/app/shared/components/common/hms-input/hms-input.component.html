@@ -1,0 +1,12 @@
+<ng-container *ngIf="inputControll">
+  <div class="hms-input" [class.error]="inputControll.errors && inputControll.touched">
+    <div class="input-email-content">
+      <input autofocus="autofocus" [placeholder]="placeholder" [formControl]="inputControll">
+      <img src="./../../../../../assets/icons/alert.svg">
+    </div>
+
+    <ng-container *ngIf="errorsList.index >= 0 && inputControll.touched">
+      <p class="error-message">{{ errorsList.messages[errorsList.index] }}</p>
+    </ng-container>
+  </div>
+</ng-container>

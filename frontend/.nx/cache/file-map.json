@@ -182,20 +182,84 @@
         "hash": "11124474718971320356"
       },
       {
+        "file": "src/app/modules/login/components/initial-container/initial-container.component.html",
+        "hash": "13495875050505287911"
+      },
+      {
+        "file": "src/app/modules/login/components/initial-container/initial-container.component.module.ts",
+        "hash": "309954854744246234"
+      },
+      {
+        "file": "src/app/modules/login/components/initial-container/initial-container.component.scss",
+        "hash": "1915851895488748662"
+      },
+      {
+        "file": "src/app/modules/login/components/initial-container/initial-container.component.ts",
+        "hash": "5432931047184214946"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-level-progress-bar/password-level-progress-bar.component.html",
+        "hash": "5872427232720809850"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-level-progress-bar/password-level-progress-bar.component.module.ts",
+        "hash": "10855036507933231350"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-level-progress-bar/password-level-progress-bar.component.scss",
+        "hash": "18321530765635097270"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-level-progress-bar/password-level-progress-bar.component.ts",
+        "hash": "12902349863176434163"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-requisite-item/password-requisite-item.component.html",
+        "hash": "14961291390014128499"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-requisite-item/password-requisite-item.component.module.ts",
+        "hash": "442018245108467503"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-requisite-item/password-requisite-item.component.scss",
+        "hash": "8955323882287061592"
+      },
+      {
+        "file": "src/app/modules/login/components/password-level-popup/components/password-requisite-item/password-requisite-item.component.ts",
+        "hash": "8478715678577145638"
+      },
+      {
         "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.html",
-        "hash": "950744561967471466"
+        "hash": "2271394035002765136"
       },
       {
         "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.module.ts",
-        "hash": "5165383690895383454"
+        "hash": "10123249065603723616"
       },
       {
         "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.scss",
-        "hash": "3244421341483603138"
+        "hash": "4136541507711070352"
       },
       {
         "file": "src/app/modules/login/components/password-level-popup/password-level-popup.component.ts",
-        "hash": "13053135005810803147"
+        "hash": "6847939404384996287"
+      },
+      {
+        "file": "src/app/modules/login/components/register-conteiner/register-container.component.html",
+        "hash": "16630642401420192790"
+      },
+      {
+        "file": "src/app/modules/login/components/register-conteiner/register-container.component.module.ts",
+        "hash": "18259805418682507111"
+      },
+      {
+        "file": "src/app/modules/login/components/register-conteiner/register-container.component.scss",
+        "hash": "3579918805008725810"
+      },
+      {
+        "file": "src/app/modules/login/components/register-conteiner/register-container.component.ts",
+        "hash": "3447504692779960883"
       },
       {
         "file": "src/app/modules/login/login-routing.page.module.ts",
@@ -203,15 +267,15 @@
       },
       {
         "file": "src/app/modules/login/login.page.html",
-        "hash": "16932492309336511056"
+        "hash": "2495383316802355030"
       },
       {
         "file": "src/app/modules/login/login.page.module.ts",
-        "hash": "4378100737661101486"
+        "hash": "17655178809525158360"
       },
       {
         "file": "src/app/modules/login/login.page.scss",
-        "hash": "12313979256401195706"
+        "hash": "6080915312352346272"
       },
       {
         "file": "src/app/modules/login/login.page.spec.ts",
@@ -219,7 +283,23 @@
       },
       {
         "file": "src/app/modules/login/login.page.ts",
-        "hash": "1466967343872788916"
+        "hash": "13771127992327196304"
+      },
+      {
+        "file": "src/app/shared/components/common/hms-input/hms-input.component.html",
+        "hash": "6127224651300911808"
+      },
+      {
+        "file": "src/app/shared/components/common/hms-input/hms-input.component.module.ts",
+        "hash": "1872821417376383527"
+      },
+      {
+        "file": "src/app/shared/components/common/hms-input/hms-input.component.scss",
+        "hash": "11580480609585350399"
+      },
+      {
+        "file": "src/app/shared/components/common/hms-input/hms-input.component.ts",
+        "hash": "8588319118698014927"
       },
       {
         "file": "src/app/shared/components/root/sidebar/sidebar.component.html",
