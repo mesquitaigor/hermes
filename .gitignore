@@ -1,4 +1,5 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
-/frontend/.nx/
-/frontend/node_modules/
+/*/.nx/
+/*/node_modules/
+/*/package-lock.json
