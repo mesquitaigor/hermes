@@ -13,8 +13,9 @@ $RECYCLE.BIN/
 log.txt
 
 
-/.sourcemaps
+/frontend/.sourcemaps
 /.versions
+/frontend/.nx
 /coverage
 
 # Ionic
