@@ -1,54 +1,38 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import PasswordValidaton from '../../shared/validators/PasswordValidation';
+import { loginContentNames } from './resources/types/loginContentNames';
+import LoginPageService from './resources/login.page.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
 })
-export class LoginPage{
-  @HostBinding('class') content: 'initial' | 'register' = 'initial'
+export class LoginPage implements OnInit{
+  @HostBinding('class') content: loginContentNames = 'initial'
 
-  registerForm: FormGroup = new FormGroup({
-
-    lastName: new FormControl('', {
-      validators: [Validators.required],
-      updateOn: 'submit'
-    }),
-    password: new FormControl('', {
-      validators: [
-        Validators.required,
-        Validators.minLength(8),
-        PasswordValidaton.shouldHaveNumbers,
-        PasswordValidaton.shouldHaveLowerLetters,
-        PasswordValidaton.shouldHaveUpperLetters,
-        PasswordValidaton.shouldHavespecialCharacters
-      ],
-      updateOn: 'change'
-    }),
-    passwordConfirmation: new FormControl('', {
-      validators: [Validators.required],
-      updateOn: 'change'
-    })
-  }, {
+  registerForm: FormGroup = new FormGroup({}, {
     updateOn: 'submit',
     validators: [
       PasswordValidaton.passwordConfirmationIsEqual
     ]
   })
 
+  constructor(
+    private loginPageService: LoginPageService
+  ){}
 
-
-  handleDisplayRegisterContainer(){
-    if(this.content == 'initial'){
-      this.content = 'register'
-    }
+  ngOnInit(){
+    this.loginPageService.setRegisterForm(this.registerForm)
+    this.loginPageService.$events.subscribe((next) => {
+      if(next?.to == 'register'){
+        this.content = 'register'
+      }
+      if(next?.to == 'initial'){
+        this.content = 'initial'
+      }
+    })
   }
-
-  handleBackToInitialContent(){
-    this.content ='initial'
-  }
-
 
 }

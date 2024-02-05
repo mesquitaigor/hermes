@@ -1,0 +1,10 @@
+<div class="input-email-content">
+  <hms-input
+    [style]="emailInputStyle"
+    [inputAutofocus]="true"
+    placeholder="Digite seu melhor email"
+    [errorsList]="errors"
+    [formOptions]="emailFormControll"
+    (formControllOutput)="handleGetEmailFormControl($event)"
+  ></hms-input>
+</div>

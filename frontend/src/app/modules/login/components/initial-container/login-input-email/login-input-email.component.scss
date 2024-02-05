@@ -1,26 +1,26 @@
 
 .initial-container-component{
   .logo{
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     transition: .3s ease-in;
-    display: flex;
-    justify-content: center;
-    img{
-      width: 70px;
+    h1{
+      color: #2b818c;
+      font-weight: bold;
+      text-align: center;
     }
   }
   .inputs-content{
     display: flex;
     flex-direction: column;
     align-items: center;
-    login-input-email{
-      margin-bottom: 10px;
+    .input-email-content{
+      margin-bottom: 8px;
     }
     .register{
       background: linear-gradient(45deg, #ef709b, #fa9372);
       padding: 12px 30px;
       border-radius: 5px;
-      margin-top: 5px;
+      margin-top: 10px;
       font-weight: bold;
       color: white;
       transition: .3s ease-in;
@@ -28,8 +28,8 @@
         filter: brightness(0.9);
       }
     }
-    .login{
-      margin-top: 15px;
+    .login, .back{
+      margin-top: 20px;
       padding: 10px;
       opacity: .7;
       transition: .2s;

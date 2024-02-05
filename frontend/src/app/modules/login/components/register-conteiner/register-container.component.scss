@@ -1,10 +1,4 @@
-.register-container{
-  position: absolute;
-  top: 0;
-  padding: 30px;
-  width: 100%;
-  transition: .8s ease-in-out;
-  height: 100%;
+.register-container-component{
   .title-content{
     display: flex;
     align-items: center;
@@ -36,60 +30,9 @@
   }
   .register-form-content{
     .input-box{
-      margin-bottom: 5px;
+      margin-bottom: 2px;
       transition: .8s ease-in;
-      &.password{
-        position: relative;
-        z-index: 2;
-      }
-      .input-register-form{
-        display: flex;
-        align-items: center;
-        position: relative;
-        margin-bottom: 10px;
-        input{
-          width: 100%;
-          background: transparent;
-          border-bottom: 2px solid rgba(0,0,0,.1);
-          padding: 15px;
-          transition: .2s;
-          text-align:left;
-          &:focus{
-            border-color: #2b818c;
-          }
-        }
-        img{
-          position: absolute;
-          right: 15px;
-          width: 16px;
-          opacity: 0;
-        }
-      }
-      .error-message{
-        color: #ed2860;
-        transition: .2s;
-        overflow: hidden;
-        font-size: 12px;
-        padding-left: 15px;
-        opacity: 0;
-        pointer-events: none;
-        height: 0;
-      }
-      &.error{
-        .error-message{
-          height: 16px;
-          pointer-events: initial;
-          opacity: 1;
-        }
-        .input-register-form {
-          img{
-            opacity: 1;
-          }
-          input{
-            border-color: #ed2860;
-          }
-        }
-      }
+
     }
     .footer-buttons-content{
       display: flex;

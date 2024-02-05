@@ -1,21 +1,23 @@
+$input-padding: 15px;
 .hms-input{
   .error-message{
     color: #ed2860;
     text-align: center;
-    height: 0;
+    height: 16px;
     transition: .2s;
     overflow: hidden;
     font-size: 14px;
+    opacity: 0;
   }
-  .input-email-content{
+  .input-content{
     display: flex;
     align-items: center;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
     transition: .3s ease-in;
     img{
       position: absolute;
-      right: 15px;
+      right: $input-padding;
       width: 16px;
       opacity: 0;
     }
@@ -23,9 +25,10 @@
       width: 100%;
       background: transparent;
       border-bottom: 2px solid rgba(0,0,0,.1);
-      padding: 15px;
+      padding: $input-padding;
       transition: .2s;
       text-align: center;
+      caret-color: black;
       &:focus{
         border-color: #2b818c;
       }
@@ -33,7 +36,8 @@
   }
   &.error{
     .error-message{
-      height: 16px;
+      opacity: 1;
+      pointer-events: none;
     }
     .input-email-content{
       img{

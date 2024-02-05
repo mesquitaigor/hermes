@@ -44,5 +44,6 @@ export interface PasswordPopupController{
 }
 export interface RulesPopupInputData{
   condition: () => boolean
+  levelText: string
   label: string
 }

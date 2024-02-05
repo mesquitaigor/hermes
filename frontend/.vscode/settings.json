@@ -1,3 +1,15 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": ["@ionic/angular/common", "@ionic/angular/standalone"]
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@ionic/angular/common",
+    "@ionic/angular/standalone"
+  ],
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "prettier.tabWidth": 1,
+  "prettier.useTabs": true,
+  "editor.detectIndentation": false,
+  "compile-hero.disable-compile-files-on-did-save-code": true
 }

@@ -5,13 +5,12 @@
     </figure>
   </div>
   <div class="login-form-content">
-
     <form [formGroup]="registerForm">
       <div class="initial-container">
-        <initial-container (createAccount)="handleDisplayRegisterContainer()" [registerForm]="registerForm"></initial-container>
+        <initial-container></initial-container>
       </div>
       <div class="register-container">
-        <register-container [registerForm]="registerForm" (back)="handleBackToInitialContent()"></register-container>
+        <register-container></register-container>
       </div>
     </form>
   </div>
