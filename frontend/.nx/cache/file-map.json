@@ -67,7 +67,7 @@
       },
       {
         "file": ".gitignore",
-        "hash": "91109559695469517"
+        "hash": "17784434607355472592"
       },
       {
         "file": ".vscode/extensions.json",
@@ -115,7 +115,7 @@
       },
       {
         "file": "src/app/app.component.spec.ts",
-        "hash": "16655258543879266906"
+        "hash": "15780500412285638321"
       },
       {
         "file": "src/app/app.component.ts",
@@ -179,7 +179,7 @@
       },
       {
         "file": "src/app/modules/home/home.page.spec.ts",
-        "hash": "17001972042763736139"
+        "hash": "13389890953072517337"
       },
       {
         "file": "src/app/modules/home/home.page.ts",
@@ -303,7 +303,7 @@
       },
       {
         "file": "src/app/modules/login/login.page.spec.ts",
-        "hash": "16109762803094899589"
+        "hash": "714937578510784423"
       },
       {
         "file": "src/app/modules/login/login.page.ts",
