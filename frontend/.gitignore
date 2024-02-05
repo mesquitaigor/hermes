@@ -12,10 +12,9 @@ $RECYCLE.BIN/
 *.log
 log.txt
 
-
-/frontend/.sourcemaps
+/.nx
+/.sourcemaps
 /.versions
-/frontend/.nx
 /coverage
 
 # Ionic
