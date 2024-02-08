@@ -1,17 +1,24 @@
 <ng-container *ngIf="inputControll">
-  <div class="hms-input" [class.error]="inputControll.errors && inputControll.touched && errorsList.messages[errorsList.index]">
+  <div
+    class="hms-input"
+    [class.error]="
+      inputControll.errors && inputControll.touched && controll?.errorMessage
+    "
+  >
     <div class="input-content">
       <input
         #inputRef
-        [ngStyle]="style.input"
-        [autofocus]="inputAutofocus"
+        [ngStyle]="controll?.style?.input"
+        [autofocus]="controll?.autofocus"
         [formControl]="inputControll"
         (focus)="handleInputFocus()"
         (blur)="handleInputBlur()"
-        [placeholder]="placeholder"
-      >
-      <img src="./../../../../../assets/icons/alert.svg">
+        [placeholder]="controll?.placeholder"
+      />
+      <img src="./../../../../../assets/icons/alert.svg" />
     </div>
-    <p class="error-message" [ngStyle]="style.error">{{ errorsList.messages[errorsList.index] }}</p>
+    <p class="error-message" [ngStyle]="controll?.style?.error">
+      {{ controll?.errorMessage }}
+    </p>
   </div>
 </ng-container>

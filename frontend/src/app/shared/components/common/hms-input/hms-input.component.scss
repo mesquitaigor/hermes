@@ -27,7 +27,6 @@ $input-padding: 15px;
       border-bottom: 2px solid rgba(0,0,0,.1);
       padding: $input-padding;
       transition: .2s;
-      text-align: center;
       caret-color: black;
       &:focus{
         border-color: #2b818c;
@@ -39,7 +38,7 @@ $input-padding: 15px;
       opacity: 1;
       pointer-events: none;
     }
-    .input-email-content{
+    .input-content{
       img{
         opacity: 1;
       }

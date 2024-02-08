@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import HsmInputComponentModule from '../../../../shared/components/common/hms-input/hms-input.component.module';
 import RegisterContainerComponent from './register-container.component';
-import PasswordLevelPopupComponentModule from './components/password-level-popup/password-level-popup.component.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import RegisterFirstNameInputComponentModule from 'src/app/modules/login/components/register-conteiner/components/register-firstname-input/register-firstname-input.component.module';
+import RegisterLastNameInputComponentModule from 'src/app/modules/login/components/register-conteiner/components/register-lastname-input/register-lastname-input.component.module';
 
 @NgModule({
-  declarations: [ RegisterContainerComponent ],
-  exports: [ RegisterContainerComponent ],
-  imports: [ CommonModule, HsmInputComponentModule, PasswordLevelPopupComponentModule, ReactiveFormsModule, HsmInputComponentModule ]
+  declarations: [RegisterContainerComponent],
+  exports: [RegisterContainerComponent],
+  imports: [
+    CommonModule,
+    RegisterFirstNameInputComponentModule,
+    RegisterLastNameInputComponentModule,
+  ],
 })
-export default class RegisterContainerComponentModule{}
+export default class RegisterContainerComponentModule {}

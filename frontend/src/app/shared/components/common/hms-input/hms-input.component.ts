@@ -1,55 +1,62 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormControlOptions, FormGroup, ValidatorFn } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
 
 @Component({
   selector: 'hms-input',
   templateUrl: 'hms-input.component.html',
   styleUrls: ['hms-input.component.scss'],
 })
-export default class HsmInputComponent implements AfterViewInit, OnInit{
-  @Input() registerForm?: FormGroup
-  @Input() errorsList: any
-  @Input() placeholder?: string
-  @Input() inputAutofocus = false
-  @Input() initialValue = ''
-  @Input() formOptions?: FormControlOptions | ValidatorFn | ValidatorFn[] | null | undefined
-  @Input() style: { input: { ['text-align']: string }, error?: { ['text-align']: string } } = {
-    input: {
-      'text-align': 'left'
-    },
-  }
+export default class HsmInputComponent implements AfterViewInit, OnInit {
+  @Input() controll?: HmsInputControll;
 
-  @Output() formControllOutput = new EventEmitter<{ control: AbstractControl, elementRef?: ElementRef }>()
-  @Output() inputFocus = new EventEmitter()
-  @Output() inputBlur = new EventEmitter()
+  @ViewChild('inputRef', { static: false }) inputRef?: ElementRef;
+  inputControll?: FormControl;
 
-  @ViewChild('inputRef', { static: false }) inputRef?: ElementRef
-  inputControll?: FormControl
-
-  ngOnInit(){
-    if(this.style?.error?.['text-align'] === undefined){
-      this.style.error = this.style.input
+  ngOnInit() {
+    this.alignErrorStyle();
+    if (this.controll) {
+      this.inputControll = this.controll.createNgControll();
     }
   }
 
-  ngAfterViewInit(){
-    if(this.formOptions){
-      this.inputControll = new FormControl(this.initialValue, this.formOptions)
-    }
-    const intervalRef = setInterval(() => {
-      if(this.inputRef && this.inputControll){
-        this.inputControll.value
-        this.formControllOutput.emit({ control: this.inputControll, elementRef: this.inputRef })
-        clearInterval(intervalRef)
+  alignErrorStyle() {
+    if (this.controll && this.controll?.style?.error == undefined) {
+      this.controll.style.error = {};
+      if (
+        this.controll?.style?.error?.['text-align'] === undefined &&
+        this.controll?.style?.input?.['text-align'] !== undefined
+      ) {
+        this.controll.style.error['text-align'] =
+          this.controll.style.input?.['text-align'];
       }
-    }, 100)
+    }
   }
 
-  handleInputFocus(){
-    this.inputFocus.emit()
-  }
-  handleInputBlur(){
-    this.inputBlur.emit()
+  ngAfterViewInit() {
+    const intervalRef = setInterval(() => {
+      if (this.inputRef && this.inputControll) {
+        this.inputControll.value;
+        this.controll?.defineInputProps({
+          control: this.inputControll,
+          elementRef: this.inputRef,
+        });
+        clearInterval(intervalRef);
+      }
+    }, 300);
   }
 
+  handleInputFocus() {
+    this.controll?._focused_();
+  }
+  handleInputBlur() {
+    this.controll?._blured_();
+  }
 }

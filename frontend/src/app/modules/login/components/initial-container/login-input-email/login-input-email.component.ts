@@ -1,78 +1,79 @@
-import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
-import { AbstractControl, FormControlOptions, FormControlStatus, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControlStatus, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import LoginPageService from '../../../resources/login.page.service';
 import { RegisterFormInputNames } from '../../../resources/enums/RegisterFormInputNames';
 import EmailValidator from '../../../../../shared/validators/EmailValidator';
+import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
+import HmsNgControlOutput from 'src/app/shared/components/common/hms-input/resources/interfaces/HmsNgControlOutput';
 
 @Component({
   selector: 'login-input-email',
   templateUrl: 'login-input-email.component.html',
-  styleUrls: ['login-input-email.component.scss'],
 })
-export default class LoginInputEmailComponent{
+export default class LoginInputEmailComponent implements OnInit {
+  @Output() validatingEmail = new EventEmitter<boolean>();
 
-  @Output() validatingEmail = new EventEmitter<boolean>()
-
-  emailInputStyle = {input: {['text-align']: 'center'}}
-  emailFormControll: FormControlOptions = {
+  emailFormControll = new HmsInputControll({
+    initialValue: 'Igor@igor.com',
     validators: [
-      Validators.required,
-      EmailValidator.format,
+      {
+        fn: Validators.required,
+        key: 'required',
+        message: 'Digite seu email para podermos começar.',
+      },
+      {
+        fn: EmailValidator.format,
+        key: 'invalidFormat',
+        message: 'Email inválido.',
+      },
     ],
     asyncValidators: [
-      EmailValidator.existing(this.httpClient)
+      {
+        fn: EmailValidator.existing(this.httpClient),
+        key: 'existing',
+        message: 'Email já possui cadastrado.',
+      },
     ],
-    updateOn: 'submit'
-  }
-  errors = {
-    index: -1,
-    messages: [
-      'Digite seu email para podermos começar.',
-      'Email inválido.',
-      'Email já possui cadastrado.'
-    ]
-  }
+    updateOn: 'submit',
+    autofocus: true,
+    placeholder: 'Digite seu melhor email',
+    style: {
+      input: {
+        ['text-align']: 'center',
+      },
+    },
+  });
 
   constructor(
     private httpClient: HttpClient,
     private loginPageService: LoginPageService
-  ){}
+  ) {}
 
-  handleGetEmailFormControl(emailInputController: { control: AbstractControl, elementRef?: ElementRef }){
-    if(this.loginPageService.registerForm){
-      setTimeout(() => {
-        emailInputController.elementRef?.nativeElement.focus()
-      }, 300)
-      this.loginPageService.addControl(RegisterFormInputNames.EMAIL, emailInputController.control)
-      this.listenEmailStatusChanges()
+  ngOnInit() {
+    this.emailFormControll.recoverNgControl((props) => {
+      this.recoverNgEmailControl(props);
+    });
+  }
+
+  recoverNgEmailControl(hmsInputNgControl: HmsNgControlOutput) {
+    if (this.loginPageService.registerForm) {
+      this.loginPageService.addControl(
+        RegisterFormInputNames.EMAIL,
+        hmsInputNgControl.control
+      );
+      this.listenEmailStatusChanges();
     }
   }
 
-  listenEmailStatusChanges(){
-    const emailControll = this.loginPageService.get(RegisterFormInputNames.EMAIL)
+  listenEmailStatusChanges() {
+    const emailControll = this.emailFormControll.getNgControl();
     emailControll?.statusChanges.subscribe((status) => {
-      this.atualizeEmailErrorMessage(status)
-    })
+      this.atualizeEmailErrorMessage(status);
+    });
   }
 
-  atualizeEmailErrorMessage(status: FormControlStatus){
-    const emailControll = this.loginPageService.get(RegisterFormInputNames.EMAIL)
-    if(emailControll){
-      this.validatingEmail.emit(status === 'PENDING')
-      if(status == 'VALID' || status == 'PENDING'){
-        this.errors.index = -1
-      }else if(status == 'INVALID' && emailControll?.touched){
-        if(emailControll?.errors?.['required']){
-          this.errors.index = 0
-        }else if(emailControll?.errors?.['invalidFormat']){
-          this.errors.index = 1
-        }else if(emailControll?.errors?.['existing']){
-          this.errors.index = 2
-        }
-      }
-    }
+  atualizeEmailErrorMessage(status: FormControlStatus) {
+    this.validatingEmail.emit(status === 'PENDING');
   }
-
-
 }

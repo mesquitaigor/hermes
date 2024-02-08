@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import Card from '../../../../domains/tasks/model/Card';
+import Card from '../../../../domains/card/model/Card';
 
 @Component({
   selector: 'card',

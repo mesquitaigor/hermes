@@ -8,35 +8,11 @@
       form {
         .initial-container{
           left: 0;
-          /* .logo, .input-email-content, .register, .login{
-            transform: translateX(0);
-          } */
+          opacity: 1;
         }
         .register-container{
           left: 100%;
-          /* .title-content{
-            transform: translateX(120px);
-          }
-          hr{
-            transform: translate(100px);
-          }
-          .register-form-content{
-            .input-box:nth-child(1){
-              transform: translateX(70px);
-            }
-            .input-box:nth-child(2){
-              transform: translateX(50px);
-            }
-            .input-box:nth-child(3){
-              transform: translateX(40px);
-            }
-            .input-box:nth-child(4){
-              transform: translateX(30px);
-            }
-            .footer-buttons-content{
-              transform: translateX(10px);
-            }
-          } */
+          opacity: 0;
         }
       }
     }
@@ -54,29 +30,11 @@
       form {
         .initial-container{
           left: -100%;
-          /* .logo{
-            transform: translateX(-80px);
-          }
-          .input-email-content{
-            transform: translateX(-50px);
-          }
-          .register{
-            transform: translateX(-30px);
-          }
-          .register{
-            transform: translateX(-10px);
-          } */
+          opacity: 0;
         }
         .register-container{
           left: 0;
-          /* .title-content, hr{
-            transform: translateX(0px);
-          }
-          .register-form-content{
-            .input-box:nth-child(1), .input-box:nth-child(2), .input-box:nth-child(3), .input-box:nth-child(4), .footer-buttons-content{
-              transform: translateX(0);
-            }
-          } */
+          opacity: 1;
         }
       }
     }

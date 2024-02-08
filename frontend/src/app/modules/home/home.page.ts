@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import CardService from '../../domains/tasks/card.service';
+import CardService from '../../domains/card/card.service';
 import StatusService from '../../domains/status/status.service';
 import Status from '../../domains/status/model/Status';
-import Card from '../../domains/tasks/model/Card';
+import Card from '../../domains/card/model/Card';
 
 @Component({
   selector: 'app-home',

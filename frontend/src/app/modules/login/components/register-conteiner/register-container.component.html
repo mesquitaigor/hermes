@@ -1,28 +1,31 @@
 <div class="register-container-component">
   <div class="title-content">
-    <img (click)="handleBack()" src="./../../../../../assets/icons/arrow-to-left.svg">
+    <img
+      (click)="handleBack()"
+      src="./../../../../../assets/icons/arrow-to-left.svg"
+    />
     <h2>Criar conta</h2>
   </div>
-  <hr>
+  <hr />
   <div class="register-form-content">
     <div class="input-box">
-      <hms-input [errorsList]="errors.firstName" (formControllOutput)="handleGetFirstNameControl($event)" [formOptions]="firstNameFormOptions" placeholder="Como podemos te chamar?"></hms-input>
+      <register-firstname-input></register-firstname-input>
     </div>
     <div class="input-box">
-      <hms-input [errorsList]="errors.lastName" (formControllOutput)="handleGetLastNameControl($event)" [formOptions]="lastNameFormOptions" placeholder="Sobrenome"></hms-input>
+      <register-lastname-input></register-lastname-input>
     </div>
     <div class="input-box">
-      <hms-input (inputFocus)="handleShowPopup()" (inputBlur)="handleHiddenPopup()" [errorsList]="errors.password" (formControllOutput)="handleGetPasswordControl($event)" [formOptions]="passwordFormOptions" placeholder="Digite sua senha"></hms-input>
+      <!-- <hms-input (inputFocus)="handleShowPopup()" (inputBlur)="handleHiddenPopup()" [errorsList]="errors.password" (formControllOutput)="handleGetPasswordControl($event)" [formOptions]="passwordFormOptions" placeholder="Digite sua senha"></hms-input> -->
     </div>
     <div class="input-box">
-      <hms-input [errorsList]="errors.passwordConfirmation" (formControllOutput)="handleGetPasswordConfirmationControl($event)" [formOptions]="passwordConfirmationFormOptions" placeholder="Confirme sua senha"></hms-input>
+      <!-- <hms-input [errorsList]="errors.passwordConfirmation" (formControllOutput)="handleGetPasswordConfirmationControl($event)" [formOptions]="passwordConfirmationFormOptions" placeholder="Confirme sua senha"></hms-input> -->
     </div>
     <!-- <div class="input-box password" [class.error]="(registerForm.errors?.['differentPasswords'] || registerForm.get('password')?.errors) && (!registerForm.get('password')?.pristine && registerForm.get('password')?.touched)">
       <div class="input-register-form">
         <input formControlName="password" placeholder="Digite sua senha" type="Digite uma senha">
         <img src="./../../../../../assets/icons/alert.svg">
       </div>
-      <password-level-popup-component (popupController)="handleGetPasswordPopupController($event)" [show]="passwordLevelPopup.show" [rules]="passwordLevelPopup.rules" [nivelLabels]="passwordLevelPopup.nivelLabels"></password-level-popup-component>
+
       <p class="error-message">{{ errors.password.messages[errors.password.index] }}</p>
     </div> -->
     <!-- <div class="input-box" [class.error]="registerForm.get('passwordConfirmation')?.errors && (!registerForm.get('passwordConfirmation')?.pristine && registerForm.get('passwordConfirmation')?.touched)">

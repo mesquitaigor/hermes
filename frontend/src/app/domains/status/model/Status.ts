@@ -1,4 +1,4 @@
-import Card from '../../tasks/model/Card';
+import Card from '../../card/model/Card';
 
 export default class Status {
   cards?: Card[];

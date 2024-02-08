@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import Status from './model/Status';
-import Card from '../tasks/model/Card';
+import Card from '../card/model/Card';
 
 @Injectable({
   providedIn: 'root',

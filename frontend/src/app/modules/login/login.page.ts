@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import PasswordValidaton from '../../shared/validators/PasswordValidation';
 import { loginContentNames } from './resources/types/loginContentNames';
 import LoginPageService from './resources/login.page.service';
@@ -9,30 +9,28 @@ import LoginPageService from './resources/login.page.service';
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
 })
-export class LoginPage implements OnInit{
-  @HostBinding('class') content: loginContentNames = 'initial'
+export class LoginPage implements OnInit {
+  @HostBinding('class') content: loginContentNames = 'initial';
 
-  registerForm: FormGroup = new FormGroup({}, {
-    updateOn: 'submit',
-    validators: [
-      PasswordValidaton.passwordConfirmationIsEqual
-    ]
-  })
+  registerForm: FormGroup = new FormGroup(
+    {},
+    {
+      updateOn: 'submit',
+      validators: [PasswordValidaton.passwordConfirmationIsEqual],
+    }
+  );
 
-  constructor(
-    private loginPageService: LoginPageService
-  ){}
+  constructor(private loginPageService: LoginPageService) {}
 
-  ngOnInit(){
-    this.loginPageService.setRegisterForm(this.registerForm)
+  ngOnInit() {
+    this.loginPageService.setRegisterForm(this.registerForm);
     this.loginPageService.$events.subscribe((next) => {
-      if(next?.to == 'register'){
-        this.content = 'register'
+      if (next?.to == 'register') {
+        this.content = 'register';
       }
-      if(next?.to == 'initial'){
-        this.content = 'initial'
+      if (next?.to == 'initial') {
+        this.content = 'initial';
       }
-    })
+    });
   }
-
 }
