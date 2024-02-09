@@ -1,5 +1,5 @@
 import { EventEmitter } from '@angular/core';
-import PasswordPopupController from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordPopupController';
+import PasswordPopupController from './PasswordPopupController';
 
 export default interface PasswordLevelPopupComponentOutputs {
   handlePopupController: EventEmitter<PasswordPopupController>;

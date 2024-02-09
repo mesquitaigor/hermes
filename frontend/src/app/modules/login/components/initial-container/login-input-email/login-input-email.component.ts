@@ -3,10 +3,10 @@ import { FormControlStatus, Validators } from '@angular/forms';
 import LoginPageService from '../../../resources/login.page.service';
 import { RegisterFormInputNames } from '../../../resources/enums/RegisterFormInputNames';
 import EmailValidator from '../../../../../shared/validators/EmailValidator';
-import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
-import HmsNgControlOutput from 'src/app/shared/components/common/hms-input/resources/interfaces/HmsNgControlOutput';
+import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
+import HmsNgControlOutput from '@components/common/hms-input/resources/interfaces/HmsNgControlOutput';
 import UserService from '@users/user.service';
-import { emailErrors } from 'src/app/shared/validators/emailErrors';
+import { emailErrors } from '@validators/emailErrors';
 
 @Component({
   selector: 'login-input-email',

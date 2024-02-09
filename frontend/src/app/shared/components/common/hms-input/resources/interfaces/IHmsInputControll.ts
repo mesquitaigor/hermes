@@ -1,5 +1,5 @@
 import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
-import HmsValidator from 'src/app/shared/components/common/hms-input/resources/interfaces/HmsValidator';
+import HmsValidator from '@components/common/hms-input/resources/interfaces/HmsValidator';
 
 export default interface IHmsInputControll {
   initialValue: string;

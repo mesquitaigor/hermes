@@ -1,9 +1,9 @@
 import { AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import PasswordPopupController from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordPopupController';
-import RulesPopupInputData from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/RulesPopupInputData';
-import { progressBarActionType } from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/types/progressBarActionType';
-import { passwordErrors } from 'src/app/shared/validators/passwordErrors';
+import { passwordErrors } from '@validators/passwordErrors';
+import RulesPopupInputData from '../interfaces/RulesPopupInputData';
+import PasswordPopupController from '../interfaces/PasswordPopupController';
+import { progressBarActionType } from '../types/progressBarActionType';
 
 export default class PasswordLevelPopup {
   show = false;

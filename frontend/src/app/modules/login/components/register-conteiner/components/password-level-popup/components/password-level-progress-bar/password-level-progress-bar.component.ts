@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import PasswordLevelPopup from 'src/app/modules/login/components/register-conteiner/resources/models/PasswordLevelPopup';
+import PasswordLevelPopup from '../../resources/models/PasswordLevelPopup';
 
 @Component({
   selector: 'password-level-progress-bar',

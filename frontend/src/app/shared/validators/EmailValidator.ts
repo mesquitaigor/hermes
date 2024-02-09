@@ -1,8 +1,8 @@
 import { AbstractControl } from '@angular/forms';
 import UserService from '@users/user.service';
 import { Observable, map } from 'rxjs';
-import { emailErrors } from 'src/app/shared/validators/emailErrors';
-import { validatorReturn } from 'src/app/shared/validators/passwordValidationReturn';
+import { emailErrors } from '@validators/emailErrors';
+import { validatorReturn } from '@validators/passwordValidationReturn';
 
 export default class EmailValidator {
   static format(control: AbstractControl): validatorReturn<typeof emailErrors> {

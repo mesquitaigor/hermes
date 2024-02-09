@@ -22,7 +22,6 @@ export default class RegisterContainerComponent {
     if (registerForm) {
       const subscription = registerForm.statusChanges.subscribe(() => {
         if (registerForm?.valid && !this.sending) {
-          console.log('oi');
           this.sending = true;
           const newUser = this.getUserFromForm();
           if (newUser) {

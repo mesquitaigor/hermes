@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
+import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
 
 @Component({
   selector: 'hms-input',

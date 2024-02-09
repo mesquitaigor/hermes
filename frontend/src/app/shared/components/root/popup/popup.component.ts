@@ -8,31 +8,10 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DynamicChildLoaderDirective } from 'src/app/shared/components/root/popup/dynamic-child-loader.directive';
-import PopupChildComponent from 'src/app/shared/components/root/popup/resources/interfaces/PopupChildComponent';
-import PopupController from 'src/app/shared/controllers/popup/popup.controller';
-import Popup from 'src/app/shared/controllers/popup/resources/models/Popup';
-
-interface PopupRenderItem {
-  contentStyle: ContentStyle;
-  boxStyle: BoxStyle;
-  show: boolean;
-  uuid: string;
-}
-interface ContentStyle {
-  top: string;
-  left: string;
-  height: string;
-  width: string;
-}
-interface BoxStyle {
-  left: string;
-  right: string;
-  top: string;
-  bottom: string;
-  height: string;
-  width: string;
-}
+import PopupController from '@controllers/popup/popup.controller';
+import Popup from '@controllers/popup/Popup';
+import { DynamicChildLoaderDirective } from '@directives/dynamic-child-loader/dynamic-child-loader.directive';
+import { IPopupComponent } from './IPopupComponent';
 
 @Component({
   selector: 'popup',
@@ -43,7 +22,7 @@ export default class PopupComponent implements OnInit {
   @ViewChildren(DynamicChildLoaderDirective)
   dynamicChild?: QueryList<DynamicChildLoaderDirective>;
 
-  list: Array<PopupRenderItem> = [];
+  list: Array<IPopupComponent.PopupRenderItem> = [];
 
   constructor(
     private popupController: PopupController,
@@ -68,7 +47,7 @@ export default class PopupComponent implements OnInit {
 
   verifyIfExistingAndCreate(
     popup: Popup<unknown, unknown>
-  ): PopupRenderItem | undefined {
+  ): IPopupComponent.PopupRenderItem | undefined {
     const renderedUuids = this.list.map((item) => item.uuid);
     if (renderedUuids.length == 0 || !renderedUuids.includes(popup.getUuid())) {
       this.createRenderPopupItem(popup.getUuid());
@@ -77,7 +56,7 @@ export default class PopupComponent implements OnInit {
     return this.getRenderItem(popup.getUuid());
   }
 
-  getRenderItem(uuid: string): PopupRenderItem | undefined {
+  getRenderItem(uuid: string): IPopupComponent.PopupRenderItem | undefined {
     return this.list.find((item) => item.uuid == uuid);
   }
 
@@ -133,7 +112,8 @@ export default class PopupComponent implements OnInit {
   }
 
   loadDynamicComponent(popup: Popup<unknown, unknown>): void {
-    const element: Type<PopupChildComponent> | undefined = popup.element;
+    const element: Type<IPopupComponent.PopupChildComponent> | undefined =
+      popup.element;
     this.changeDetectorRef.detectChanges();
     if (element && this.dynamicChild) {
       const childElements = this.dynamicChild.toArray();
@@ -142,10 +122,10 @@ export default class PopupComponent implements OnInit {
         (element) => element.uuid == renderItem?.uuid
       );
       if (content) {
-        const componentRef: ComponentRef<PopupChildComponent> =
+        const componentRef: ComponentRef<IPopupComponent.PopupChildComponent> =
           content.viewContainerRef.createComponent(element);
         this.stilizeHost(componentRef);
-        this.atribuiteDefinitions(popup, componentRef);
+        this.assignDefinitions(popup, componentRef);
         this.listenOutputs(popup, componentRef);
         this.setChildComponentInputs(popup, componentRef);
       }
@@ -195,9 +175,9 @@ export default class PopupComponent implements OnInit {
     }
   }
 
-  atribuiteDefinitions(
+  assignDefinitions(
     popup: Popup<unknown, unknown>,
-    componentRef: ComponentRef<PopupChildComponent>
+    componentRef: ComponentRef<IPopupComponent.PopupChildComponent>
   ): void {
     if (componentRef.instance.popupDefinitions) {
       const style = componentRef.instance.popupDefinitions.style;
@@ -213,7 +193,9 @@ export default class PopupComponent implements OnInit {
     }
   }
 
-  stilizeHost(componentRef: ComponentRef<PopupChildComponent>): void {
+  stilizeHost(
+    componentRef: ComponentRef<IPopupComponent.PopupChildComponent>
+  ): void {
     const nativeElement = componentRef.location.nativeElement;
     nativeElement.style.display = 'inline-block';
     nativeElement.style.width = '100%';

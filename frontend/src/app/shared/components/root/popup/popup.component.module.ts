@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { DynamicChildLoaderDirective } from 'src/app/shared/components/root/popup/dynamic-child-loader.directive';
-import PopupComponent from 'src/app/shared/components/root/popup/popup.component';
+import DynamicChildLoaderDirectiveModule from '../../../directives/dynamic-child-loader/dynamic-child-loader.directive.module';
+import PopupComponent from './popup.component';
 
 @NgModule({
-  declarations: [PopupComponent, DynamicChildLoaderDirective],
+  declarations: [PopupComponent],
   exports: [PopupComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, DynamicChildLoaderDirectiveModule],
 })
 export default class PopupComponentModule {}

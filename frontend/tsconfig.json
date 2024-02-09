@@ -6,6 +6,24 @@
       "@users/*": [
         "src/app/domains/users/*"
       ],
+      "@controllers/*": [
+        "src/app/shared/controllers/*"
+      ],
+      "@components/root/*": [
+        "src/app/shared/components/root/*"
+      ],
+      "@components/common/*": [
+        "src/app/shared/components/common/*"
+      ],
+      "@validators/*": [
+        "src/app/shared/validators/*"
+      ],
+      "@directives/*": [
+        "src/app/shared/directives/*"
+      ],
+      "@helpers/*": [
+        "src/app/shared/helpers/*"
+      ],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

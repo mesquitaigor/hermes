@@ -6,9 +6,9 @@ import {
   FormControlStatus,
   ValidatorFn,
 } from '@angular/forms';
-import HmsNgControlOutput from 'src/app/shared/components/common/hms-input/resources/interfaces/HmsNgControlOutput';
-import HmsValidator from 'src/app/shared/components/common/hms-input/resources/interfaces/HmsValidator';
-import IHmsInputControll from 'src/app/shared/components/common/hms-input/resources/interfaces/IHmsInputControll';
+import HmsNgControlOutput from '@components/common/hms-input/resources/interfaces/HmsNgControlOutput';
+import HmsValidator from '@components/common/hms-input/resources/interfaces/HmsValidator';
+import IHmsInputControll from '@components/common/hms-input/resources/interfaces/IHmsInputControll';
 
 type recoverFnCb = (props: {
   control: FormControl;

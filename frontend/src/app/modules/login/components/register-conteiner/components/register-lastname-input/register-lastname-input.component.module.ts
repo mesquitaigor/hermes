@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import RegisterLastNameInputComponent from 'src/app/modules/login/components/register-conteiner/components/register-lastname-input/register-lastname-input.component';
-import HsmInputComponentModule from 'src/app/shared/components/common/hms-input/hms-input.component.module';
+import HsmInputComponentModule from '@components/common/hms-input/hms-input.component.module';
+import RegisterLastNameInputComponent from './register-lastname-input.component';
 
 @NgModule({
   declarations: [RegisterLastNameInputComponent],

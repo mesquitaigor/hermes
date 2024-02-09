@@ -6,15 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import PasswordLevelPopupComponentInputs from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentInputs';
-import PasswordLevelPopupComponentOutputs from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentOutputs';
-import PasswordPopupController from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordPopupController';
-import RulesPopupInputData from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/RulesPopupInputData';
-import { progressBarActionType } from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/types/progressBarActionType';
-import PasswordLevelPopup from '../../resources/models/PasswordLevelPopup';
-import PopupChildComponent, {
-  PopupChildDefinitions,
-} from 'src/app/shared/components/root/popup/resources/interfaces/PopupChildComponent';
+import PasswordLevelPopup from './resources/models/PasswordLevelPopup';
+import { IPopupComponent } from '@components/root/popup/IPopupComponent';
+import PasswordLevelPopupComponentInputs from './resources/interfaces/PasswordLevelPopupComponentInputs';
+import PasswordLevelPopupComponentOutputs from './resources/interfaces/PasswordLevelPopupComponentOutputs';
+import PasswordPopupController from './resources/interfaces/PasswordPopupController';
+import { progressBarActionType } from './resources/types/progressBarActionType';
 
 @Component({
   selector: 'password-level-popup-component',
@@ -23,7 +20,7 @@ import PopupChildComponent, {
 })
 export default class PasswordLevelPopupComponent
   implements
-    PopupChildComponent,
+    IPopupComponent.PopupChildComponent,
     OnInit,
     PasswordLevelPopupComponentInputs,
     PasswordLevelPopupComponentOutputs
@@ -36,7 +33,7 @@ export default class PasswordLevelPopupComponent
   addingProgressBar = false;
   completedLevelProgressBar = 0;
 
-  popupDefinitions: PopupChildDefinitions = {
+  popupDefinitions: IPopupComponent.PopupChildDefinitions = {
     show: false,
     style: {
       width: '225px',

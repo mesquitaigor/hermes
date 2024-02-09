@@ -1,6 +1,6 @@
 import { AbstractControl } from '@angular/forms';
-import { passwordErrors } from 'src/app/shared/validators/passwordErrors';
-import { validatorReturn } from 'src/app/shared/validators/passwordValidationReturn';
+import { passwordErrors } from '@validators/passwordErrors';
+import { validatorReturn } from '@validators/passwordValidationReturn';
 export default class PasswordValidaton {
   static passwordConfirmationIsEqual(
     control: AbstractControl

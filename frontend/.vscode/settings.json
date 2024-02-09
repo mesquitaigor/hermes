@@ -12,6 +12,8 @@
   "prettier.useTabs": true,
   "editor.detectIndentation": false,
   "compile-hero.disable-compile-files-on-did-save-code": true,
-  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
   "typescript.tsdk": "node_modules/typescript/lib"
 }

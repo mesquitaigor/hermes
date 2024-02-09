@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
+import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
 import LoginPageService from '../../../../resources/login.page.service';
-import { RegisterFormInputNames } from 'src/app/modules/login/resources/enums/RegisterFormInputNames';
+import { RegisterFormInputNames } from '../../../../resources/enums/RegisterFormInputNames';
 
 @Component({
   selector: 'register-firstname-input',

@@ -1,17 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
+import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
 import LoginPageService from '../../../../resources/login.page.service';
-import { RegisterFormInputNames } from 'src/app/modules/login/resources/enums/RegisterFormInputNames';
-import PasswordValidaton from 'src/app/shared/validators/PasswordValidation';
-import PasswordLevelPopup from 'src/app/modules/login/components/register-conteiner/resources/models/PasswordLevelPopup';
-import PasswordPopupController from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordPopupController';
-import PopupController from 'src/app/shared/controllers/popup/popup.controller';
-import PasswordLevelPopupComponent from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/password-level-popup.component';
-import Popup from 'src/app/shared/controllers/popup/resources/models/Popup';
-import { passwordErrors } from 'src/app/shared/validators/passwordErrors';
-import PopupInput from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentInputs';
+import PasswordValidaton from '@validators/PasswordValidation';
+import { passwordErrors } from '@validators/passwordErrors';
+import Popup from '@controllers/popup/Popup';
+import PopupController from '@controllers/popup/popup.controller';
+import PasswordLevelPopup from '../password-level-popup/resources/models/PasswordLevelPopup';
 import PopupOutput from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentOutputs';
+import PopupInput from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentInputs';
+import { RegisterFormInputNames } from '../../../../resources/enums/RegisterFormInputNames';
+import PasswordLevelPopupComponent from '../password-level-popup/password-level-popup.component';
+import PasswordPopupController from '../password-level-popup/resources/interfaces/PasswordPopupController';
 
 @Component({
   selector: 'register-password-input',
