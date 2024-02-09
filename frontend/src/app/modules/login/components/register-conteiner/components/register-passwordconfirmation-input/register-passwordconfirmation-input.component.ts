@@ -13,6 +13,7 @@ export default class RegisterPasswordConfirmationInputComponent
 {
   lastNameInput = new HmsInputControll({
     initialValue: '',
+    type: 'password',
     placeholder: 'Confirme sua senha',
     validators: [
       {
@@ -26,7 +27,7 @@ export default class RegisterPasswordConfirmationInputComponent
 
   constructor(private loginPageService: LoginPageService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.lastNameInput.recoverNgControl((props) => {
       this.loginPageService.addControl(
         RegisterFormInputNames.PASSWORD_CONFIRMATION,

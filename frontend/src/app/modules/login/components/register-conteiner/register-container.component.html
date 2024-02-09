@@ -15,29 +15,16 @@
       <register-lastname-input></register-lastname-input>
     </div>
     <div class="input-box">
-      <!-- <hms-input (inputFocus)="handleShowPopup()" (inputBlur)="handleHiddenPopup()" [errorsList]="errors.password" (formControllOutput)="handleGetPasswordControl($event)" [formOptions]="passwordFormOptions" placeholder="Digite sua senha"></hms-input> -->
+      <register-password-input></register-password-input>
     </div>
     <div class="input-box">
-      <!-- <hms-input [errorsList]="errors.passwordConfirmation" (formControllOutput)="handleGetPasswordConfirmationControl($event)" [formOptions]="passwordConfirmationFormOptions" placeholder="Confirme sua senha"></hms-input> -->
+      <register-passwordconfirmation-input></register-passwordconfirmation-input>
     </div>
-    <!-- <div class="input-box password" [class.error]="(registerForm.errors?.['differentPasswords'] || registerForm.get('password')?.errors) && (!registerForm.get('password')?.pristine && registerForm.get('password')?.touched)">
-      <div class="input-register-form">
-        <input formControlName="password" placeholder="Digite sua senha" type="Digite uma senha">
-        <img src="./../../../../../assets/icons/alert.svg">
-      </div>
-
-      <p class="error-message">{{ errors.password.messages[errors.password.index] }}</p>
-    </div> -->
-    <!-- <div class="input-box" [class.error]="registerForm.get('passwordConfirmation')?.errors && (!registerForm.get('passwordConfirmation')?.pristine && registerForm.get('passwordConfirmation')?.touched)">
-      <div class="input-register-form">
-        <input formControlName="passwordConfirmation" placeholder="Confirmar senha" type="Confirme sua senha">
-        <img src="./../../../../../assets/icons/alert.svg">
-      </div>
-      <p class="error-message">{{ errors.passwordConfirmation.messages[errors.passwordConfirmation.index] }}</p>
-    </div> -->
     <div class="footer-buttons-content">
       <button class="back" (click)="handleBack()">Voltar</button>
-      <button class="send" (click)="handleSendRegister()">Enviar</button>
+      <button class="send" (click)="handleSendRegister()">
+        {{ !sending ? "Enviar" : "Enviando..." }}
+      </button>
     </div>
   </div>
 </div>

@@ -10,6 +10,7 @@ import {
 import { UserService } from '../user.service';
 import UserDto from './dto/UserDto';
 import { Response } from 'express';
+import LoginDto from './dto/LoginDto';
 
 @Controller('users')
 export class UserController {
@@ -17,6 +18,20 @@ export class UserController {
   @Post()
   register(@Body(ValidationPipe) userDto: UserDto) {
     return this.userService.create(userDto);
+  }
+  @Post()
+  async login(@Body(ValidationPipe) loginDto: LoginDto, @Res() res: Response) {
+    const user = await this.userService.find(loginDto.email);
+    if (user) {
+      return res.json({
+        result: 'User found',
+        user,
+      });
+    } else {
+      return res.json({
+        result: 'User not found',
+      });
+    }
   }
   @Get('validate-email')
   async verifyExistingEmail(

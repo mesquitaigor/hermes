@@ -1,66 +1,87 @@
 import { AbstractControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 import PasswordPopupController from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/PasswordPopupController';
 import RulesPopupInputData from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/interfaces/RulesPopupInputData';
+import { progressBarActionType } from 'src/app/modules/login/components/register-conteiner/components/password-level-popup/resources/types/progressBarActionType';
+import { passwordErrors } from 'src/app/shared/validators/passwordErrors';
 
 export default class PasswordLevelPopup {
   show = false;
   firstLabel = 'Nível da sua senha';
-  private controller?: PasswordPopupController;
-  private passwordInput?: AbstractControl;
-  rules: RulesPopupInputData[] = [
+  rules: Array<RulesPopupInputData> = [
     {
       label: 'Possui letras maiusculas',
       condition: () =>
-        this.pristineInputRuleCondition('shouldHaveUpperLetters'),
+        this.pristineInputRuleCondition(passwordErrors.shouldHaveUpperLetters),
       levelText: 'Tá fraca ainda.',
+      ruleApplied: false,
     },
     {
       label: 'Possui letras mínusculas',
       condition: () =>
-        this.pristineInputRuleCondition('shouldHaveLowerLetters'),
+        this.pristineInputRuleCondition(passwordErrors.shouldHaveLowerLetters),
       levelText: 'Começou a melhorar.',
+      ruleApplied: false,
     },
     {
       label: 'Possui números',
-      condition: () => this.pristineInputRuleCondition('shouldHaveNumbers'),
+      condition: () =>
+        this.pristineInputRuleCondition(passwordErrors.shouldHaveNumbers),
       levelText: 'Tá indo...',
+      ruleApplied: false,
     },
     {
       label: 'Possui carácteres expeciais',
       condition: () =>
-        this.pristineInputRuleCondition('shouldHavespecialCharacters'),
+        this.pristineInputRuleCondition(
+          passwordErrors.shouldHavespecialCharacters
+        ),
       levelText: 'Tá ficando boa em!',
+      ruleApplied: false,
     },
     {
       label: 'Possui mais de 8 dígitos',
-      condition: () => this.pristineInputRuleCondition('minlength'),
+      condition: (): boolean => {
+        return (
+          this.pristineInputRuleCondition('minlength') &&
+          this.pristineInputRuleCondition('required')
+        );
+      },
       levelText: 'Agora sim!',
+      ruleApplied: false,
     },
   ];
 
-  setPopupController(controller: PasswordPopupController) {
+  private controller?: PasswordPopupController;
+  private passwordInput?: AbstractControl;
+
+  onChanges(): Observable<unknown> | undefined {
+    return this.passwordInput?.valueChanges;
+  }
+
+  setPopupController(controller: PasswordPopupController): void {
     this.controller = controller;
   }
-  getPopupController() {
+  getPopupController(): PasswordPopupController | undefined {
     return this.controller;
   }
 
-  setPasswordInput(control: AbstractControl) {
+  setPasswordInput(control: AbstractControl): void {
     this.passwordInput = control;
   }
-  getPasswordInput() {
+  getPasswordInput(): AbstractControl | undefined {
     return this.passwordInput;
   }
 
-  changeProgress(action: any) {
+  changeProgress(action: progressBarActionType): void {
     this.controller?.changeProgressBar(action);
   }
 
-  getProgressBar() {
+  getProgressBar(): number | undefined {
     return this.controller?.getProgressBar();
   }
 
-  pristineInputRuleCondition(errorName: string) {
+  pristineInputRuleCondition(errorName: string): boolean {
     return (
       !this.passwordInput?.errors?.[errorName] && !this.passwordInput?.pristine
     );

@@ -8,4 +8,4 @@ import HsmInputComponentModule from 'src/app/shared/components/common/hms-input/
   exports: [RegisterPasswordConfirmationInputComponent],
   imports: [CommonModule, HsmInputComponentModule],
 })
-export default class RegisterLastNameInputComponentModule {}
+export default class RegisterPasswordConfirmationInputComponentModule {}

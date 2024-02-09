@@ -20,14 +20,16 @@ export default class HsmInputComponent implements AfterViewInit, OnInit {
   @ViewChild('inputRef', { static: false }) inputRef?: ElementRef;
   inputControll?: FormControl;
 
-  ngOnInit() {
+  test: Array<string> = [];
+
+  ngOnInit(): void {
     this.alignErrorStyle();
     if (this.controll) {
       this.inputControll = this.controll.createNgControll();
     }
   }
 
-  alignErrorStyle() {
+  alignErrorStyle(): void {
     if (this.controll && this.controll?.style?.error == undefined) {
       this.controll.style.error = {};
       if (
@@ -40,7 +42,7 @@ export default class HsmInputComponent implements AfterViewInit, OnInit {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     const intervalRef = setInterval(() => {
       if (this.inputRef && this.inputControll) {
         this.inputControll.value;
@@ -53,10 +55,10 @@ export default class HsmInputComponent implements AfterViewInit, OnInit {
     }, 300);
   }
 
-  handleInputFocus() {
+  handleInputFocus(): void {
     this.controll?._focused_();
   }
-  handleInputBlur() {
+  handleInputBlur(): void {
     this.controll?._blured_();
   }
 }

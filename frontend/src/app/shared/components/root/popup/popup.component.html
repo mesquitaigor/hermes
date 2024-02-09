@@ -1,0 +1,14 @@
+<div class="popup-component">
+  <div class="popup__backdrop"></div>
+  <ng-container *ngFor="let item of list">
+    <div
+      class="popup__content"
+      [class.show]="item.show"
+      [ngStyle]="item.contentStyle"
+    >
+      <div class="popup__content-box" [ngStyle]="item.boxStyle">
+        <ng-template appDynamicChildLoader [uuid]="item.uuid"></ng-template>
+      </div>
+    </div>
+  </ng-container>
+</div>

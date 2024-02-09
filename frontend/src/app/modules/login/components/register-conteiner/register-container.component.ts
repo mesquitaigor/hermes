@@ -1,128 +1,71 @@
-import { Component } from '@angular/core';
-import { FormControlStatus } from '@angular/forms';
-import { take } from 'rxjs';
+import { Component, HostBinding } from '@angular/core';
 import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
 import LoginPageService from '../../resources/login.page.service';
 import UserService from '@users/user.service';
+import BasicUser from '@users/model/BasicUser';
+import { FormGroup } from '@angular/forms';
 
-type registerContainerInputs =
-  | 'firstName'
-  | 'lastName'
-  | 'password'
-  | 'passwordConfirmation';
 @Component({
   selector: 'register-container',
   templateUrl: 'register-container.component.html',
   styleUrls: ['register-container.component.scss'],
 })
 export default class RegisterContainerComponent {
+  @HostBinding('class.sending') sending = false;
   constructor(
     private userService: UserService,
     private loginPageService: LoginPageService
   ) {}
 
-  /* ngOnInit() {
-    this.formRegisterListenChanges();
-  } */
-
-  atualizeFormInputsStatus(status: FormControlStatus) {
-    /* if (status == 'VALID') {
-      this.errors.passwordConfirmation.index = -1;
-      this.errors.firstName.index = -1;
-      this.errors.lastName.index = -1;
-    } else if (
-      status == 'INVALID' &&
-      this.loginPageService.registerForm?.touched
-    ) {
-      this.changeInputStatus(RegisterFormInputNames.FIRST_NAME, ['required']);
-      this.changeInputStatus(RegisterFormInputNames.LAST_NAME, ['required']);
-      if (
-        !this.loginPageService.get(RegisterFormInputNames.PASSWORD)?.errors?.[
-          'required'
-        ] &&
-        !this.loginPageService.get(RegisterFormInputNames.PASSWORD)?.errors?.[
-          'required'
-        ] &&
-        this.loginPageService.registerForm?.errors?.['differentPasswords'] &&
-        this.loginPageService.get(RegisterFormInputNames.PASSWORD)?.touched &&
-        this.loginPageService.get(RegisterFormInputNames.PASSWORD_CONFIRMATION)
-          ?.touched
-      ) {
-        this.errors.password.index = 1;
-      } else {
-        this.changeInputStatus(RegisterFormInputNames.LAST_NAME, [
-          'required',
-          '',
-          'minLength',
-          'weakPassword',
-        ]);
-        this.changeInputStatus(RegisterFormInputNames.PASSWORD_CONFIRMATION, [
-          'required',
-        ]);
-      }
-    } */
-  }
-
-  /* formRegisterListenChanges() {
-    this.loginPageService.registerForm?.statusChanges.subscribe((status) => {
-      this.atualizeFormInputsStatus(status);
-    });
-  } */
-
-  /* changeInputStatus(inputName: RegisterFormInputNames, errorCases: string[]) {
-    const controll = this.loginPageService.get(inputName);
-    if (controll?.status == 'VALID') {
-      this.errors[inputName].index = -1;
-    } else if (
-      controll?.status == 'INVALID' &&
-      this.loginPageService.registerForm?.touched
-    ) {
-      let found = false;
-      errorCases.forEach((errorCase, index) => {
-        if (controll.errors?.[errorCase] && !found) {
-          found = true;
-          this.errors[inputName].index = index;
-        }
-      });
-    }
-  } */
-
-  handleSendRegister() {
+  handleSendRegister(): void {
     const registerForm = this.loginPageService.registerForm;
     if (registerForm) {
-      registerForm.statusChanges.pipe(take(1)).subscribe(() => {
-        if (registerForm?.valid) {
-          this.userService
-            .createUser(this.getUserFromForm())
-            .subscribe(() => {});
+      const subscription = registerForm.statusChanges.subscribe(() => {
+        if (registerForm?.valid && !this.sending) {
+          console.log('oi');
+          this.sending = true;
+          const newUser = this.getUserFromForm();
+          if (newUser) {
+            this.userService.createUser(newUser).subscribe(() => {
+              this.sending = false;
+              subscription.unsubscribe();
+            });
+          }
         }
       });
-      registerForm.get(RegisterFormInputNames.FIRST_NAME)?.markAsTouched();
-      registerForm
-        .get(RegisterFormInputNames.FIRST_NAME)
-        ?.updateValueAndValidity();
-      registerForm.get(RegisterFormInputNames.LAST_NAME)?.markAsTouched();
-      registerForm
-        .get(RegisterFormInputNames.LAST_NAME)
-        ?.updateValueAndValidity();
+      this.updateInput(RegisterFormInputNames.FIRST_NAME, registerForm);
+      this.updateInput(RegisterFormInputNames.LAST_NAME, registerForm);
+      this.updateInput(RegisterFormInputNames.PASSWORD, registerForm);
+      this.updateInput(
+        RegisterFormInputNames.PASSWORD_CONFIRMATION,
+        registerForm
+      );
       registerForm.markAllAsTouched();
       registerForm.updateValueAndValidity();
     }
   }
 
-  getUserFromForm() {
-    return {
-      email: this.loginPageService.get(RegisterFormInputNames.EMAIL)?.value,
-      firstName: this.loginPageService.get(RegisterFormInputNames.FIRST_NAME)
-        ?.value,
-      lastName: this.loginPageService.get(RegisterFormInputNames.LAST_NAME)
-        ?.value,
-      password: this.loginPageService.get(RegisterFormInputNames.PASSWORD)
-        ?.value,
-    };
+  updateInput(
+    inputName: RegisterFormInputNames,
+    registerForm: FormGroup
+  ): void {
+    registerForm.get(inputName)?.markAsTouched();
+    registerForm.get(inputName)?.updateValueAndValidity();
   }
 
-  handleBack() {
+  getUserFromForm(): BasicUser | void {
+    const formValues = this.loginPageService.registerForm?.value;
+    if (formValues) {
+      return new BasicUser({
+        email: formValues[RegisterFormInputNames.EMAIL],
+        firstName: formValues[RegisterFormInputNames.FIRST_NAME],
+        lastName: formValues[RegisterFormInputNames.LAST_NAME],
+        password: formValues[RegisterFormInputNames.PASSWORD],
+      });
+    }
+  }
+
+  handleBack(): void {
     this.loginPageService.displayInitialContent();
   }
 }

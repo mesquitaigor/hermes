@@ -26,12 +26,12 @@ export default class RegisterFirstNameInputComponent implements OnInit {
 
   constructor(private loginPageService: LoginPageService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.focusWhenOpenContainer();
     this.recoverNgControl();
   }
 
-  recoverNgControl() {
+  recoverNgControl(): void {
     this.firstNameInput.recoverNgControl((props) => {
       this.loginPageService.addControl(
         RegisterFormInputNames.FIRST_NAME,
@@ -41,7 +41,7 @@ export default class RegisterFirstNameInputComponent implements OnInit {
     });
   }
 
-  focusWhenOpenContainer() {
+  focusWhenOpenContainer(): void {
     this.loginPageService.$events.subscribe((next) => {
       if (next?.to == 'register') {
         this.fistNameInputElement?.nativeElement.focus();

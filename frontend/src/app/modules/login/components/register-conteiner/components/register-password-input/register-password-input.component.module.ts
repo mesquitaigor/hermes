@@ -13,4 +13,4 @@ import HsmInputComponentModule from 'src/app/shared/components/common/hms-input/
     PasswordLevelPopupComponentModule,
   ],
 })
-export default class RegisterLastNameInputComponentModule {}
+export default class RegisterPasswordInputComponentModule {}

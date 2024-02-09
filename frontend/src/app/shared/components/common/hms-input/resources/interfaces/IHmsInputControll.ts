@@ -3,11 +3,12 @@ import HmsValidator from 'src/app/shared/components/common/hms-input/resources/i
 
 export default interface IHmsInputControll {
   initialValue: string;
-  validators?: HmsValidator<ValidatorFn>[];
-  asyncValidators?: HmsValidator<AsyncValidatorFn>[];
+  validators?: Array<HmsValidator<ValidatorFn>>;
+  asyncValidators?: Array<HmsValidator<AsyncValidatorFn>>;
   updateOn?: 'change' | 'blur' | 'submit';
   autofocus?: boolean;
   placeholder?: string;
+  type?: string;
   style?: {
     input?: { ['text-align']?: string };
     error?: { ['text-align']?: string };

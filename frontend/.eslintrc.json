@@ -19,7 +19,11 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "plugins": [
+        "@typescript-eslint"
+      ],
       "rules": {
+        "@typescript-eslint/no-empty-function": "error",
         "@angular-eslint/component-class-suffix": [
           "error",
           {
@@ -43,6 +47,42 @@
             "type": "attribute",
             "prefix": "app",
             "style": "camelCase"
+          }
+        ],
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "generic"
+          }
+        ],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              // Field Decorators
+              "public-decorated-field",
+              "protected-decorated-field",
+              "private-decorated-field",
+              // Static Fields
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              // Fields
+              "public-field",
+              "protected-field",
+              "private-field",
+              // Constructors
+              "public-constructor",
+              "protected-constructor",
+              "private-constructor",
+              "signature",
+              // Methods
+              "public-method",
+              "protected-method",
+              "private-method"
+            ]
           }
         ]
       }

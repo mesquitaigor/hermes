@@ -10,8 +10,8 @@ import Card from '../../domains/card/model/Card';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  cards: Card[] = [];
-  status: Status[] = [];
+  cards: Array<Card> = [];
+  status: Array<Status> = [];
   namingNewTask = false;
   namingNewStatus = false;
 

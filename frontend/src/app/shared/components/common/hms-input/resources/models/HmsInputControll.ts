@@ -22,8 +22,8 @@ interface InputStyleData {
 
 export default class HmsInputControll {
   initialValue = '';
-  validators?: HmsValidator<ValidatorFn>[] = [];
-  asyncValidators?: HmsValidator<AsyncValidatorFn>[] = [];
+  validators?: Array<HmsValidator<ValidatorFn>> = [];
+  asyncValidators?: Array<HmsValidator<AsyncValidatorFn>> = [];
   updateOn: 'change' | 'blur' | 'submit' = 'change';
   autofocus = false;
   placeholder = '';
@@ -31,6 +31,7 @@ export default class HmsInputControll {
 
   errorMessage = '';
   errorMessagesList = [];
+  type = 'text';
 
   private recoverNgControllFn?: recoverFnCb;
   private ngControl?: FormControl;
@@ -45,6 +46,7 @@ export default class HmsInputControll {
     this.updateOn = props.updateOn || 'change';
     this.autofocus = props.autofocus || false;
     this.placeholder = props.placeholder || '';
+    this.type = props.type || 'text';
     this.style = props.style || {
       input: {
         ['text-align']: 'left',
@@ -52,7 +54,7 @@ export default class HmsInputControll {
     };
   }
 
-  defineInputProps(props: HmsNgControlOutput) {
+  defineInputProps(props: HmsNgControlOutput): void {
     this.ngControl = props.control;
     this.inputRef = props.elementRef;
     this.ngControl?.valueChanges.subscribe((status) => {
@@ -67,31 +69,31 @@ export default class HmsInputControll {
     this.emitNgControll();
   }
 
-  getNgControl() {
+  getNgControl(): FormControl | undefined {
     return this.ngControl;
   }
 
-  getValidators() {
+  getValidators(): Array<ValidatorFn> {
     return this.validators?.map((validator) => validator.fn) || [];
   }
 
-  getAsyncValidators() {
+  getAsyncValidators(): Array<AsyncValidatorFn> {
     return this.asyncValidators?.map((validator) => validator.fn) || [];
   }
 
-  recoverNgControl(cb: (props: HmsNgControlOutput) => void) {
+  recoverNgControl(cb: (props: HmsNgControlOutput) => void): void {
     this.recoverNgControllFn = cb;
   }
 
-  onBlur(cb: () => void) {
+  onBlur(cb: () => void): void {
     this._onBlur_ = cb;
   }
 
-  onFocus(cb: () => void) {
+  onFocus(cb: () => void): void {
     this._onFocus_ = cb;
   }
 
-  createNgControll() {
+  createNgControll(): FormControl {
     const formOptions: FormControlOptions = {
       validators: this.getValidators(),
       asyncValidators: this.getAsyncValidators(),
@@ -101,7 +103,15 @@ export default class HmsInputControll {
     return new FormControl(this.initialValue || '', formOptions);
   }
 
-  private atualizeErrorMessage(status: FormControlStatus) {
+  _focused_(): void {
+    if (this._onFocus_) this._onFocus_();
+  }
+
+  _blured_(): void {
+    if (this._onBlur_) this._onBlur_();
+  }
+
+  private atualizeErrorMessage(status: FormControlStatus): void {
     if (this.ngControl) {
       this.errorMessage = '';
       if (status == 'INVALID' && this.ngControl.touched) {
@@ -119,9 +129,9 @@ export default class HmsInputControll {
   }
 
   private verifyValidatorsError(
-    validatorsList: HmsValidator<ValidatorFn | AsyncValidatorFn>[] = [],
-    errorsKeys: string[]
-  ) {
+    validatorsList: Array<HmsValidator<ValidatorFn | AsyncValidatorFn>> = [],
+    errorsKeys: Array<string>
+  ): void {
     Object.keys(this.ngControl?.errors as Object).forEach(
       (errorKey: string) => {
         if (errorsKeys.includes(errorKey) && this.errorMessage == '') {
@@ -133,7 +143,7 @@ export default class HmsInputControll {
     );
   }
 
-  private emitNgControll() {
+  private emitNgControll(): void {
     if (this.ngControl && this.inputRef && this.recoverNgControllFn) {
       this.recoverNgControllFn({
         control: this.ngControl,
@@ -145,13 +155,5 @@ export default class HmsInputControll {
         }, 300);
       }
     }
-  }
-
-  _focused_() {
-    if (this._onFocus_) this._onFocus_();
-  }
-
-  _blured_() {
-    if (this._onBlur_) this._onBlur_();
   }
 }

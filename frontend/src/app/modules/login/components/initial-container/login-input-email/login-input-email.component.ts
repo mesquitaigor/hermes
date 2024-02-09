@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControlStatus, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import LoginPageService from '../../../resources/login.page.service';
 import { RegisterFormInputNames } from '../../../resources/enums/RegisterFormInputNames';
 import EmailValidator from '../../../../../shared/validators/EmailValidator';
 import HmsInputControll from 'src/app/shared/components/common/hms-input/resources/models/HmsInputControll';
 import HmsNgControlOutput from 'src/app/shared/components/common/hms-input/resources/interfaces/HmsNgControlOutput';
+import UserService from '@users/user.service';
+import { emailErrors } from 'src/app/shared/validators/emailErrors';
 
 @Component({
   selector: 'login-input-email',
@@ -24,14 +25,14 @@ export default class LoginInputEmailComponent implements OnInit {
       },
       {
         fn: EmailValidator.format,
-        key: 'invalidFormat',
+        key: emailErrors.invalidFormat,
         message: 'Email inválido.',
       },
     ],
     asyncValidators: [
       {
-        fn: EmailValidator.existing(this.httpClient),
-        key: 'existing',
+        fn: EmailValidator.existing(this.userService),
+        key: emailErrors.existing,
         message: 'Email já possui cadastrado.',
       },
     ],
@@ -46,17 +47,17 @@ export default class LoginInputEmailComponent implements OnInit {
   });
 
   constructor(
-    private httpClient: HttpClient,
+    private userService: UserService,
     private loginPageService: LoginPageService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.emailFormControll.recoverNgControl((props) => {
       this.recoverNgEmailControl(props);
     });
   }
 
-  recoverNgEmailControl(hmsInputNgControl: HmsNgControlOutput) {
+  recoverNgEmailControl(hmsInputNgControl: HmsNgControlOutput): void {
     if (this.loginPageService.registerForm) {
       this.loginPageService.addControl(
         RegisterFormInputNames.EMAIL,
@@ -66,14 +67,14 @@ export default class LoginInputEmailComponent implements OnInit {
     }
   }
 
-  listenEmailStatusChanges() {
+  listenEmailStatusChanges(): void {
     const emailControll = this.emailFormControll.getNgControl();
     emailControll?.statusChanges.subscribe((status) => {
       this.atualizeEmailErrorMessage(status);
     });
   }
 
-  atualizeEmailErrorMessage(status: FormControlStatus) {
+  atualizeEmailErrorMessage(status: FormControlStatus): void {
     this.validatingEmail.emit(status === 'PENDING');
   }
 }

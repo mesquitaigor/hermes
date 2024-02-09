@@ -10,7 +10,7 @@ import Card from '../card/model/Card';
 export default class StatusService {
   constructor(private httpClient: HttpClient) {}
 
-  getAll(): Observable<Status[]> {
+  getAll(): Observable<Array<Status>> {
     return this.httpClient.get('http://localhost:3000/status').pipe(
       catchError(() => {
         return of('oi');

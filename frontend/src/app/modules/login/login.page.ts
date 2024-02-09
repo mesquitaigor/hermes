@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
 
   constructor(private loginPageService: LoginPageService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loginPageService.setRegisterForm(this.registerForm);
     this.loginPageService.$events.subscribe((next) => {
       if (next?.to == 'register') {
