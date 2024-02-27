@@ -8,7 +8,10 @@
     <form [formGroup]="registerForm">
       <div>
         <div class="initial-container inside-login-block">
-          <initial-container></initial-container>
+          <initial-container
+            [contFormGroup]="registerForm"
+            (containerAction)="handleInitialContainerAction($event)"
+          ></initial-container>
         </div>
         <div class="register-container inside-login-block">
           <register-container></register-container>

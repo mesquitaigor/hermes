@@ -1,9 +1,9 @@
 import { EventEmitter } from '@angular/core';
-import Popup from '@controllers/popup/Popup';
+import PopupModel from './PopupModel';
 
 export namespace IPopupController {
   export interface PopupBehaviorNext {
-    popup?: Popup<unknown, unknown>;
+    popup?: PopupModel<unknown, unknown>;
     action: 'present' | 'fix' | 'dismiss';
   }
   export type popupComponentOutputs<O> = {

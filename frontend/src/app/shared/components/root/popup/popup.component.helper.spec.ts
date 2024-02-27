@@ -1,13 +1,15 @@
 import { ElementRef } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import PopupComponent from '@components/root/popup/popup.component';
-import Popup from '@controllers/popup/Popup';
-import PopupController from '@controllers/popup/resources/popup.controller';
+import PopupModel from '@controllers/popup/resources/PopupModel';
+import PopupController from '@controllers/popup/popup.controller';
 import TestComponentGenericComponent from '../../../test/generic/test-component-generic.component';
 
 export default class PopupComponentHelperSpec {
-  buildPopup(mockPopupController: PopupController): Popup<unknown, unknown> {
-    const popup = new Popup(mockPopupController.popupStatus$!);
+  buildPopup(
+    mockPopupController: PopupController
+  ): PopupModel<unknown, unknown> {
+    const popup = new PopupModel(mockPopupController.popupStatus$!);
     popup.setElement(TestComponentGenericComponent);
     popup.setParent(new ElementRef(document.createElement('div')));
     return popup;
@@ -15,8 +17,8 @@ export default class PopupComponentHelperSpec {
   initComponentAndOpenPopup(
     mockPopupController: PopupController,
     component: PopupComponent
-  ): Popup<unknown, unknown> {
-    const popup = new Popup(mockPopupController.popupStatus$);
+  ): PopupModel<unknown, unknown> {
+    const popup = new PopupModel(mockPopupController.popupStatus$);
     component.ngOnInit();
     popup.present();
     return popup;

@@ -2,7 +2,7 @@ import { Injectable, Type } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IPopupComponent } from '@components/root/popup/IPopupComponent';
 import { IPopupController } from '@controllers/popup/resources/IPopupController';
-import Popup from '@controllers/popup/Popup';
+import PopupModel from '@controllers/popup/resources/PopupModel';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +13,8 @@ export default class PopupController {
   >(undefined);
   create<I, O>(
     element: Type<IPopupComponent.PopupChildComponent>
-  ): Popup<I, O> {
-    const popup = new Popup<I, O>(this.popupStatus$);
+  ): PopupModel<I, O> {
+    const popup = new PopupModel<I, O>(this.popupStatus$);
     popup.setElement(element);
     return popup;
   }

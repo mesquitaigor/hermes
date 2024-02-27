@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { FormControl, FormControlStatus } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
 import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
-import LoginPageService from '../../resources/login.page.service';
 import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
 import UserService from '@users/user.service';
 import EmailValidator from '@validators/email-validator/EmailValidator';
+import OutInitialContainerAction from './resources/OutInitialContainerAction';
 
 @Component({
   selector: 'initial-container',
@@ -12,20 +12,18 @@ import EmailValidator from '@validators/email-validator/EmailValidator';
   styleUrls: ['initial-container.component.scss'],
 })
 export default class InitialContainerComponent {
+  @Input() contFormGroup?: FormGroup;
+  @Output() containerAction = new EventEmitter<OutInitialContainerAction>();
   validatingEmail = false;
   emailHmsControl?: HmsInputControll;
 
   readonly asyncValidatorExistingLoginKey = 'existing';
 
-  constructor(
-    private loginPageService: LoginPageService,
-    private userService: UserService
-  ) {}
+  constructor(private userService: UserService) {}
 
   handleRecoveryEmailInput(hmsControl: HmsInputControll): void {
-    const loginPageFormGroup = this.loginPageService.registerForm;
-    if (loginPageFormGroup) {
-      loginPageFormGroup.addControl(
+    if (this.contFormGroup) {
+      this.contFormGroup.addControl(
         RegisterFormInputNames.EMAIL,
         hmsControl.getNgControl()
       );
@@ -45,7 +43,7 @@ export default class InitialContainerComponent {
     const emailNgControll = this.emailHmsControl?.getNgControl();
     if (emailNgControll) {
       this.validateAndPass(emailNgControll, () =>
-        this.loginPageService.displayLoginContent()
+        this.containerAction.emit({ action: 'display-login' })
       );
     }
   }
@@ -59,7 +57,7 @@ export default class InitialContainerComponent {
     const emailNgControll = this.emailHmsControl?.getNgControl();
     if (emailNgControll) {
       this.validateAndPass(emailNgControll, () =>
-        this.loginPageService.displayRegisterContent()
+        this.containerAction.emit({ action: 'display-register' })
       );
     }
   }

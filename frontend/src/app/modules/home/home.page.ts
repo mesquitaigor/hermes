@@ -23,11 +23,11 @@ export class HomePage implements OnInit {
     private statusService: StatusService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadStatus();
   }
 
-  loadStatus() {
+  loadStatus(): void {
     this.statusService.getAll().subscribe({
       next: (res) => {
         this.status = res;
@@ -35,9 +35,9 @@ export class HomePage implements OnInit {
     });
   }
 
-  handleClickNewTaskButton() {
+  handleClickNewTaskButton(): void {
     this.namingNewTask = true;
-    const newTaskEventCbReference = (event: KeyboardEvent) => {
+    const newTaskEventCbReference = (event: KeyboardEvent): void => {
       if (event.key == 'Enter') {
         this.namingNewTask = false;
         if (this.creatingNewTaskName.length > 0) {
@@ -51,9 +51,9 @@ export class HomePage implements OnInit {
     window.addEventListener('keydown', newTaskEventCbReference);
   }
 
-  handleClickNewStatusButton() {
+  handleClickNewStatusButton(): void {
     this.namingNewStatus = true;
-    const newStatusEventCbReference = (event: KeyboardEvent) => {
+    const newStatusEventCbReference = (event: KeyboardEvent): void => {
       if (event.key == 'Enter') {
         this.namingNewStatus = false;
         this.createStatus(this.creatingNewStatusName);
@@ -67,7 +67,7 @@ export class HomePage implements OnInit {
     window.addEventListener('keydown', newStatusEventCbReference);
   }
 
-  createTask(name: string) {
+  createTask(name: string): void {
     this.taskService.create(name).subscribe({
       next: () => {
         //this.loadCards();
@@ -75,7 +75,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  createStatus(name: string) {
+  createStatus(name: string): void {
     this.statusService.create(name).subscribe({
       next: () => {
         this.loadStatus();

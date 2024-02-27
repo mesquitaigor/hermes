@@ -1,5 +1,5 @@
 import UuidGenerator from '../../../helpers/UuidGenerator';
-import { Toast } from './IToastController';
+import { Toast } from './Toast';
 
 export default class ToastModel {
   show = false;

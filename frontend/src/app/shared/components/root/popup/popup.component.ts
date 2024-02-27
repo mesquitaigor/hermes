@@ -8,8 +8,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import PopupController from '@controllers/popup/resources/popup.controller';
-import Popup from '@controllers/popup/Popup';
+import PopupController from '@controllers/popup/popup.controller';
+import PopupModel from '@controllers/popup/resources/PopupModel';
 import { DynamicChildLoaderDirective } from '@directives/dynamic-child-loader/dynamic-child-loader.directive';
 import { IPopupComponent } from './IPopupComponent';
 
@@ -46,7 +46,7 @@ export default class PopupComponent implements OnInit {
   }
 
   verifyIfExistingAndCreate(
-    popup: Popup<unknown, unknown>
+    popup: PopupModel<unknown, unknown>
   ): IPopupComponent.PopupRenderItem | undefined {
     const renderedUuids = this.list.map((item) => item.uuid);
     if (renderedUuids.length == 0 || !renderedUuids.includes(popup.getUuid())) {
@@ -81,13 +81,13 @@ export default class PopupComponent implements OnInit {
     });
   }
 
-  createPopup(popup: Popup<unknown, unknown>): void {
+  createPopup(popup: PopupModel<unknown, unknown>): void {
     this.defineAnchor(popup);
     this.definePopupPosition(popup);
     this.loadDynamicComponent(popup);
   }
 
-  definePopupPosition(popup: Popup<unknown, unknown>): void {
+  definePopupPosition(popup: PopupModel<unknown, unknown>): void {
     const popupPosition = popup.getPosition();
     const renderItem = this.getRenderItem(popup.getUuid());
     if (renderItem) {
@@ -98,7 +98,7 @@ export default class PopupComponent implements OnInit {
     }
   }
 
-  defineAnchor(popup: Popup<unknown, unknown>): void {
+  defineAnchor(popup: PopupModel<unknown, unknown>): void {
     if (popup.parent) {
       const renderItem = this.getRenderItem(popup.getUuid());
       const parentRect = popup.parent.nativeElement.getBoundingClientRect();
@@ -111,7 +111,7 @@ export default class PopupComponent implements OnInit {
     }
   }
 
-  loadDynamicComponent(popup: Popup<unknown, unknown>): void {
+  loadDynamicComponent(popup: PopupModel<unknown, unknown>): void {
     const element: Type<IPopupComponent.PopupChildComponent> | undefined =
       popup.element;
     this.changeDetectorRef.detectChanges();
@@ -133,7 +133,7 @@ export default class PopupComponent implements OnInit {
   }
 
   setChildComponentInputs(
-    popup: Popup<unknown, unknown>,
+    popup: PopupModel<unknown, unknown>,
     componentRef: ComponentRef<unknown>
   ): void {
     if (popup.childInputList) {
@@ -153,7 +153,7 @@ export default class PopupComponent implements OnInit {
   }
 
   listenOutputs(
-    popup: Popup<unknown, unknown>,
+    popup: PopupModel<unknown, unknown>,
     componentRef: ComponentRef<unknown>
   ): void {
     if (popup.childOutputList) {
@@ -176,7 +176,7 @@ export default class PopupComponent implements OnInit {
   }
 
   assignDefinitions(
-    popup: Popup<unknown, unknown>,
+    popup: PopupModel<unknown, unknown>,
     componentRef: ComponentRef<IPopupComponent.PopupChildComponent>
   ): void {
     if (componentRef.instance.popupDefinitions) {

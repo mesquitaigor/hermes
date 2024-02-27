@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Toast } from './resources/IToastController';
+import { Toast } from './resources/Toast';
 import ToastModel from './resources/ToastModel';
 
 @Injectable({

@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import PopupComponent from '@components/root/popup/popup.component';
 import { IPopupController } from '@controllers/popup/resources/IPopupController';
-import Popup from '@controllers/popup/Popup';
-import PopupController from '@controllers/popup/resources/popup.controller';
+import PopupModel from '@controllers/popup/resources/PopupModel';
+import PopupController from '@controllers/popup/popup.controller';
 import PopupComponentModule from './popup.component.module';
 import TestComponentGenericComponent from '../../../test/generic/test-component-generic.component';
 import PopupComponentHelperSpec from './popup.component.helper.spec';
@@ -95,7 +95,7 @@ describe(PopupComponent.name, () => {
   });
 
   it(`should show popup if it will be present`, () => {
-    const popup = new Popup(mockPopupController.popupStatus$);
+    const popup = new PopupModel(mockPopupController.popupStatus$);
     component.ngOnInit();
     popup.fix();
     const renderItem = component.list[0];
@@ -123,7 +123,7 @@ describe(PopupComponent.name, () => {
 
   describe(PopupComponent.prototype.verifyIfExistingAndCreate.name, () => {
     it(`should return the created popup`, () => {
-      const popup = new Popup(mockPopupController.popupStatus$);
+      const popup = new PopupModel(mockPopupController.popupStatus$);
       const createdRenderItem = component.verifyIfExistingAndCreate(popup);
       expect(createdRenderItem?.uuid).toEqual(popup.getUuid());
     });
@@ -131,7 +131,7 @@ describe(PopupComponent.name, () => {
 
   describe(PopupComponent.prototype.getRenderItem.name, () => {
     it(`should return target popup`, () => {
-      const popup = new Popup(mockPopupController.popupStatus$);
+      const popup = new PopupModel(mockPopupController.popupStatus$);
       popup.present();
       const createdRenderItem = component.getRenderItem(popup.getUuid());
       expect(createdRenderItem?.uuid).toEqual(popup.getUuid());
@@ -140,7 +140,7 @@ describe(PopupComponent.name, () => {
 
   describe(PopupComponent.prototype.createRenderPopupItem.name, () => {
     it(`should add a new item to renderize when is called`, () => {
-      const popup = new Popup(mockPopupController.popupStatus$);
+      const popup = new PopupModel(mockPopupController.popupStatus$);
       component.createRenderPopupItem(popup.getUuid());
       expect(component.list.length).toEqual(1);
     });
@@ -148,19 +148,19 @@ describe(PopupComponent.name, () => {
 
   describe(PopupComponent.prototype.createPopup.name, () => {
     it(`should define popup anchor when need to create a popup`, () => {
-      const popup = new Popup(mockPopupController.popupStatus$);
+      const popup = new PopupModel(mockPopupController.popupStatus$);
       const spyMethod = spyOn(component, 'defineAnchor');
       component.createPopup(popup);
       expect(spyMethod).toHaveBeenCalled();
     });
     it(`should define popup position when need to create a popup`, () => {
-      const popup = new Popup(mockPopupController.popupStatus$);
+      const popup = new PopupModel(mockPopupController.popupStatus$);
       const spyMethod = spyOn(component, 'definePopupPosition');
       component.createPopup(popup);
       expect(spyMethod).toHaveBeenCalled();
     });
     it(`should render child element when need to create a popup`, () => {
-      const popup = new Popup(mockPopupController.popupStatus$);
+      const popup = new PopupModel(mockPopupController.popupStatus$);
       const spyMethod = spyOn(component, 'loadDynamicComponent');
       component.createPopup(popup);
       expect(spyMethod).toHaveBeenCalled();
@@ -169,7 +169,7 @@ describe(PopupComponent.name, () => {
 
   describe(PopupComponent.prototype.defineAnchor.name, () => {
     it(`should need a parent element to define anchor`, () => {
-      const popup: Popup<unknown, unknown> = new Popup(
+      const popup: PopupModel<unknown, unknown> = new PopupModel(
         mockPopupController.popupStatus$
       );
       component.createRenderPopupItem(popup.getUuid());
@@ -182,7 +182,7 @@ describe(PopupComponent.name, () => {
       });
     });
     it(`should define anchor equal parant's rect values`, () => {
-      const popup: Popup<unknown, unknown> = new Popup(
+      const popup: PopupModel<unknown, unknown> = new PopupModel(
         mockPopupController.popupStatus$
       );
       popup.setParent(new ElementRef(document.createElement('div')));
@@ -199,7 +199,7 @@ describe(PopupComponent.name, () => {
     });
   });
   describe(PopupComponent.prototype.loadDynamicComponent.name, () => {
-    let popup: Popup<unknown, unknown>;
+    let popup: PopupModel<unknown, unknown>;
     beforeEach(() => {
       popup = componentSpecHelper.buildPopup(mockPopupController);
     });

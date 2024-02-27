@@ -11,10 +11,10 @@ import { Validators } from '@angular/forms';
 import PasswordValidator from '@validators/password-validator/PasswordValidatior';
 import { PasswordErrors } from '@validators/password-validator/PasswordErrors';
 import PasswordLevelPopup from './components/password-level-popup/resources/models/PasswordLevelPopup';
-import Popup from '../../../controllers/popup/Popup';
+import PopupModel from '@controllers/popup/resources/PopupModel';
 import PopupInput from '@molecules/password-input/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentInputs';
 import PopupOutput from '@molecules/password-input/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentOutputs';
-import PopupController from '@controllers/popup/resources/popup.controller';
+import PopupController from '@controllers/popup/popup.controller';
 import PasswordLevelPopupComponent from './components/password-level-popup/password-level-popup.component';
 import PasswordPopupController from './components/password-level-popup/resources/interfaces/PasswordPopupController';
 
@@ -65,7 +65,7 @@ export default class PasswordInputComponent implements OnInit {
   });
 
   controller = new PasswordLevelPopup();
-  popup?: Popup<PopupInput, PopupOutput>;
+  popup?: PopupModel<PopupInput, PopupOutput>;
   inpurPasswordElement?: ElementRef;
 
   constructor(private popupController: PopupController) {}
