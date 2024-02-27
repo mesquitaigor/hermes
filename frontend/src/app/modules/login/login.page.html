@@ -6,11 +6,16 @@
   </div>
   <div class="login-form-content">
     <form [formGroup]="registerForm">
-      <div class="initial-container">
-        <initial-container></initial-container>
-      </div>
-      <div class="register-container">
-        <register-container></register-container>
+      <div>
+        <div class="initial-container inside-login-block">
+          <initial-container></initial-container>
+        </div>
+        <div class="register-container inside-login-block">
+          <register-container></register-container>
+        </div>
+        <div class="login-container inside-login-block">
+          <login-container></login-container>
+        </div>
       </div>
     </form>
   </div>

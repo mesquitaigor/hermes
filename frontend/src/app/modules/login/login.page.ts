@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import PasswordValidaton from '../../shared/validators/PasswordValidation';
+import PasswordValidator from '../../shared/validators/password-validator/PasswordValidatior';
 import { loginContentNames } from './resources/types/loginContentNames';
 import LoginPageService from './resources/login.page.service';
 
@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
     {},
     {
       updateOn: 'submit',
-      validators: [PasswordValidaton.passwordConfirmationIsEqual],
+      validators: [PasswordValidator.passwordConfirmationIsEqual],
     }
   );
 
@@ -25,11 +25,8 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {
     this.loginPageService.setRegisterForm(this.registerForm);
     this.loginPageService.$events.subscribe((next) => {
-      if (next?.to == 'register') {
-        this.content = 'register';
-      }
-      if (next?.to == 'initial') {
-        this.content = 'initial';
+      if (next) {
+        this.content = next?.to;
       }
     });
   }

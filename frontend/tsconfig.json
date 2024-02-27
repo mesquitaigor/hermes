@@ -9,6 +9,9 @@
       "@controllers/*": [
         "src/app/shared/controllers/*"
       ],
+      "@molecules/*": [
+        "src/app/shared/components/molecules/*"
+      ],
       "@components/root/*": [
         "src/app/shared/components/root/*"
       ],

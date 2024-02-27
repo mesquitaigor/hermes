@@ -1,1 +1,1 @@
-export type loginContentNames = 'initial' | 'register'
+export type loginContentNames = 'initial' | 'register' | 'login';

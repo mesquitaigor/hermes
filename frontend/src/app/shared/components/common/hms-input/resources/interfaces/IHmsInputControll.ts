@@ -8,6 +8,13 @@ export default interface IHmsInputControll {
   updateOn?: 'change' | 'blur' | 'submit';
   autofocus?: boolean;
   placeholder?: string;
+  autocapitalize?:
+    | 'none'
+    | 'off'
+    | 'sentences'
+    | 'characters'
+    | 'words'
+    | 'off';
   type?: string;
   style?: {
     input?: { ['text-align']?: string };

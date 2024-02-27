@@ -7,12 +7,12 @@
       height: 335px;
       form {
         .initial-container{
-          left: 0;
           opacity: 1;
+          transition: .8s ease-in-out;
         }
-        .register-container{
-          left: 100%;
+        .register-container, .login-container{
           opacity: 0;
+          pointer-events: none;
         }
       }
     }
@@ -29,12 +29,42 @@
       top: 60px;
       form {
         .initial-container{
-          left: -100%;
           opacity: 0;
+          pointer-events: none;
         }
         .register-container{
-          left: 0;
           opacity: 1;
+          transition: .8s ease-in-out;
+        }
+        .login-container{
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+  &.login .login-page{
+    .illustration-content{
+      bottom: -220px;
+      img{
+        transform: scale(1.1);
+      }
+    }
+    .login-form-content{
+      height: 520px;
+      top: 60px;
+      form {
+        .initial-container{
+          opacity: 0;
+          pointer-events: none;
+        }
+        .login-container{
+          opacity: 1;
+          transition: .8s ease-in-out;
+        }
+        .register-container{
+          opacity: 0;
+          pointer-events: none;
         }
       }
     }
@@ -53,7 +83,7 @@
       justify-content: center;
       position: absolute;
       transition: .8s ease-in-out;
-      animation: puff-in-center 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+      /* animation: puff-in-center 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both; */
       img{
         transition: .8s ease-in-out;
       }
@@ -62,37 +92,28 @@
     .login-form-content{
       flex: 1;
       transition: .8s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       background: white;
       border-radius: 10px;
       width: 400px;
-      box-shadow: 3px 3px 10px 2px rgb(69 68 73 / 10%);
+      box-shadow: 3px 3px 10px 2px rgba(69, 68, 73, 10%);
       position: absolute;
       top: 80px;
-      animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
       overflow: hidden;
+
+      /* animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both; */
       >form{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        .initial-container, .register-container{
+        .inside-login-block{
           position: absolute;
           top: 0;
           padding: 30px;
           width: 100%;
-          transition: .8s ease-in-out;
           height: 100%;
         }
       }
     }
   }
-
-
 }
+
 
 @keyframes slide-in-blurred-bottom {
   0% {

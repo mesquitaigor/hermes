@@ -22,12 +22,19 @@ interface InputStyleData {
 
 export default class HmsInputControll {
   initialValue = '';
-  validators?: Array<HmsValidator<ValidatorFn>> = [];
-  asyncValidators?: Array<HmsValidator<AsyncValidatorFn>> = [];
+  validators: Array<HmsValidator<ValidatorFn>> = [];
+  asyncValidators: Array<HmsValidator<AsyncValidatorFn>> = [];
   updateOn: 'change' | 'blur' | 'submit' = 'change';
   autofocus = false;
   placeholder = '';
   style: InputStyleData;
+  autocapitalize:
+    | 'none'
+    | 'off'
+    | 'sentences'
+    | 'characters'
+    | 'words'
+    | 'off' = 'none';
 
   errorMessage = '';
   errorMessagesList = [];
@@ -41,12 +48,13 @@ export default class HmsInputControll {
 
   constructor(props: IHmsInputControll) {
     this.initialValue = props.initialValue;
-    this.validators = props.validators;
-    this.asyncValidators = props.asyncValidators;
+    this.validators = props.validators || [];
+    this.asyncValidators = props.asyncValidators || [];
     this.updateOn = props.updateOn || 'change';
     this.autofocus = props.autofocus || false;
     this.placeholder = props.placeholder || '';
     this.type = props.type || 'text';
+    this.autocapitalize = props.autocapitalize || 'none';
     this.style = props.style || {
       input: {
         ['text-align']: 'left',
@@ -54,9 +62,22 @@ export default class HmsInputControll {
     };
   }
 
+  focus(): void {
+    this.inputRef?.nativeElement.focus();
+  }
+
+  setValue(value?: string | number): void {
+    this.ngControl?.setValue(value);
+  }
+
   defineInputProps(props: HmsNgControlOutput): void {
-    this.ngControl = props.control;
     this.inputRef = props.elementRef;
+    this.defineNgControl(props.control);
+    this.emitNgControll();
+  }
+
+  defineNgControl(control: FormControl): void {
+    this.ngControl = control;
     this.ngControl?.valueChanges.subscribe((status) => {
       this.atualizeErrorMessage(status);
     });
@@ -66,7 +87,6 @@ export default class HmsInputControll {
     this.ngControl?.valueChanges.subscribe(() => {
       this.atualizeErrorMessage(this.ngControl?.status as FormControlStatus);
     });
-    this.emitNgControll();
   }
 
   getNgControl(): FormControl | undefined {
@@ -91,6 +111,19 @@ export default class HmsInputControll {
 
   onFocus(cb: () => void): void {
     this._onFocus_ = cb;
+  }
+
+  addAsyncValidator(hmsAsyncValidator: HmsValidator<AsyncValidatorFn>): void {
+    this.ngControl?.addAsyncValidators(hmsAsyncValidator.fn);
+    this.asyncValidators.push(hmsAsyncValidator);
+  }
+
+  removeAsyncValidator(key: string): void {
+    const index = this.asyncValidators.findIndex((v) => v.key === key);
+    if (index !== -1) {
+      this.ngControl?.removeAsyncValidators(this.asyncValidators[index].fn);
+      this.asyncValidators.splice(index, 1);
+    }
   }
 
   createNgControll(): FormControl {
@@ -133,10 +166,10 @@ export default class HmsInputControll {
     errorsKeys: Array<string>
   ): void {
     Object.keys(this.ngControl?.errors as Object).forEach(
-      (errorKey: string) => {
-        if (errorsKeys.includes(errorKey) && this.errorMessage == '') {
+      (ngErrorKey: string) => {
+        if (errorsKeys.includes(ngErrorKey) && this.errorMessage == '') {
           this.errorMessage =
-            validatorsList.find((validator) => validator.key === errorKey)
+            validatorsList.find((validator) => validator.key === ngErrorKey)
               ?.message || '';
         }
       }

@@ -45,7 +45,6 @@ export default class HsmInputComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     const intervalRef = setInterval(() => {
       if (this.inputRef && this.inputControll) {
-        this.inputControll.value;
         this.controll?.defineInputProps({
           control: this.inputControll,
           elementRef: this.inputRef,

@@ -1,24 +1,27 @@
 <div class="register-container-component">
-  <div class="title-content">
-    <img
-      (click)="handleBack()"
-      src="./../../../../../assets/icons/arrow-to-left.svg"
-    />
-    <h2>Criar conta</h2>
+  <div class="container-logo">
+    <content-title (back)="handleBack()">Criar conta</content-title>
   </div>
-  <hr />
   <div class="register-form-content">
     <div class="input-box">
-      <register-firstname-input></register-firstname-input>
+      <firstname-input
+        (inputReady)="handleRecoverFirstnameInput($event)"
+      ></firstname-input>
     </div>
     <div class="input-box">
-      <register-lastname-input></register-lastname-input>
+      <lastname-input
+        (inputReady)="handleRecoverLastnameInput($event)"
+      ></lastname-input>
     </div>
     <div class="input-box">
-      <register-password-input></register-password-input>
+      <password-input
+        (inputReady)="handleRecoverPasswordInput($event)"
+      ></password-input>
     </div>
     <div class="input-box">
-      <register-passwordconfirmation-input></register-passwordconfirmation-input>
+      <passwordconfirmation-input
+        (inputReady)="handleRecoverPasswordConfirmationInput($event)"
+      ></passwordconfirmation-input>
     </div>
     <div class="footer-buttons-content">
       <button class="back" (click)="handleBack()">Voltar</button>

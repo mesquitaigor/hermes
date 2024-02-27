@@ -1,12 +1,21 @@
 <div class="initial-container-component">
   <div class="logo">
-    <img src="./../../../../../assets/illustrations/logo-dark2.svg">
+    <img src="./../../../../../assets/illustrations/logo-dark2.svg" />
   </div>
   <div class="inputs-content">
-    <login-input-email (validatingEmail)="handleValidatingEmail($event)"></login-input-email>
-    <button class="register" (click)="handleCreateAccount()" [class.verifying-email]="validatingEmail">
-      {{validatingEmail ? 'Verificando email...' : 'Criar conta'}}
+    <email-input
+      (inputReady)="handleRecoveryEmailInput($event)"
+      (validating)="handleValidatingEmail($event)"
+    ></email-input>
+    <button
+      class="register"
+      (click)="handleCreateAccount()"
+      [class.verifying-email]="validatingEmail"
+    >
+      {{ validatingEmail ? "Verificando email..." : "Criar conta" }}
     </button>
-    <button class="login" (click)="handleCreateAccount()">Já possuo uma conta</button>
+    <button class="login" (click)="handleLoginContainer()">
+      Já possuo uma conta
+    </button>
   </div>
 </div>

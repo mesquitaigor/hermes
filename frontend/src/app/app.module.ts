@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import TopbarComponentModule from './shared/components/root/topbar/topbar.component.module';
 import SidebarComponentModule from './shared/components/root/sidebar/sidebar.component.module';
 import PopupComponentModule from '@components/root/popup/popup.component.module';
+import ToastComponentModule from './shared/components/root/toast/toast.component.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import PopupComponentModule from '@components/root/popup/popup.component.module'
     TopbarComponentModule,
     SidebarComponentModule,
     PopupComponentModule,
+    ToastComponentModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

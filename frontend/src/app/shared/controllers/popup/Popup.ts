@@ -2,7 +2,7 @@ import { ElementRef, Type } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import UuidGenerator from '@helpers/UuidGenerator';
 import { IPopupComponent } from '@components/root/popup/IPopupComponent';
-import { IPopupController } from './IPopupController';
+import { IPopupController } from '@controllers/popup/resources/IPopupController';
 
 export default class Popup<I, O> {
   private _position: IPopupController.PopupPosition = {

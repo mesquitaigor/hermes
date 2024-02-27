@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import PopupComponent from '@components/root/popup/popup.component';
 import Popup from '@controllers/popup/Popup';
-import PopupController from '@controllers/popup/popup.controller';
+import PopupController from '@controllers/popup/resources/popup.controller';
 import TestComponentGenericComponent from '../../../test/generic/test-component-generic.component';
 
 export default class PopupComponentHelperSpec {

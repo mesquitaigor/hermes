@@ -1,32 +1,6 @@
 :host{
-  &.sending{
-
-  }
   .register-container-component{
-    .title-content{
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 100%;
-      transition: .8s ease-in;
-      img{
-        width: 32px;
-        padding-right: 20px;
-        cursor: pointer;
-      }
-      h2{
-        color: #665a92;
-        font-weight: bold;
-      }
-    }
-    hr{
-      width: 100%;
-      height: 1.5px;
-      background-color: rgba(0,0,0,.1);
-      margin: 20px 0;
-      transition: .8s ease-in;
-    }
-
+    .container-logo{margin-bottom: 20px;}
     .inputs-content{
       display: flex;
       flex-direction: column;

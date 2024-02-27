@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import InitialContainerComponent from './initial-container.component';
 import { CommonModule } from '@angular/common';
-import LoginInputEmailComponentModule from './login-input-email/login-input-email.component.module';
+import EmailInputComponentModule from '../../../../shared/components/molecules/email-input/email-input.component.module';
 
 @NgModule({
-  declarations: [ InitialContainerComponent ],
-  exports: [ InitialContainerComponent ],
-  imports: [ CommonModule, LoginInputEmailComponentModule ]
+  declarations: [InitialContainerComponent],
+  exports: [InitialContainerComponent],
+  imports: [CommonModule, EmailInputComponentModule],
 })
-export default class InitialContainerComponentModule{}
+export default class InitialContainerComponentModule {}

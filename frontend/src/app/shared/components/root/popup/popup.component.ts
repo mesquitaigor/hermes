@@ -8,7 +8,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import PopupController from '@controllers/popup/popup.controller';
+import PopupController from '@controllers/popup/resources/popup.controller';
 import Popup from '@controllers/popup/Popup';
 import { DynamicChildLoaderDirective } from '@directives/dynamic-child-loader/dynamic-child-loader.directive';
 import { IPopupComponent } from './IPopupComponent';
