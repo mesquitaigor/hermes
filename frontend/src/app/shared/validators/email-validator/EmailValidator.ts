@@ -2,8 +2,8 @@ import { AbstractControl } from '@angular/forms';
 import UserService from '@users/user.service';
 import { Observable, map } from 'rxjs';
 import { EmailErrorsKeys } from './EmailErrorsKeys';
-import { validatorReturn } from '@validators/validatorReturn';
-type emailErrors = validatorReturn<typeof EmailErrorsKeys>;
+import { validatorResult } from '@validators/validatorResult';
+type emailErrors = validatorResult<typeof EmailErrorsKeys>;
 export default class EmailValidator {
   static format(control: AbstractControl): emailErrors {
     var validRegex =

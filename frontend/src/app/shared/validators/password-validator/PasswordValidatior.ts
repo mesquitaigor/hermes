@@ -1,10 +1,10 @@
 import { AbstractControl } from '@angular/forms';
 import { PasswordErrors } from '@validators/password-validator/PasswordErrors';
-import { validatorReturn } from '@validators/validatorReturn';
+import { validatorResult } from '@validators/validatorResult';
 export default class PasswordValidator {
   static passwordConfirmationIsEqual(
     control: AbstractControl
-  ): validatorReturn<typeof PasswordErrors> {
+  ): validatorResult<typeof PasswordErrors> {
     if (
       control.get('password')?.value !==
       control.get('passwordConfirmation')?.value
@@ -17,7 +17,7 @@ export default class PasswordValidator {
 
   static shouldHaveNumbers(
     control: AbstractControl
-  ): validatorReturn<typeof PasswordErrors> {
+  ): validatorResult<typeof PasswordErrors> {
     if (!/\d/.test(control.value)) {
       return { shouldHaveNumbers: true };
     } else {
@@ -27,7 +27,7 @@ export default class PasswordValidator {
 
   static shouldHaveLowerLetters(
     control: AbstractControl
-  ): validatorReturn<typeof PasswordErrors> {
+  ): validatorResult<typeof PasswordErrors> {
     if (!/[a-z]/.test(control.value)) {
       return { shouldHaveLowerLetters: true };
     } else {
@@ -37,7 +37,7 @@ export default class PasswordValidator {
 
   static shouldHaveUpperLetters(
     control: AbstractControl
-  ): validatorReturn<typeof PasswordErrors> {
+  ): validatorResult<typeof PasswordErrors> {
     if (!/[A-Z]/.test(control.value)) {
       return { shouldHaveUpperLetters: true };
     } else {
@@ -47,7 +47,7 @@ export default class PasswordValidator {
 
   static shouldHavespecialCharacters(
     control: AbstractControl
-  ): validatorReturn<typeof PasswordErrors> {
+  ): validatorResult<typeof PasswordErrors> {
     if (!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(control.value)) {
       return { shouldHavespecialCharacters: true };
     } else {
