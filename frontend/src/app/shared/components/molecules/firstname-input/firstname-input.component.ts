@@ -20,6 +20,11 @@ export default class FirstNameInputComponent implements OnInit {
       },
     ],
     updateOn: 'submit',
+    style: {
+      input: {
+        ['text-transform']: 'capitalize',
+      },
+    },
   });
 
   ngOnInit(): void {

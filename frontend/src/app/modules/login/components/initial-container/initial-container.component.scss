@@ -24,6 +24,10 @@
       font-weight: bold;
       color: white;
       transition: .3s ease-in;
+      &.verifying-email{
+        filter: saturate(0) opacity(.8);
+        pointer-events: none;
+      }
       &:hover{
         filter: brightness(0.9);
       }

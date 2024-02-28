@@ -32,7 +32,7 @@ export default class StatusService {
     );
   }
 
-  create(name: string) {
+  create(name: string): Observable<Object> {
     return this.httpClient.post('http://localhost:3000/status', { name });
   }
 }

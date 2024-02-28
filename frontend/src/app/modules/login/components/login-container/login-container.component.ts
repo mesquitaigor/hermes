@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import LoginPageService from '../../resources/login.page.service';
 import HmsInputControll from '../../../../shared/components/common/hms-input/resources/models/HmsInputControll';
 import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
@@ -10,7 +9,6 @@ import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputN
   styleUrls: ['login-container.component.scss'],
 })
 export default class LoginContainerComponent implements OnInit {
-  validatingEmail = false;
   loginHmsControl?: HmsInputControll;
 
   constructor(private loginPageService: LoginPageService) {}
@@ -32,9 +30,5 @@ export default class LoginContainerComponent implements OnInit {
 
   handleBack(): void {
     this.loginPageService.displayInitialContent();
-  }
-
-  handleValidatingEmail(stt: boolean): void {
-    this.validatingEmail = stt;
   }
 }

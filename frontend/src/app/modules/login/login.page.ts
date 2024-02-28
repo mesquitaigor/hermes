@@ -1,9 +1,9 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import PasswordValidator from '../../shared/validators/password-validator/PasswordValidatior';
 import { loginContentNames } from './resources/types/loginContentNames';
 import LoginPageService from './resources/login.page.service';
-import OutInitialContainerAction from './components/initial-container/resources/OutInitialContainerAction';
+import { OutInitialContainerAction } from './components/initial-container/resources/OutInitialContainerAction';
+import OutRegisterContainerReady from './components/register-conteiner/resources/OutRegisterContainerReady';
 
 @Component({
   selector: 'app-login',
@@ -13,23 +13,36 @@ import OutInitialContainerAction from './components/initial-container/resources/
 export class LoginPage implements OnInit {
   @HostBinding('class') content: loginContentNames = 'initial';
 
-  registerForm: FormGroup = new FormGroup(
-    {},
-    {
-      updateOn: 'submit',
-      validators: [PasswordValidator.passwordConfirmationIsEqual],
-    }
-  );
+  registerFormReadyCalls: OutRegisterContainerReady | undefined;
+
+  email = '';
+
+  loginPageForm: FormGroup = new FormGroup({});
 
   constructor(private loginPageService: LoginPageService) {}
 
   ngOnInit(): void {
-    this.loginPageService.setRegisterForm(this.registerForm);
+    this.loginPageService.setRegisterForm(this.loginPageForm);
     this.loginPageService.$events.subscribe((next) => {
       if (next) {
-        this.content = next?.to;
+        if (this.registerFormReadyCalls) {
+          if (this.content == 'initial' && next.to == 'register') {
+            this.registerFormReadyCalls.addControls(this.loginPageForm);
+          } else if (this.content == 'register' && next.to == 'initial') {
+            this.registerFormReadyCalls.removeControls(this.loginPageForm);
+          }
+        }
+        this.content = next.to;
       }
     });
+  }
+
+  handleDisplayBack(): void {
+    this.loginPageService.displayInitialContent();
+  }
+
+  handleRegisterFormReady(event: OutRegisterContainerReady): void {
+    this.registerFormReadyCalls = event;
   }
 
   handleInitialContainerAction(event: OutInitialContainerAction): void {

@@ -6,6 +6,7 @@ import { BoardStatusModule } from './domains/status/board-status.module';
 import { UserModule } from './domains/user/user.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigurationModule } from './config/config.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigurationModule } from './config/config.module';
     BoardCardsModule,
     BoardStatusModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

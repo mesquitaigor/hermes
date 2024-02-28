@@ -1,12 +1,19 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
-import LoginPageService from '../../resources/login.page.service';
 import UserService from '@users/user.service';
 import BasicUser from '@users/model/BasicUser';
 import { FormGroup } from '@angular/forms';
 import HmsInputControll from '../../../../shared/components/common/hms-input/resources/models/HmsInputControll';
 import { finalize } from 'rxjs';
 import ToastController from '@controllers/toast/toast.controller';
+import OutRegisterContainerReady from './resources/OutRegisterContainerReady';
 
 type registerContainerInputsControl = {
   [key in RegisterFormInputNames]?: RegisterContainerInputsControlValue;
@@ -23,34 +30,32 @@ interface RegisterContainerInputsControlValue {
   styleUrls: ['register-container.component.scss'],
 })
 export default class RegisterContainerComponent implements OnInit {
+  @Input() contFormGroup?: FormGroup;
+  @Output() formReady = new EventEmitter<OutRegisterContainerReady>();
+  @Output() displayBack = new EventEmitter<void>();
   @HostBinding('class.sending') sending = false;
   inputs: registerContainerInputsControl = {};
   constructor(
     private userService: UserService,
-    private loginPageService: LoginPageService,
     private toastController: ToastController
   ) {}
 
   ngOnInit(): void {
-    this.loginPageService.$events.subscribe((next) => {
-      if (next?.to == 'register') {
-        const loginPageFormGroup = this.loginPageService.registerForm;
+    this.formReady.emit({
+      addControls: (formGroup: FormGroup): void => {
         this.forEachInput((inputItem: RegisterContainerInputsControlValue) => {
-          if (loginPageFormGroup) {
-            loginPageFormGroup.addControl(
-              inputItem.name,
-              inputItem.control.getNgControl()
-            );
-          }
+          console.log(formGroup);
+          formGroup.addControl(
+            inputItem.name,
+            inputItem.control.getNgControl()
+          );
         });
-      } else if (next?.to == 'initial' && next.previus == 'register') {
-        const loginPageFormGroup = this.loginPageService.registerForm;
+      },
+      removeControls: (formGroup: FormGroup): void => {
         this.forEachInput((inputItem: RegisterContainerInputsControlValue) => {
-          if (loginPageFormGroup) {
-            loginPageFormGroup.removeControl(inputItem.name);
-          }
+          formGroup.removeControl(inputItem.name);
         });
-      }
+      },
     });
   }
 
@@ -65,9 +70,8 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   handleRecoverPasswordInput(hmsControl: HmsInputControll): void {
-    const loginPageFormGroup = this.loginPageService.registerForm;
-    if (loginPageFormGroup) {
-      loginPageFormGroup.addControl(
+    if (this.contFormGroup) {
+      this.contFormGroup.addControl(
         RegisterFormInputNames.PASSWORD,
         hmsControl.getNgControl()
       );
@@ -79,9 +83,8 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   handleRecoverPasswordConfirmationInput(hmsControl: HmsInputControll): void {
-    const loginPageFormGroup = this.loginPageService.registerForm;
-    if (loginPageFormGroup) {
-      loginPageFormGroup.addControl(
+    if (this.contFormGroup) {
+      this.contFormGroup.addControl(
         RegisterFormInputNames.PASSWORD,
         hmsControl.getNgControl()
       );
@@ -93,9 +96,8 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   handleRecoverFirstnameInput(hmsControl: HmsInputControll): void {
-    const loginPageFormGroup = this.loginPageService.registerForm;
-    if (loginPageFormGroup) {
-      loginPageFormGroup.addControl(
+    if (this.contFormGroup) {
+      this.contFormGroup.addControl(
         RegisterFormInputNames.FIRST_NAME,
         hmsControl.getNgControl()
       );
@@ -107,9 +109,8 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   handleRecoverLastnameInput(hmsControl: HmsInputControll): void {
-    const loginPageFormGroup = this.loginPageService.registerForm;
-    if (loginPageFormGroup) {
-      loginPageFormGroup.addControl(
+    if (this.contFormGroup) {
+      this.contFormGroup.addControl(
         RegisterFormInputNames.LAST_NAME,
         hmsControl.getNgControl()
       );
@@ -121,10 +122,10 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   handleSendRegister(): void {
-    const registerForm = this.loginPageService.registerForm;
-    if (registerForm) {
-      const subscription = registerForm.statusChanges.subscribe(() => {
-        if (registerForm?.valid && !this.sending) {
+    if (this.contFormGroup) {
+      console.log(this.contFormGroup);
+      const subscription = this.contFormGroup.statusChanges.subscribe(() => {
+        if (this.contFormGroup?.valid && !this.sending) {
           this.sending = true;
           const newUser = this.getUserFromForm();
           if (newUser) {
@@ -142,15 +143,15 @@ export default class RegisterContainerComponent implements OnInit {
           }
         }
       });
-      this.updateInput(RegisterFormInputNames.FIRST_NAME, registerForm);
-      this.updateInput(RegisterFormInputNames.LAST_NAME, registerForm);
-      this.updateInput(RegisterFormInputNames.PASSWORD, registerForm);
+      this.updateInput(RegisterFormInputNames.FIRST_NAME, this.contFormGroup);
+      this.updateInput(RegisterFormInputNames.LAST_NAME, this.contFormGroup);
+      this.updateInput(RegisterFormInputNames.PASSWORD, this.contFormGroup);
       this.updateInput(
         RegisterFormInputNames.PASSWORD_CONFIRMATION,
-        registerForm
+        this.contFormGroup
       );
-      registerForm.markAllAsTouched();
-      registerForm.updateValueAndValidity();
+      this.contFormGroup.markAllAsTouched();
+      this.contFormGroup.updateValueAndValidity();
     }
   }
 
@@ -163,7 +164,8 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   getUserFromForm(): BasicUser | void {
-    const formValues = this.loginPageService.registerForm?.value;
+    const formValues = this.contFormGroup?.value;
+    console.log(formValues);
     if (formValues) {
       return new BasicUser({
         email: formValues[RegisterFormInputNames.EMAIL],
@@ -175,6 +177,6 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   handleBack(): void {
-    this.loginPageService.displayInitialContent();
+    this.displayBack.emit();
   }
 }

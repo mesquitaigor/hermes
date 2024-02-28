@@ -10,6 +10,7 @@ export default class LastNameInputComponent implements OnInit {
   @Output() inputReady = new EventEmitter<HmsInputControll>();
   lastNameInput = new HmsInputControll({
     initialValue: '',
+    autocapitalize: 'words',
     placeholder: 'Qual seu sobrenome?',
     validators: [
       {
@@ -19,6 +20,11 @@ export default class LastNameInputComponent implements OnInit {
       },
     ],
     updateOn: 'submit',
+    style: {
+      input: {
+        ['text-transform']: 'capitalize',
+      },
+    },
   });
 
   ngOnInit(): void {

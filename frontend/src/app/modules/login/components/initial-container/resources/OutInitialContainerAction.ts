@@ -1,3 +1,8 @@
-export default interface OutInitialContainerAction {
-  action: 'display-login' | 'display-register';
+export interface OutInitialContainerAction {
+  action: outInitialContainerDisplayValue;
+  email: string;
 }
+
+export type outInitialContainerDisplayValue =
+  | 'display-login'
+  | 'display-register';

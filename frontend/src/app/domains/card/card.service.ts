@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import Card from './model/Card';
 
 @Injectable({
@@ -9,8 +9,8 @@ import Card from './model/Card';
 export default class CardService {
   constructor(private httpClient: HttpClient) {}
 
-  getAll() {
-    return this.httpClient.get<any>('http://localhost:3000/tasks').pipe(
+  getAll(): Observable<Object> {
+    return this.httpClient.get('http://localhost:3000/tasks').pipe(
       map(() => {
         return [
           new Card(1, 'Card 1', 1),
@@ -21,7 +21,7 @@ export default class CardService {
     );
   }
 
-  create(name: string) {
+  create(name: string): Observable<Object> {
     return this.httpClient.post('http://localhost:3000/tasks', { name });
   }
 }

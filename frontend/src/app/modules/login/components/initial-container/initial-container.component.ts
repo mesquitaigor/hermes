@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
-import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
 import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
 import UserService from '@users/user.service';
 import EmailValidator from '@validators/email-validator/EmailValidator';
-import OutInitialContainerAction from './resources/OutInitialContainerAction';
+import {
+  OutInitialContainerAction,
+  outInitialContainerDisplayValue,
+} from './resources/OutInitialContainerAction';
+import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
 
 @Component({
   selector: 'initial-container',
@@ -14,61 +17,86 @@ import OutInitialContainerAction from './resources/OutInitialContainerAction';
 export default class InitialContainerComponent {
   @Input() contFormGroup?: FormGroup;
   @Output() containerAction = new EventEmitter<OutInitialContainerAction>();
-  validatingEmail = false;
   emailHmsControl?: HmsInputControll;
 
-  readonly asyncValidatorExistingLoginKey = 'existing';
+  readonly asyncValExistingEmailKey = 'existing';
+  readonly asyncValNonExistingEmailKey = 'nonexisting';
 
   constructor(private userService: UserService) {}
 
   handleRecoveryEmailInput(hmsControl: HmsInputControll): void {
     if (this.contFormGroup) {
+      hmsControl.focus();
+      this.emailHmsControl = hmsControl;
       this.contFormGroup.addControl(
         RegisterFormInputNames.EMAIL,
         hmsControl.getNgControl()
       );
-      hmsControl.focus();
-      this.emailHmsControl = hmsControl;
     }
   }
 
-  handleValidatingEmail(stt: boolean): void {
-    this.validatingEmail = stt;
-  }
-
   handleLoginContainer(): void {
-    this.emailHmsControl?.removeAsyncValidator(
-      this.asyncValidatorExistingLoginKey
-    );
+    this.toggleLoginValidators();
     const emailNgControll = this.emailHmsControl?.getNgControl();
     if (emailNgControll) {
-      this.validateAndPass(emailNgControll, () =>
-        this.containerAction.emit({ action: 'display-login' })
+      this.validateAndPass(() =>
+        this.emitDisplay(emailNgControll, 'display-login')
       );
     }
   }
 
   handleCreateAccount(): void {
-    this.emailHmsControl?.addAsyncValidator({
-      fn: EmailValidator.existing(this.userService),
-      key: this.asyncValidatorExistingLoginKey,
-      message: 'Email já possui cadastrado.',
-    });
-    const emailNgControll = this.emailHmsControl?.getNgControl();
-    if (emailNgControll) {
-      this.validateAndPass(emailNgControll, () =>
-        this.containerAction.emit({ action: 'display-register' })
-      );
+    if (!this.emailHmsControl?.pending$.getValue()) {
+      this.toggleRegisterValidators();
+      const emailNgControll = this.emailHmsControl?.getNgControl();
+      if (emailNgControll) {
+        this.validateAndPass(() =>
+          this.emitDisplay(emailNgControll, 'display-register')
+        );
+      }
     }
   }
 
-  validateAndPass(emailNgControll: FormControl, passTo: () => void): void {
-    emailNgControll.statusChanges.subscribe((status: FormControlStatus) => {
-      if (status == 'VALID' && emailNgControll.valid) {
-        passTo();
-      }
+  validateAndPass(validatedFn: () => void): void {
+    const emailNgControll = this.emailHmsControl?.getNgControl();
+    if (emailNgControll) {
+      emailNgControll.statusChanges.subscribe((status: FormControlStatus) => {
+        if (status == 'VALID' && emailNgControll.valid) {
+          validatedFn();
+        }
+      });
+      emailNgControll.markAsTouched();
+      emailNgControll.updateValueAndValidity();
+    }
+  }
+
+  toggleLoginValidators(): void {
+    this.emailHmsControl?.removeAsyncValidator(this.asyncValExistingEmailKey);
+    this.emailHmsControl?.addAsyncValidator({
+      fn: EmailValidator.nonExisting(this.userService),
+      key: this.asyncValNonExistingEmailKey,
+      message: 'Email não cadastrado.',
     });
-    emailNgControll.markAsTouched();
-    emailNgControll.updateValueAndValidity();
+  }
+
+  toggleRegisterValidators(): void {
+    this.emailHmsControl?.removeAsyncValidator(
+      this.asyncValNonExistingEmailKey
+    );
+    this.emailHmsControl?.addAsyncValidator({
+      fn: EmailValidator.existing(this.userService),
+      key: this.asyncValExistingEmailKey,
+      message: 'Email já possui cadastro.',
+    });
+  }
+
+  emitDisplay(
+    emailNgControll: FormControl<string>,
+    displayValue: outInitialContainerDisplayValue
+  ): void {
+    this.containerAction.emit({
+      action: displayValue,
+      email: emailNgControll.value,
+    });
   }
 }

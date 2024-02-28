@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import ToastController from '@controllers/toast/toast.controller';
 import ToastRenderItem from './resources/models/ToastRenderItem';
-import ToastModel from '../../../controllers/toast/resources/ToastModel';
 
 @Component({
   selector: 'toast',

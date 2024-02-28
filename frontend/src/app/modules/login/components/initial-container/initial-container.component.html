@@ -3,16 +3,17 @@
     <img src="./../../../../../assets/illustrations/logo-dark2.svg" />
   </div>
   <div class="inputs-content">
-    <email-input
-      (inputReady)="handleRecoveryEmailInput($event)"
-      (validating)="handleValidatingEmail($event)"
-    ></email-input>
+    <email-input (inputReady)="handleRecoveryEmailInput($event)"></email-input>
     <button
       class="register"
       (click)="handleCreateAccount()"
-      [class.verifying-email]="validatingEmail"
+      [class.verifying-email]="emailHmsControl?.pending$ | async"
     >
-      {{ validatingEmail ? "Verificando email..." : "Criar conta" }}
+      {{
+        (emailHmsControl?.pending$ | async)
+          ? "Verificando email..."
+          : "Criar conta"
+      }}
     </button>
     <button class="login" (click)="handleLoginContainer()">
       Já possuo uma conta

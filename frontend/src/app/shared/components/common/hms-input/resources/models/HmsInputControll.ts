@@ -9,6 +9,7 @@ import {
 import HmsNgControlOutput from '@components/common/hms-input/resources/interfaces/HmsNgControlOutput';
 import HmsValidator from '@components/common/hms-input/resources/interfaces/HmsValidator';
 import IHmsInputControll from '@components/common/hms-input/resources/interfaces/IHmsInputControll';
+import { BehaviorSubject } from 'rxjs';
 
 type recoverFnCb = (props: {
   control: FormControl;
@@ -40,6 +41,8 @@ export default class HmsInputControll {
   errorMessagesList = [];
   type = 'text';
 
+  pending$ = new BehaviorSubject(false);
+
   private recoverNgControllFn?: recoverFnCb;
   private ngControl?: FormControl;
   private inputRef?: ElementRef;
@@ -66,6 +69,10 @@ export default class HmsInputControll {
     this.inputRef?.nativeElement.focus();
   }
 
+  getInputRef(): ElementRef<HTMLInputElement> | undefined {
+    return this.inputRef;
+  }
+
   setValue(value?: string | number): void {
     this.ngControl?.setValue(value);
   }
@@ -78,14 +85,18 @@ export default class HmsInputControll {
 
   defineNgControl(control: FormControl): void {
     this.ngControl = control;
-    this.ngControl?.valueChanges.subscribe((status) => {
+    this.ngControl.valueChanges.subscribe((status) => {
       this.atualizeErrorMessage(status);
     });
-    this.ngControl?.statusChanges.subscribe((status) => {
+    this.ngControl.statusChanges.subscribe((status) => {
       this.atualizeErrorMessage(status);
     });
-    this.ngControl?.valueChanges.subscribe(() => {
+    this.ngControl.valueChanges.subscribe(() => {
       this.atualizeErrorMessage(this.ngControl?.status as FormControlStatus);
+    });
+
+    this.ngControl.statusChanges.subscribe((status) => {
+      this.pending$.next(status === 'PENDING');
     });
   }
 
@@ -116,6 +127,7 @@ export default class HmsInputControll {
   addAsyncValidator(hmsAsyncValidator: HmsValidator<AsyncValidatorFn>): void {
     this.ngControl?.addAsyncValidators(hmsAsyncValidator.fn);
     this.asyncValidators.push(hmsAsyncValidator);
+    this.ngControl?.updateValueAndValidity();
   }
 
   removeAsyncValidator(key: string): void {

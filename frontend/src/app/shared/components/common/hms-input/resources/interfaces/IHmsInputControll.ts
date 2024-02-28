@@ -17,7 +17,7 @@ export default interface IHmsInputControll {
     | 'off';
   type?: string;
   style?: {
-    input?: { ['text-align']?: string };
+    input?: { ['text-align']?: string; ['text-transform']?: string };
     error?: { ['text-align']?: string };
   };
 }

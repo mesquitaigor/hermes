@@ -5,19 +5,23 @@
     </figure>
   </div>
   <div class="login-form-content">
-    <form [formGroup]="registerForm">
+    <form [formGroup]="loginPageForm">
       <div>
         <div class="initial-container inside-login-block">
           <initial-container
-            [contFormGroup]="registerForm"
+            [contFormGroup]="loginPageForm"
             (containerAction)="handleInitialContainerAction($event)"
           ></initial-container>
         </div>
         <div class="register-container inside-login-block">
-          <register-container></register-container>
+          <register-container
+            [contFormGroup]="loginPageForm"
+            (displayBack)="handleDisplayBack()"
+            (formReady)="handleRegisterFormReady($event)"
+          ></register-container>
         </div>
         <div class="login-container inside-login-block">
-          <login-container></login-container>
+          <!-- <login-container></login-container> -->
         </div>
       </div>
     </form>
