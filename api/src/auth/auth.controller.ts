@@ -23,8 +23,22 @@ export class AuthController {
     private jwtService: JwtService,
   ) {}
   @Post('register')
-  register(@Body(ValidationPipe) userDto: UserDto) {
-    return this.userService.create(userDto);
+  async register(@Body(ValidationPipe) userDto: UserDto, @Res() res: Response) {
+    const foundUser = await this.userService.getUserByEmail(userDto.email);
+    if (foundUser === null) {
+      const user = await this.userService.create(userDto);
+      return res.json({
+        createdUser: user.id,
+        created: true,
+        error: null,
+      });
+    } else {
+      return res.json({
+        createdUser: null,
+        created: false,
+        error: 'Usuário já existe',
+      });
+    }
   }
   @Post('authenticate')
   async login(@Body(ValidationPipe) loginDto: LoginDto) {

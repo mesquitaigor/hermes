@@ -14,6 +14,7 @@ import { finalize } from 'rxjs';
 import ToastController from '@controllers/toast/toast.controller';
 import OutRegisterContainerReady from './resources/OutRegisterContainerReady';
 import AuthService from '../../../../shared/auth/auth.service';
+import { Router } from '@angular/router';
 
 type registerContainerInputsControl = {
   [key in RegisterFormInputNames]?: RegisterContainerInputsControlValue;
@@ -37,7 +38,8 @@ export default class RegisterContainerComponent implements OnInit {
   inputs: registerContainerInputsControl = {};
   constructor(
     private authServce: AuthService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -122,18 +124,23 @@ export default class RegisterContainerComponent implements OnInit {
 
   handleSendRegister(): void {
     if (this.contFormGroup) {
-      console.log(this.contFormGroup);
       const subscription = this.contFormGroup.statusChanges.subscribe(() => {
         if (this.contFormGroup?.valid && !this.sending) {
           this.sending = true;
           const newUser = this.getUserFromForm();
           if (newUser) {
             this.authServce
-              .registerUser(newUser)
-              .pipe(finalize(() => subscription.unsubscribe()))
+              .register(newUser)
+              .pipe(
+                finalize(() => {
+                  subscription.unsubscribe();
+                  this.sending = false;
+                })
+              )
               .subscribe({
                 next: () => {
                   this.toastController.success('Usuário criado com sucesso.');
+                  this.router.navigate(['/home']);
                 },
                 error: () => {
                   this.toastController.error('Erro ao criar usuário.');

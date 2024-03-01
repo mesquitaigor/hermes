@@ -14,7 +14,6 @@ export default class JwtHttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const token = localStorage.getItem('token');
-    alert('oi');
     //Append default headers
     let headers = request.headers
       .set('Accept', `application/json`)

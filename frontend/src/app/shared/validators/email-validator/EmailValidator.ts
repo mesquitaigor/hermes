@@ -4,7 +4,7 @@ import { EmailErrorsKeys } from './EmailErrorsKeys';
 import { validatorResult } from '@validators/validatorResult';
 import AuthService from '../../auth/auth.service';
 import { AuthDto } from '../../auth/AuthDto';
-import { HttpErrorResponse } from '@angular/common/http';
+
 type emailErrors = validatorResult<typeof EmailErrorsKeys>;
 export default class EmailValidator {
   static format(control: AbstractControl): emailErrors {
@@ -38,10 +38,9 @@ export default class EmailValidator {
         delay(500),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catchError((error: any) => {
-          console.log(error);
           return of(error);
         }),
-        map((res: AuthDto.EmailAvailabilityResponse) => {
+        map((res: AuthDto.EmailValidateResponse) => {
           if (typeof res?.existing === 'boolean') {
             if (shouldExist && res.existing) {
               return { existing: true };

@@ -1,24 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import BasicUser from '../../domains/users/model/BasicUser';
 import { AuthDto } from './AuthDto';
-import { environment } from '../../../environments/environment';
+import AuthApiService from './auth.api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export default class AuthService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private authApiService: AuthApiService) {}
 
-  registerUser(newUser: BasicUser): Observable<{}> {
-    return this.httpClient.post(environment.api + '/register', newUser);
+  register(newUser: BasicUser): Observable<AuthDto.RegisterResponse> {
+    return this.authApiService.register({
+      email: newUser.email,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      password: newUser.password,
+    });
   }
 
-  validateEmail(email: string): Observable<AuthDto.EmailAvailabilityResponse> {
-    return this.httpClient.get<AuthDto.EmailAvailabilityResponse>(
-      environment.api + '/validate-email',
-      { params: { email } }
-    );
+  validateEmail(email: string): Observable<AuthDto.EmailValidateResponse> {
+    return this.authApiService.validateEmail({ email });
+  }
+
+  login(
+    email: string,
+    password: string
+  ): Observable<AuthDto.AuthenticateResponse> {
+    return this.authApiService.authenticate({ email, password });
   }
 }
