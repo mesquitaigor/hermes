@@ -7,13 +7,13 @@ import {
   Output,
 } from '@angular/core';
 import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
-import UserService from '@users/user.service';
 import BasicUser from '@users/model/BasicUser';
 import { FormGroup } from '@angular/forms';
 import HmsInputControll from '../../../../shared/components/common/hms-input/resources/models/HmsInputControll';
 import { finalize } from 'rxjs';
 import ToastController from '@controllers/toast/toast.controller';
 import OutRegisterContainerReady from './resources/OutRegisterContainerReady';
+import AuthService from '../../../../shared/auth/auth.service';
 
 type registerContainerInputsControl = {
   [key in RegisterFormInputNames]?: RegisterContainerInputsControlValue;
@@ -36,7 +36,7 @@ export default class RegisterContainerComponent implements OnInit {
   @HostBinding('class.sending') sending = false;
   inputs: registerContainerInputsControl = {};
   constructor(
-    private userService: UserService,
+    private authServce: AuthService,
     private toastController: ToastController
   ) {}
 
@@ -44,7 +44,6 @@ export default class RegisterContainerComponent implements OnInit {
     this.formReady.emit({
       addControls: (formGroup: FormGroup): void => {
         this.forEachInput((inputItem: RegisterContainerInputsControlValue) => {
-          console.log(formGroup);
           formGroup.addControl(
             inputItem.name,
             inputItem.control.getNgControl()
@@ -129,8 +128,8 @@ export default class RegisterContainerComponent implements OnInit {
           this.sending = true;
           const newUser = this.getUserFromForm();
           if (newUser) {
-            this.userService
-              .createUser(newUser)
+            this.authServce
+              .registerUser(newUser)
               .pipe(finalize(() => subscription.unsubscribe()))
               .subscribe({
                 next: () => {

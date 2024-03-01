@@ -1,8 +1,10 @@
 import { AbstractControl } from '@angular/forms';
-import UserService from '@users/user.service';
-import { Observable, delay, map } from 'rxjs';
+import { Observable, catchError, delay, map, of } from 'rxjs';
 import { EmailErrorsKeys } from './EmailErrorsKeys';
 import { validatorResult } from '@validators/validatorResult';
+import AuthService from '../../auth/auth.service';
+import { AuthDto } from '../../auth/AuthDto';
+import { HttpErrorResponse } from '@angular/common/http';
 type emailErrors = validatorResult<typeof EmailErrorsKeys>;
 export default class EmailValidator {
   static format(control: AbstractControl): emailErrors {
@@ -17,24 +19,29 @@ export default class EmailValidator {
     }
   }
   static existing(
-    userService: UserService
+    authService: AuthService
   ): (control: AbstractControl) => Observable<emailErrors> {
-    return EmailValidator.checkEmail(userService, true);
+    return EmailValidator.checkEmail(authService, true);
   }
   static nonExisting(
-    userService: UserService
+    authService: AuthService
   ): (control: AbstractControl) => Observable<emailErrors> {
-    return EmailValidator.checkEmail(userService, false);
+    return EmailValidator.checkEmail(authService, false);
   }
 
   private static checkEmail(
-    userService: UserService,
+    authService: AuthService,
     shouldExist: boolean
   ): (control: AbstractControl) => Observable<emailErrors> {
     return (control: AbstractControl): Observable<emailErrors> => {
-      return userService.checkEmailAvailability(control.value).pipe(
+      return authService.validateEmail(control.value).pipe(
         delay(500),
-        map((res: { existing: boolean; user: number }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catchError((error: any) => {
+          console.log(error);
+          return of(error);
+        }),
+        map((res: AuthDto.EmailAvailabilityResponse) => {
           if (typeof res?.existing === 'boolean') {
             if (shouldExist && res.existing) {
               return { existing: true };

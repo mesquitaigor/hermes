@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
 import HmsInputControll from '@components/common/hms-input/resources/models/HmsInputControll';
-import UserService from '@users/user.service';
 import EmailValidator from '@validators/email-validator/EmailValidator';
 import {
   OutInitialContainerAction,
   outInitialContainerDisplayValue,
 } from './resources/OutInitialContainerAction';
 import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
+import AuthService from '../../../../shared/auth/auth.service';
 
 @Component({
   selector: 'initial-container',
@@ -22,7 +22,7 @@ export default class InitialContainerComponent {
   readonly asyncValExistingEmailKey = 'existing';
   readonly asyncValNonExistingEmailKey = 'nonexisting';
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   handleRecoveryEmailInput(hmsControl: HmsInputControll): void {
     if (this.contFormGroup) {
@@ -73,7 +73,7 @@ export default class InitialContainerComponent {
   toggleLoginValidators(): void {
     this.emailHmsControl?.removeAsyncValidator(this.asyncValExistingEmailKey);
     this.emailHmsControl?.addAsyncValidator({
-      fn: EmailValidator.nonExisting(this.userService),
+      fn: EmailValidator.nonExisting(this.authService),
       key: this.asyncValNonExistingEmailKey,
       message: 'Email não cadastrado.',
     });
@@ -84,7 +84,7 @@ export default class InitialContainerComponent {
       this.asyncValNonExistingEmailKey
     );
     this.emailHmsControl?.addAsyncValidator({
-      fn: EmailValidator.existing(this.userService),
+      fn: EmailValidator.existing(this.authService),
       key: this.asyncValExistingEmailKey,
       message: 'Email já possui cadastro.',
     });

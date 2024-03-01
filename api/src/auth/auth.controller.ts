@@ -5,33 +5,40 @@ import {
   Post,
   Query,
   Res,
+  UnauthorizedException,
   ValidationPipe,
 } from '@nestjs/common';
 import { Response } from 'express';
 import LoginDto from '../domains/user/controller/dto/LoginDto';
 import UserDto from '../domains/user/controller/dto/UserDto';
 import { UserService } from '../domains/user/user.service';
+import AuthService from './auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private authService: AuthService,
+    private jwtService: JwtService,
+  ) {}
   @Post('register')
   register(@Body(ValidationPipe) userDto: UserDto) {
     return this.userService.create(userDto);
   }
   @Post('authenticate')
-  async login(@Body(ValidationPipe) loginDto: LoginDto, @Res() res: Response) {
-    const user = await this.userService.find(loginDto.email);
-    if (user) {
-      return res.json({
-        result: 'User found',
-        user,
-      });
-    } else {
-      return res.json({
-        result: 'User not found',
-      });
+  async login(@Body(ValidationPipe) loginDto: LoginDto) {
+    const user = await this.authService.validateUser(
+      loginDto.email,
+      loginDto.password,
+    );
+    if (!user) {
+      throw new UnauthorizedException('Credenciais inválidas');
     }
+    const payload = { email: user.email, id: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
   @Get('validate-email')
   async verifyExistingEmail(

@@ -1,12 +1,12 @@
 import { FormControl } from '@angular/forms';
 import EmailValidator from './EmailValidator';
 import { Observable, Subscriber } from 'rxjs';
-import UserService from '../../../domains/users/user.service';
 import EmailAvailabilityResponse from '../../../domains/users/dto/EmailAvailabilityResponse';
+import AuthService from '../../auth/auth.service';
 
 describe(EmailValidator.name, () => {
   const abstractControll = new FormControl('');
-  const mockUserService = jasmine.createSpyObj(UserService.name, [
+  const mockUserService = jasmine.createSpyObj(AuthService.name, [
     'checkEmailAvailability',
   ]);
   let apiReturn: EmailAvailabilityResponse = { existing: false, user: 0 };
