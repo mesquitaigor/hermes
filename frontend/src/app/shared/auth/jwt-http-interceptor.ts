@@ -7,13 +7,17 @@ import {
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { inject } from '@angular/core';
+import StorageService from '../services/storage/storage.sevice';
+import { StorageKeys } from '../services/storage/StorageKeys';
 
 export default class JwtHttpInterceptor {
+  storageService = inject(StorageService);
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = localStorage.getItem('token');
+    const token = this.storageService.get(StorageKeys.ACCESS_TOKEN);
     //Append default headers
     let headers = request.headers
       .set('Accept', `application/json`)

@@ -35,7 +35,7 @@ export default class EmailValidator {
   ): (control: AbstractControl) => Observable<emailErrors> {
     return (control: AbstractControl): Observable<emailErrors> => {
       return authService.validateEmail(control.value).pipe(
-        delay(500),
+        delay(300),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catchError((error: any) => {
           return of(error);

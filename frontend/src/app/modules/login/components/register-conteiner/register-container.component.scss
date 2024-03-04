@@ -1,12 +1,23 @@
 :host{
   .register-container-component{
-    .container-logo{margin-bottom: 20px;}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 20%;
+    .container-logo{
+      margin-bottom: 20px;
+      width: 100%;
+    }
     .inputs-content{
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .register-form-content{
+      width: 100%;
+      margin-top: 50px;
       .input-box{
         margin-bottom: 2px;
         transition: .8s ease-in;

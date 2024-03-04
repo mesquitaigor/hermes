@@ -1,19 +1,21 @@
 import { FormControl } from '@angular/forms';
 import EmailValidator from './EmailValidator';
 import { Observable, Subscriber } from 'rxjs';
-import EmailAvailabilityResponse from '../../../domains/users/dto/EmailAvailabilityResponse';
 import AuthService from '../../auth/auth.service';
+import { AuthDto } from '../../auth/AuthDto';
 
 describe(EmailValidator.name, () => {
   const abstractControll = new FormControl('');
   const mockUserService = jasmine.createSpyObj(AuthService.name, [
-    'checkEmailAvailability',
+    'validateEmail',
   ]);
-  let apiReturn: EmailAvailabilityResponse = { existing: false, user: 0 };
-  mockUserService.checkEmailAvailability.and.callFake(() => {
-    return new Observable((subject: Subscriber<EmailAvailabilityResponse>) => {
-      subject.next(apiReturn);
-    });
+  let apiReturn: AuthDto.EmailValidateResponse = { existing: false, user: 0 };
+  mockUserService.validateEmail.and.callFake(() => {
+    return new Observable(
+      (subject: Subscriber<AuthDto.EmailValidateResponse>) => {
+        subject.next(apiReturn);
+      }
+    );
   });
   beforeEach(() => {
     apiReturn.existing = false;

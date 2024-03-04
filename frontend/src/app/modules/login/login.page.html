@@ -1,22 +1,26 @@
 <div class="login-page">
+  <div class="logo">
+    <img src="./../../../assets/illustrations/logo-dark2.svg" />
+    <h2>Hermes</h2>
+  </div>
   <div class="illustration-content">
     <figure>
       <img src="./../../../assets/illustrations/login.svg" />
     </figure>
   </div>
   <div class="login-form-content">
-    <form [formGroup]="loginPageForm">
+    <form [formGroup]="loginPageForm" (submit)="$event.preventDefault()">
       <div>
         <div class="initial-container inside-login-block">
           <initial-container
             [contFormGroup]="loginPageForm"
-            (containerAction)="handleInitialContainerAction($event)"
+            [contentObservable]="content$"
           ></initial-container>
         </div>
         <div class="register-container inside-login-block">
           <register-container
             [contFormGroup]="loginPageForm"
-            (displayBack)="handleDisplayBack()"
+            [contentObservable]="content$"
             (formReady)="handleRegisterFormReady($event)"
           ></register-container>
         </div>

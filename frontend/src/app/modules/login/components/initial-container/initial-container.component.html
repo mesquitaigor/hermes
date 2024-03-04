@@ -1,12 +1,13 @@
 <div class="initial-container-component">
-  <div class="logo">
-    <img src="./../../../../../assets/illustrations/logo-dark2.svg" />
+  <div class="text-apresentation">
+    <h2 class="enterprise-name">Bem-vindo ao Hermes!</h2>
+    <p class="subtitle">Desbloqueie seu potencial, um clique de cada vez.</p>
   </div>
   <div class="inputs-content">
     <email-input (inputReady)="handleRecoveryEmailInput($event)"></email-input>
     <button
       class="register"
-      (click)="handleCreateAccount()"
+      (click)="handleDisplayRegisterContainer()"
       [class.verifying-email]="emailHmsControl?.pending$ | async"
     >
       {{
@@ -15,7 +16,7 @@
           : "Criar conta"
       }}
     </button>
-    <button class="login" (click)="handleLoginContainer()">
+    <button class="login" (click)="handleDisplayLoginContainer()">
       Já possuo uma conta
     </button>
   </div>

@@ -6,24 +6,15 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { RegisterFormInputNames } from '../../resources/enums/RegisterFormInputNames';
 import BasicUser from '@users/model/BasicUser';
 import { FormGroup } from '@angular/forms';
 import HmsInputControll from '../../../../shared/components/common/hms-input/resources/models/HmsInputControll';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, finalize } from 'rxjs';
 import ToastController from '@controllers/toast/toast.controller';
-import OutRegisterContainerReady from './resources/OutRegisterContainerReady';
 import AuthService from '../../../../shared/auth/auth.service';
 import { Router } from '@angular/router';
-
-type registerContainerInputsControl = {
-  [key in RegisterFormInputNames]?: RegisterContainerInputsControlValue;
-};
-
-interface RegisterContainerInputsControlValue {
-  control: HmsInputControll;
-  name: RegisterFormInputNames;
-}
+import { RegisterContainer } from './RegisterContainer';
+import { ILoginPage } from '../../ILoginPage';
 
 @Component({
   selector: 'register-container',
@@ -32,10 +23,10 @@ interface RegisterContainerInputsControlValue {
 })
 export default class RegisterContainerComponent implements OnInit {
   @Input() contFormGroup?: FormGroup;
-  @Output() formReady = new EventEmitter<OutRegisterContainerReady>();
-  @Output() displayBack = new EventEmitter<void>();
+  @Input() contentObservable?: BehaviorSubject<ILoginPage.LoginPageEvents>;
+  @Output() formReady = new EventEmitter<RegisterContainer.OutReady>();
   @HostBinding('class.sending') sending = false;
-  inputs: registerContainerInputsControl = {};
+  inputs: RegisterContainer.inputsControl = {};
   constructor(
     private authServce: AuthService,
     private toastController: ToastController,
@@ -45,7 +36,7 @@ export default class RegisterContainerComponent implements OnInit {
   ngOnInit(): void {
     this.formReady.emit({
       addControls: (formGroup: FormGroup): void => {
-        this.forEachInput((inputItem: RegisterContainerInputsControlValue) => {
+        this.forEachInput((inputItem: RegisterContainer.InputsControlValue) => {
           formGroup.addControl(
             inputItem.name,
             inputItem.control.getNgControl()
@@ -53,17 +44,17 @@ export default class RegisterContainerComponent implements OnInit {
         });
       },
       removeControls: (formGroup: FormGroup): void => {
-        this.forEachInput((inputItem: RegisterContainerInputsControlValue) => {
+        this.forEachInput((inputItem: RegisterContainer.InputsControlValue) => {
           formGroup.removeControl(inputItem.name);
         });
       },
     });
   }
 
-  forEachInput(cb: (item: RegisterContainerInputsControlValue) => void): void {
+  forEachInput(cb: (item: RegisterContainer.InputsControlValue) => void): void {
     Object.keys(this.inputs).forEach((key) => {
       const inputItem =
-        this.inputs[key as keyof registerContainerInputsControl];
+        this.inputs[key as keyof RegisterContainer.inputsControl];
       if (inputItem) {
         cb(inputItem);
       }
@@ -73,12 +64,12 @@ export default class RegisterContainerComponent implements OnInit {
   handleRecoverPasswordInput(hmsControl: HmsInputControll): void {
     if (this.contFormGroup) {
       this.contFormGroup.addControl(
-        RegisterFormInputNames.PASSWORD,
+        RegisterContainer.FormInputNames.PASSWORD,
         hmsControl.getNgControl()
       );
       this.inputs.password = {
         control: hmsControl,
-        name: RegisterFormInputNames.PASSWORD,
+        name: RegisterContainer.FormInputNames.PASSWORD,
       };
     }
   }
@@ -86,12 +77,12 @@ export default class RegisterContainerComponent implements OnInit {
   handleRecoverPasswordConfirmationInput(hmsControl: HmsInputControll): void {
     if (this.contFormGroup) {
       this.contFormGroup.addControl(
-        RegisterFormInputNames.PASSWORD,
+        RegisterContainer.FormInputNames.PASSWORD,
         hmsControl.getNgControl()
       );
       this.inputs.passwordConfirmation = {
         control: hmsControl,
-        name: RegisterFormInputNames.PASSWORD_CONFIRMATION,
+        name: RegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
       };
     }
   }
@@ -99,12 +90,12 @@ export default class RegisterContainerComponent implements OnInit {
   handleRecoverFirstnameInput(hmsControl: HmsInputControll): void {
     if (this.contFormGroup) {
       this.contFormGroup.addControl(
-        RegisterFormInputNames.FIRST_NAME,
+        RegisterContainer.FormInputNames.FIRST_NAME,
         hmsControl.getNgControl()
       );
       this.inputs.firstName = {
         control: hmsControl,
-        name: RegisterFormInputNames.FIRST_NAME,
+        name: RegisterContainer.FormInputNames.FIRST_NAME,
       };
     }
   }
@@ -112,12 +103,12 @@ export default class RegisterContainerComponent implements OnInit {
   handleRecoverLastnameInput(hmsControl: HmsInputControll): void {
     if (this.contFormGroup) {
       this.contFormGroup.addControl(
-        RegisterFormInputNames.LAST_NAME,
+        RegisterContainer.FormInputNames.LAST_NAME,
         hmsControl.getNgControl()
       );
       this.inputs.lastName = {
         control: hmsControl,
-        name: RegisterFormInputNames.LAST_NAME,
+        name: RegisterContainer.FormInputNames.LAST_NAME,
       };
     }
   }
@@ -139,21 +130,37 @@ export default class RegisterContainerComponent implements OnInit {
               )
               .subscribe({
                 next: () => {
-                  this.toastController.success('Usuário criado com sucesso.');
+                  this.toastController.success('Conta criada!');
                   this.router.navigate(['/home']);
                 },
                 error: () => {
-                  this.toastController.error('Erro ao criar usuário.');
+                  this.toastController.error(
+                    'Erro ao tentar registrar sua conta.'
+                  );
                 },
               });
+          } else {
+            subscription.unsubscribe();
+            this.sending = false;
           }
+        } else {
+          subscription.unsubscribe();
         }
       });
-      this.updateInput(RegisterFormInputNames.FIRST_NAME, this.contFormGroup);
-      this.updateInput(RegisterFormInputNames.LAST_NAME, this.contFormGroup);
-      this.updateInput(RegisterFormInputNames.PASSWORD, this.contFormGroup);
       this.updateInput(
-        RegisterFormInputNames.PASSWORD_CONFIRMATION,
+        RegisterContainer.FormInputNames.FIRST_NAME,
+        this.contFormGroup
+      );
+      this.updateInput(
+        RegisterContainer.FormInputNames.LAST_NAME,
+        this.contFormGroup
+      );
+      this.updateInput(
+        RegisterContainer.FormInputNames.PASSWORD,
+        this.contFormGroup
+      );
+      this.updateInput(
+        RegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
         this.contFormGroup
       );
       this.contFormGroup.markAllAsTouched();
@@ -162,7 +169,7 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   updateInput(
-    inputName: RegisterFormInputNames,
+    inputName: RegisterContainer.FormInputNames,
     registerForm: FormGroup
   ): void {
     registerForm.get(inputName)?.markAsTouched();
@@ -171,18 +178,17 @@ export default class RegisterContainerComponent implements OnInit {
 
   getUserFromForm(): BasicUser | void {
     const formValues = this.contFormGroup?.value;
-    console.log(formValues);
     if (formValues) {
       return new BasicUser({
-        email: formValues[RegisterFormInputNames.EMAIL],
-        firstName: formValues[RegisterFormInputNames.FIRST_NAME],
-        lastName: formValues[RegisterFormInputNames.LAST_NAME],
-        password: formValues[RegisterFormInputNames.PASSWORD],
+        email: formValues[RegisterContainer.FormInputNames.EMAIL],
+        firstName: formValues[RegisterContainer.FormInputNames.FIRST_NAME],
+        lastName: formValues[RegisterContainer.FormInputNames.LAST_NAME],
+        password: formValues[RegisterContainer.FormInputNames.PASSWORD],
       });
     }
   }
 
   handleBack(): void {
-    this.displayBack.emit();
+    this.contentObservable?.next({ displayContent: 'initial' });
   }
 }
