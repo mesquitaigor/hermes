@@ -34,6 +34,7 @@ export default class EmailValidator {
     shouldExist: boolean
   ): (control: AbstractControl) => Observable<emailErrors> {
     return (control: AbstractControl): Observable<emailErrors> => {
+      console.log('control2');
       return authService.validateEmail(control.value).pipe(
         delay(300),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +42,7 @@ export default class EmailValidator {
           return of(error);
         }),
         map((res: AuthDto.EmailValidateResponse) => {
+          console.log(res);
           if (typeof res?.existing === 'boolean') {
             if (shouldExist && res.existing) {
               return { existing: true };

@@ -1,0 +1,23 @@
+<ng-container *ngIf="inputControll">
+  <div
+    class="hms-input"
+    [class.error]="inputControll.errors && inputControll.touched"
+  >
+    <div class="input-content">
+      <input
+        #inputRef
+        [autocapitalize]="controll?.autocapitalize"
+        [formControl]="inputControll"
+        (focus)="handleInputFocus()"
+        (blur)="handleInputBlur()"
+        [ngStyle]="controll?.style?.input || {}"
+        [placeholder]="controll?.placeholder"
+        [type]="controll?.type"
+      />
+      <img src="./../../../../../assets/icons/alert.svg" />
+    </div>
+    <p class="error-message" [ngStyle]="controll?.style?.error || {}">
+      {{ controll?.errorMessage }}
+    </p>
+  </div>
+</ng-container>

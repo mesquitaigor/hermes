@@ -6,11 +6,11 @@ import { AuthDto } from '../../auth/AuthDto';
 
 describe(EmailValidator.name, () => {
   const abstractControll = new FormControl('');
-  const mockUserService = jasmine.createSpyObj(AuthService.name, [
+  const mockAuthService = jasmine.createSpyObj(AuthService.name, [
     'validateEmail',
   ]);
   let apiReturn: AuthDto.EmailValidateResponse = { existing: false, user: 0 };
-  mockUserService.validateEmail.and.callFake(() => {
+  mockAuthService.validateEmail.and.callFake(() => {
     return new Observable(
       (subject: Subscriber<AuthDto.EmailValidateResponse>) => {
         subject.next(apiReturn);
@@ -31,14 +31,14 @@ describe(EmailValidator.name, () => {
     });
   });
   it('should return null when email is not registered', () => {
-    const validatorFn = EmailValidator.existing(mockUserService);
+    const validatorFn = EmailValidator.existing(mockAuthService);
     validatorFn(abstractControll).subscribe((res) => {
       expect(res).toBeNull();
     });
   });
   it('should return existing when email is invalid', () => {
     apiReturn.existing = true;
-    const validatorFn = EmailValidator.existing(mockUserService);
+    const validatorFn = EmailValidator.existing(mockAuthService);
     validatorFn(abstractControll).subscribe((res) => {
       expect(res?.existing).toEqual(true);
     });

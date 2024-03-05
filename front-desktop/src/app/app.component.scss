@@ -1,0 +1,13 @@
+.app-page-content{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .router-content{
+    top: var(--hms-topbar-height);
+    left: var(--hms-sibar-width);
+    height: 100%;
+    width: 100%;
+  }
+}

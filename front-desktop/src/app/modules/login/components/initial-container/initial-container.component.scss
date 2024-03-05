@@ -1,0 +1,60 @@
+
+.initial-container-component{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  height: 100%;
+  .text-apresentation{
+    margin: 10px 25% 50px 25%;
+    .enterprise-name{
+      text-align: center;
+      font-weight: bold;
+      color: #4c5078;
+      margin-bottom: 10px;
+    }
+    .subtitle{
+      text-align: center;
+      color: #4c5078;
+      opacity: .8;
+    }
+  }
+  .inputs-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    email-input{
+      margin-bottom: 10px;
+    }
+    .register{
+      background: linear-gradient(45deg, #ef709b, #fa9372);
+      padding: 12px 30px;
+      border-radius: 5px;
+      margin-top: 5px;
+      font-weight: bold;
+      color: white;
+      transition: .3s ease-in;
+      &.verifying-email{
+        filter: saturate(0) opacity(.8);
+        pointer-events: none;
+      }
+      &:hover{
+        filter: brightness(0.9);
+      }
+    }
+    .login{
+      margin-top: 15px;
+      padding: 10px;
+      opacity: .7;
+      transition: .2s;
+      transition: .3s ease-in;
+      &:hover{
+        opacity: 1;
+      }
+    }
+    .login.verifying-email{
+      filter: saturate(0) opacity(.8);
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="register-container-component">
+  <div class="container-logo">
+    <content-title (back)="handleBack()">Criar conta</content-title>
+  </div>
+  <div class="register-form-content">
+    <div class="input-box">
+      <firstname-input
+        (inputReady)="handleRecoverFirstnameInput($event)"
+      ></firstname-input>
+    </div>
+    <div class="input-box">
+      <lastname-input
+        (inputReady)="handleRecoverLastnameInput($event)"
+      ></lastname-input>
+    </div>
+    <div class="input-box">
+      <password-input
+        (inputReady)="handleRecoverPasswordInput($event)"
+      ></password-input>
+    </div>
+    <div class="input-box">
+      <passwordconfirmation-input
+        (inputReady)="handleRecoverPasswordConfirmationInput($event)"
+      ></passwordconfirmation-input>
+    </div>
+    <div class="footer-buttons-content">
+      <button class="back" (click)="handleBack()">Voltar</button>
+      <button class="send" (click)="handleSendRegister()">
+        {{ !sending ? "Enviar" : "Enviando..." }}
+      </button>
+    </div>
+  </div>
+</div>
