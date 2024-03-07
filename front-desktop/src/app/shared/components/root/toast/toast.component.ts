@@ -36,7 +36,7 @@ export default class ToastComponent {
   handleCloseToast(toast: IToastComponent.RenderItem): void {
     toast.show = false;
     setTimeout(() => {
-      const toastsUuid = this.toasts.map((toast) => toast.uuid);
+      const toastsUuid = this.toasts.map((toastItem) => toastItem.uuid);
       const targetToastIndex = toastsUuid.indexOf(toast.uuid);
       this.toasts.splice(targetToastIndex, 1);
       this.redefineToastPosition();

@@ -10,13 +10,10 @@ import HmsInputControll from '@components/common/hms-input/HmsInputControll';
 import { Validators } from '@angular/forms';
 import PasswordValidator from '@validators/password-validator/PasswordValidatior';
 import { PasswordErrors } from '@validators/password-validator/PasswordErrors';
-import PasswordLevelPopup from './components/password-level-popup/resources/models/PasswordLevelPopup';
 import PopupModel from '@controllers/popup/resources/PopupModel';
-import PopupInput from '@molecules/password-input/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentInputs';
-import PopupOutput from '@molecules/password-input/components/password-level-popup/resources/interfaces/PasswordLevelPopupComponentOutputs';
 import PopupController from '@controllers/popup/popup.controller';
-import PasswordLevelPopupComponent from './components/password-level-popup/password-level-popup.component';
-import PasswordPopupController from './components/password-level-popup/resources/interfaces/PasswordPopupController';
+import PasswordLevelPopupComponent from '../password-level-popup/password-level-popup.component';
+import { IPasswordLevelPopup } from '../password-level-popup/IPasswordLevelPopup';
 
 @Component({
   selector: 'password-input',
@@ -28,6 +25,7 @@ export default class PasswordInputComponent implements OnInit {
   passwordInput = new HmsInputControll({
     initialValue: '',
     type: 'password',
+    icon: './../../../../../assets/icons/padlock.svg',
     placeholder: 'Digite sua senha',
     validators: [
       {
@@ -64,8 +62,8 @@ export default class PasswordInputComponent implements OnInit {
     updateOn: 'change',
   });
 
-  controller = new PasswordLevelPopup();
-  popup?: PopupModel<PopupInput, PopupOutput>;
+  controller = new IPasswordLevelPopup.PasswordLevelPopup();
+  popup?: PopupModel<IPasswordLevelPopup.Inputs, IPasswordLevelPopup.Output>;
   inpurPasswordElement?: ElementRef;
 
   constructor(private popupController: PopupController) {}
@@ -97,18 +95,18 @@ export default class PasswordInputComponent implements OnInit {
   createPopupPasswordLevel(): void {
     if (this.inpurPasswordElement) {
       this.popup = this.popupController
-        .create<PopupInput, PopupOutput>(PasswordLevelPopupComponent)
+        .create<IPasswordLevelPopup.Inputs, IPasswordLevelPopup.Output>(
+          PasswordLevelPopupComponent
+        )
         .setParent(this.inpurPasswordElement)
         .input({
           popupController: this.controller,
         })
         .output({
           handlePopupController: (next): void => {
-            if (next) {
-              this.handleGetPasswordPopupController(
-                next as PasswordPopupController
-              );
-            }
+            this.handleGetPasswordPopupController(
+              next as IPasswordLevelPopup.Controller
+            );
           },
         })
         .position({
@@ -148,7 +146,9 @@ export default class PasswordInputComponent implements OnInit {
     this.controller.show = false;
   }
 
-  handleGetPasswordPopupController(controller: PasswordPopupController): void {
+  handleGetPasswordPopupController(
+    controller: IPasswordLevelPopup.Controller
+  ): void {
     this.controller.setPopupController(controller);
   }
 

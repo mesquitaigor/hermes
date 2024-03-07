@@ -13,7 +13,7 @@ export default class ToastComponentSpecHelper {
   toastController?: jasmine.SpyObj<ToastController>;
   fixture?: ComponentFixture<ToastComponent>;
 
-  emitToast(message = 'message') {
+  emitToast(): void {
     const toast = new IToast.ToastModel('message');
     toast.setType('success');
     if (this.toastController) {

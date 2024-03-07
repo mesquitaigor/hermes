@@ -1,8 +1,8 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { RegisterContainer } from './components/register-conteiner/RegisterContainer';
+import { IRegisterContainer } from './organism/register-conteiner/IRegisterContainer';
 import { BehaviorSubject } from 'rxjs';
-import { ILoginPage } from './ILoginPage';
+import { ILoginPage } from './resources/ILoginPage';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class LoginPage implements OnInit {
   @HostBinding('class') content: ILoginPage.loginContentNames = 'initial';
   content$ = new BehaviorSubject<ILoginPage.LoginPageEvents>({});
 
-  registerFormReadyCalls?: RegisterContainer.OutReady;
+  registerFormReadyCalls?: IRegisterContainer.OutReady;
 
   email = '';
 
@@ -21,13 +21,13 @@ export class LoginPage implements OnInit {
 
   ngOnInit(): void {
     this.content$.subscribe((content) => {
-      if (content?.displayContent) {
+      if (content.displayContent) {
         this.content = content.displayContent;
       }
     });
   }
 
-  handleRegisterFormReady(event: RegisterContainer.OutReady): void {
+  handleRegisterFormReady(event: IRegisterContainer.OutReady): void {
     this.registerFormReadyCalls = event;
   }
 }

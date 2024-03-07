@@ -7,8 +7,8 @@ export namespace IHmsInput {
     elementRef: ElementRef;
   }
   export interface InputStyle {
-    input?: { ['text-align']?: string };
-    error?: { ['text-align']?: string };
+    input?: { ['text-align']?: string; ['padding-left']?: string };
+    error?: { ['text-align']?: string; ['padding-left']?: string };
   }
   export type recoverFnCb = (props: {
     control: FormControl;
@@ -28,6 +28,7 @@ export namespace IHmsInput {
   }
   export interface IHmsInputControll {
     initialValue: string;
+    icon?: string;
     validators?: Array<Validator<ValidatorFn>>;
     asyncValidators?: Array<Validator<AsyncValidatorFn>>;
     updateOn?: 'change' | 'blur' | 'submit';

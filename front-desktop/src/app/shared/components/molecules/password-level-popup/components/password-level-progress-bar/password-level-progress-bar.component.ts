@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import PasswordLevelPopup from '../../resources/models/PasswordLevelPopup';
+import { IPasswordLevelPopup } from '../../IPasswordLevelPopup';
 
 @Component({
   selector: 'password-level-progress-bar',
@@ -7,7 +7,7 @@ import PasswordLevelPopup from '../../resources/models/PasswordLevelPopup';
   styleUrls: ['password-level-progress-bar.component.scss'],
 })
 export default class PasswordLevelProgressBarComponent implements OnInit {
-  @Input() popupController?: PasswordLevelPopup;
+  @Input() popupController?: IPasswordLevelPopup.PasswordLevelPopup;
 
   stepsIterable: Array<number> = [];
   stepsLabel: Array<string> = [];
@@ -22,17 +22,15 @@ export default class PasswordLevelProgressBarComponent implements OnInit {
         (_, i) => i
       );
 
-      this.stepsLabel = this.popupController.rules.map((rule) => rule.label);
+      this.stepsLabel = this.popupController.getRulesLabel();
 
       this.popupController.onChanges()?.subscribe(() => {
-        const ruleAppliedLength = this.popupController?.rules.filter(
-          (rule) => rule.ruleApplied
-        ).length;
+        const ruleAppliedLength = this.popupController?.getRuleAppliedLength();
         if (typeof ruleAppliedLength == 'number') {
           this.completedLevel = ruleAppliedLength;
         }
         this.levelLabel =
-          this.popupController?.rules[this.completedLevel - 1]?.levelText || '';
+          this.popupController?.getCurrentLevelLabel(this.completedLevel) || '';
       });
     }
   }

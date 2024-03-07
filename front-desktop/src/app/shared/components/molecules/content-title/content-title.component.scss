@@ -1,8 +1,7 @@
+@use './../../../../../theme/scss-utils.scss' as mixins;
 .content-title-component{
   .title-box{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    @include mixins.f_start-centered;
     width: 100%;
     transition: .8s ease-in;
     img{

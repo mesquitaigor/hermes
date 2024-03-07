@@ -12,8 +12,4 @@ export default class LoginContainerComponent {
   handleRecoveryEmailInput(hmsControl: HmsInputControll): void {
     this.loginHmsControl = hmsControl;
   }
-
-  handleBack(): void {
-    //this.loginPageService.displayInitialContent();
-  }
 }

@@ -1,5 +1,5 @@
 import { AbstractControl } from '@angular/forms';
-import { Observable, catchError, delay, map, of, tap } from 'rxjs';
+import { Observable, catchError, delay, map, of } from 'rxjs';
 import AuthService from '../../auth/auth.service';
 import { AuthDto } from '../../auth/AuthDto';
 import { IEmailValidator } from './IEmailValidator';
@@ -36,7 +36,7 @@ export default class EmailValidator {
   ): (control: AbstractControl) => Observable<IEmailValidator.errors> {
     return (control: AbstractControl): Observable<IEmailValidator.errors> => {
       return authService.validateEmail(control.value).pipe(
-        delay(300),
+        delay(200),
         catchError((error: HttpErrorResponse) => {
           return of(error);
         }),
@@ -52,7 +52,7 @@ export default class EmailValidator {
     res: AuthDto.EmailValidateResponse | HttpErrorResponse
   ): IEmailValidator.errors {
     if (!(res instanceof HttpErrorResponse)) {
-      if (typeof res?.existing === 'boolean') {
+      if (typeof res.existing === 'boolean') {
         if (shouldExist && res.existing) {
           return { existing: true };
         } else if (!shouldExist && !res.existing) {

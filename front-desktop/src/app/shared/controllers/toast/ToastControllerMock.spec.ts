@@ -1,4 +1,4 @@
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import ServiceMock from '../../../test/ServiceMock.spec';
 import ToastController from './toast.controller';
 import { IToast } from './IToast';

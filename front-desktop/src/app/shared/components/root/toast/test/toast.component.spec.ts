@@ -45,8 +45,7 @@ describe(ToastComponent.name, () => {
     expect(toastDebugElement).not.toBeNull();
   });
   it('should display the message of toast', () => {
-    const message = 'message-test';
-    componentHelper.emitToast(message);
+    componentHelper.emitToast();
     const toastDebugElement = componentHelper.getToast();
     expect(toastDebugElement).not.toBeNull();
   });

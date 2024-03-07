@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { AsyncValidatorFn, FormControlStatus, FormGroup } from '@angular/forms';
 import EmailValidator from '@validators/email-validator/EmailValidator';
 import AuthService from '../../../../shared/auth/auth.service';
-import { RegisterContainer } from '../register-conteiner/RegisterContainer';
+import { IRegisterContainer } from '../register-conteiner/IRegisterContainer';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { ILoginPage } from '../../ILoginPage';
+import { ILoginPage } from './../../resources/ILoginPage';
 import { IEmailValidator } from '@validators/email-validator/IEmailValidator';
 import { IHmsInput } from '@components/common/hms-input/IHmsInput';
 import HmsInputControll from '@components/common/hms-input/HmsInputControll';
@@ -18,7 +18,6 @@ export default class InitialContainerComponent {
   @Input() contFormGroup?: FormGroup;
   @Input() contentObservable?: BehaviorSubject<ILoginPage.LoginPageEvents>;
   emailHmsControl?: HmsInputControll;
-
   additionalValidators: Array<IHmsInput.Validator<AsyncValidatorFn>> = [
     {
       fn: EmailValidator.nonExisting(this.authService),
@@ -46,7 +45,7 @@ export default class InitialContainerComponent {
   handleRecoveryEmailInput(hmsControl: HmsInputControll): void {
     if (this.contentObservable) {
       this.contentObservable.subscribe((content) => {
-        if (content?.displayContent != 'initial' && this.emailHmsControl) {
+        if (content.displayContent != 'initial' && this.emailHmsControl) {
           this.emailHmsControl.removeAsyncValidator(
             IEmailValidator.errorKeys.existing
           );
@@ -62,7 +61,7 @@ export default class InitialContainerComponent {
       const abstractControl = hmsControl.getNgControl();
       if (abstractControl) {
         this.contFormGroup.addControl(
-          RegisterContainer.FormInputNames.EMAIL,
+          IRegisterContainer.FormInputNames.EMAIL,
           abstractControl
         );
       }

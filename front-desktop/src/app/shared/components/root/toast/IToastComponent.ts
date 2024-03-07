@@ -17,7 +17,7 @@ export namespace IToastComponent {
       this.defineIcon();
       this.defineClasses();
     }
-    private defineIcon() {
+    private defineIcon(): void {
       if (this.type == 'success') {
         this.icon = 'success';
       } else if (this.type == 'error') {
@@ -28,7 +28,7 @@ export namespace IToastComponent {
         this.icon = 'info';
       }
     }
-    private defineClasses() {
+    private defineClasses(): void {
       this.ngClass = {
         'toast-success': this.type === 'success',
         'toast-error': this.type === 'error',

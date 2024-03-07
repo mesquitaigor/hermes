@@ -1,0 +1,10 @@
+@use './../../../../../theme/scss-utils.scss' as mixins;
+.illustration-content{
+  @include mixins.f_full-center;
+  transition: .8s ease-in-out;
+  padding: 20px;
+  img{
+    transition: .8s ease-in-out;
+    width: 100%;
+  }
+}

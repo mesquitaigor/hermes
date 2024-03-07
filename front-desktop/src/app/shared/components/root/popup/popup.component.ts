@@ -119,7 +119,7 @@ export default class PopupComponent implements OnInit {
       const childElements = this.dynamicChild.toArray();
       const renderItem = this.getRenderItem(popup.getUuid());
       const content = childElements.find(
-        (element) => element.uuid == renderItem?.uuid
+        (childElement) => childElement.uuid == renderItem?.uuid
       );
       if (content) {
         const componentRef: ComponentRef<IPopupComponent.PopupChildComponent> =
@@ -179,16 +179,14 @@ export default class PopupComponent implements OnInit {
     popup: PopupModel<unknown, unknown>,
     componentRef: ComponentRef<IPopupComponent.PopupChildComponent>
   ): void {
-    if (componentRef.instance.popupDefinitions) {
-      const style = componentRef.instance.popupDefinitions.style;
-      const renderItem = this.getRenderItem(popup.getUuid());
-      if (renderItem) {
-        if (style?.width) {
-          renderItem.boxStyle.width = style.width;
-        }
-        if (style?.height) {
-          renderItem.boxStyle.height = style.height;
-        }
+    const style = componentRef.instance.popupDefinitions.style;
+    const renderItem = this.getRenderItem(popup.getUuid());
+    if (renderItem) {
+      if (style?.width) {
+        renderItem.boxStyle.width = style.width;
+      }
+      if (style?.height) {
+        renderItem.boxStyle.height = style.height;
       }
     }
   }

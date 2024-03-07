@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import PasswordLevelPopup from '../../resources/models/PasswordLevelPopup';
+import { IPasswordLevelPopup } from '../../IPasswordLevelPopup';
 
 @Component({
   selector: 'password-requisite-item-bar',
@@ -7,5 +7,5 @@ import PasswordLevelPopup from '../../resources/models/PasswordLevelPopup';
   styleUrls: ['password-requisite-item.component.scss'],
 })
 export default class PasswordRequisiteItemComponent {
-  @Input() popupController?: PasswordLevelPopup;
+  @Input() popupController?: IPasswordLevelPopup.PasswordLevelPopup;
 }

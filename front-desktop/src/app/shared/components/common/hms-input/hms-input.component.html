@@ -4,6 +4,9 @@
     [class.error]="inputControll.errors && inputControll.touched"
   >
     <div class="input-content">
+      <ng-template [ngIf]="controll?.icon">
+        <img class="input-icon" [src]="controll?.icon" />
+      </ng-template>
       <input
         #inputRef
         [autocapitalize]="controll?.autocapitalize"
@@ -14,7 +17,7 @@
         [placeholder]="controll?.placeholder"
         [type]="controll?.type"
       />
-      <img src="./../../../../../assets/icons/alert.svg" />
+      <img class="error-icon" src="./../../../../../assets/icons/alert.svg" />
     </div>
     <p class="error-message" [ngStyle]="controll?.style?.error || {}">
       {{ controll?.errorMessage }}

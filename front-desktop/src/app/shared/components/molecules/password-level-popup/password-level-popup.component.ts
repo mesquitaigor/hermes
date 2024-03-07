@@ -6,12 +6,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import PasswordLevelPopup from './resources/models/PasswordLevelPopup';
 import { IPopupComponent } from '@components/root/popup/IPopupComponent';
-import PasswordLevelPopupComponentInputs from './resources/interfaces/PasswordLevelPopupComponentInputs';
-import PasswordLevelPopupComponentOutputs from './resources/interfaces/PasswordLevelPopupComponentOutputs';
-import PasswordPopupController from './resources/interfaces/PasswordPopupController';
-import { progressBarActionType } from './resources/types/progressBarActionType';
+import { IPasswordLevelPopup } from './IPasswordLevelPopup';
 
 @Component({
   selector: 'password-level-popup-component',
@@ -22,13 +18,14 @@ export default class PasswordLevelPopupComponent
   implements
     IPopupComponent.PopupChildComponent,
     OnInit,
-    PasswordLevelPopupComponentInputs,
-    PasswordLevelPopupComponentOutputs
+    IPasswordLevelPopup.Inputs,
+    IPasswordLevelPopup.Output
 {
-  @Input() popupController: PasswordLevelPopup | undefined;
+  @Input() popupController: IPasswordLevelPopup.PasswordLevelPopup | undefined;
   @Input() @HostBinding('class.show') show = false;
 
-  @Output() handlePopupController = new EventEmitter<PasswordPopupController>();
+  @Output() handlePopupController =
+    new EventEmitter<IPasswordLevelPopup.Controller>();
 
   addingProgressBar = false;
   completedLevelProgressBar = 0;
@@ -43,7 +40,7 @@ export default class PasswordLevelPopupComponent
 
   ngOnInit(): void {
     this.handlePopupController.emit({
-      changeProgressBar: (type: progressBarActionType) => {
+      changeProgressBar: (type: IPasswordLevelPopup.progressBarActionType) => {
         this.changeProgressPasswordBar(type);
       },
       getProgressBar: () => {
@@ -51,17 +48,21 @@ export default class PasswordLevelPopupComponent
       },
     });
 
+    this.listenPopupChanges()
+  }
+
+  listenPopupChanges(){
     if (this.popupController) {
       const onChangeSubscribe = this.popupController.onChanges();
       onChangeSubscribe?.subscribe(() => {
-        this.popupController?.rules.forEach((rule) => {
-          rule.ruleApplied = rule.condition();
-        });
+        this.popupController?.atualizeRulesStatus();
       });
     }
   }
 
-  changeProgressPasswordBar(action: progressBarActionType): void {
+  changeProgressPasswordBar(
+    action: IPasswordLevelPopup.progressBarActionType
+  ): void {
     if (
       !this.addingProgressBar &&
       ((action == 'remove' && this.completedLevelProgressBar > 0) ||

@@ -44,14 +44,19 @@ export default class HsmInputComponent implements AfterViewInit, OnInit {
   }
 
   alignErrorStyle(): void {
-    if (this.controll && this.controll?.style?.error == undefined) {
-      this.controll.style.error = {};
-      if (
-        this.controll?.style?.error?.['text-align'] === undefined &&
-        this.controll?.style?.input?.['text-align'] !== undefined
-      ) {
-        this.controll.style.error['text-align'] =
-          this.controll.style.input?.['text-align'];
+    if (this.controll) {
+      if (this.controll.style.error == undefined) {
+        this.controll.style.error = {};
+        if (
+          this.controll.style.error['text-align'] === undefined &&
+          this.controll.style.input?.['text-align'] !== undefined
+        ) {
+          this.controll.style.error['text-align'] =
+            this.controll.style.input['text-align'];
+        }
+      }
+      if (this.controll.icon && this.controll.style.input) {
+        this.controll.style.input['padding-left'] = '46px';
       }
     }
   }

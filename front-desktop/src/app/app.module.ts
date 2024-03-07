@@ -5,11 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { LoginPageModule } from './modules/login/login.page.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import TopbarComponentModule from './shared/components/root/topbar/topbar.component.module';
 import SidebarComponentModule from './shared/components/root/sidebar/sidebar.component.module';
 import PopupComponentModule from './shared/components/root/popup/popup.component.module';
 import ToastComponentModule from './shared/components/root/toast/toast.component.module';
+import JwtHttpInterceptor from './shared/auth/jwt-http-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,9 @@ import ToastComponentModule from './shared/components/root/toast/toast.component
     PopupComponentModule,
     ToastComponentModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 import HmsInputControll from '@components/common/hms-input/HmsInputControll';
 
-export namespace RegisterContainer {
+export namespace IRegisterContainer {
   export type inputsControl = {
     [key in FormInputNames]?: InputsControlValue;
   };

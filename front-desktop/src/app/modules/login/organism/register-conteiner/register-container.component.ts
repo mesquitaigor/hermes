@@ -13,8 +13,8 @@ import { BehaviorSubject, finalize } from 'rxjs';
 import ToastController from '@controllers/toast/toast.controller';
 import AuthService from '../../../../shared/auth/auth.service';
 import { Router } from '@angular/router';
-import { RegisterContainer } from './RegisterContainer';
-import { ILoginPage } from '../../ILoginPage';
+import { IRegisterContainer } from './IRegisterContainer';
+import { ILoginPage } from '../../resources/ILoginPage';
 
 @Component({
   selector: 'register-container',
@@ -24,9 +24,9 @@ import { ILoginPage } from '../../ILoginPage';
 export default class RegisterContainerComponent implements OnInit {
   @Input() contFormGroup?: FormGroup;
   @Input() contentObservable?: BehaviorSubject<ILoginPage.LoginPageEvents>;
-  @Output() formReady = new EventEmitter<RegisterContainer.OutReady>();
+  @Output() formReady = new EventEmitter<IRegisterContainer.OutReady>();
   @HostBinding('class.sending') sending = false;
-  inputs: RegisterContainer.inputsControl = {};
+  inputs: IRegisterContainer.inputsControl = {};
   constructor(
     private authServce: AuthService,
     private toastController: ToastController,
@@ -36,25 +36,34 @@ export default class RegisterContainerComponent implements OnInit {
   ngOnInit(): void {
     this.formReady.emit({
       addControls: (formGroup: FormGroup): void => {
-        this.forEachInput((inputItem: RegisterContainer.InputsControlValue) => {
-          const abstractControl = inputItem.control.getNgControl();
-          if (abstractControl) {
-            formGroup.addControl(inputItem.name, abstractControl);
+        this.forEachInput(
+          (inputItem: IRegisterContainer.InputsControlValue) => {
+            const abstractControl = inputItem.control.getNgControl();
+            if (abstractControl) {
+              formGroup.addControl(inputItem.name, abstractControl);
+            }
           }
-        });
+        );
       },
       removeControls: (formGroup: FormGroup): void => {
-        this.forEachInput((inputItem: RegisterContainer.InputsControlValue) => {
-          formGroup.removeControl(inputItem.name);
-        });
+        this.forEachInput(
+          (inputItem: IRegisterContainer.InputsControlValue) => {
+            formGroup.removeControl(inputItem.name);
+          }
+        );
       },
+    });
+    this.contFormGroup?.statusChanges.subscribe((status) => {
+      console.log(status);
     });
   }
 
-  forEachInput(cb: (item: RegisterContainer.InputsControlValue) => void): void {
+  forEachInput(
+    cb: (item: IRegisterContainer.InputsControlValue) => void
+  ): void {
     Object.keys(this.inputs).forEach((key) => {
       const inputItem =
-        this.inputs[key as keyof RegisterContainer.inputsControl];
+        this.inputs[key as keyof IRegisterContainer.inputsControl];
       if (inputItem) {
         cb(inputItem);
       }
@@ -65,12 +74,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        RegisterContainer.FormInputNames.PASSWORD,
+        IRegisterContainer.FormInputNames.PASSWORD,
         abstractControl
       );
       this.inputs.password = {
         control: hmsControl,
-        name: RegisterContainer.FormInputNames.PASSWORD,
+        name: IRegisterContainer.FormInputNames.PASSWORD,
       };
     }
   }
@@ -79,12 +88,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        RegisterContainer.FormInputNames.PASSWORD,
+        IRegisterContainer.FormInputNames.PASSWORD,
         abstractControl
       );
       this.inputs.passwordConfirmation = {
         control: hmsControl,
-        name: RegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
+        name: IRegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
       };
     }
   }
@@ -93,12 +102,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        RegisterContainer.FormInputNames.FIRST_NAME,
+        IRegisterContainer.FormInputNames.FIRST_NAME,
         abstractControl
       );
       this.inputs.firstName = {
         control: hmsControl,
-        name: RegisterContainer.FormInputNames.FIRST_NAME,
+        name: IRegisterContainer.FormInputNames.FIRST_NAME,
       };
     }
   }
@@ -107,12 +116,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        RegisterContainer.FormInputNames.LAST_NAME,
+        IRegisterContainer.FormInputNames.LAST_NAME,
         abstractControl
       );
       this.inputs.lastName = {
         control: hmsControl,
-        name: RegisterContainer.FormInputNames.LAST_NAME,
+        name: IRegisterContainer.FormInputNames.LAST_NAME,
       };
     }
   }
@@ -152,19 +161,19 @@ export default class RegisterContainerComponent implements OnInit {
         }
       });
       this.updateInput(
-        RegisterContainer.FormInputNames.FIRST_NAME,
+        IRegisterContainer.FormInputNames.FIRST_NAME,
         this.contFormGroup
       );
       this.updateInput(
-        RegisterContainer.FormInputNames.LAST_NAME,
+        IRegisterContainer.FormInputNames.LAST_NAME,
         this.contFormGroup
       );
       this.updateInput(
-        RegisterContainer.FormInputNames.PASSWORD,
+        IRegisterContainer.FormInputNames.PASSWORD,
         this.contFormGroup
       );
       this.updateInput(
-        RegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
+        IRegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
         this.contFormGroup
       );
       this.contFormGroup.markAllAsTouched();
@@ -173,7 +182,7 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   updateInput(
-    inputName: RegisterContainer.FormInputNames,
+    inputName: IRegisterContainer.FormInputNames,
     registerForm: FormGroup
   ): void {
     registerForm.get(inputName)?.markAsTouched();
@@ -184,10 +193,10 @@ export default class RegisterContainerComponent implements OnInit {
     const formValues = this.contFormGroup?.value;
     if (formValues) {
       return new BasicUser({
-        email: formValues[RegisterContainer.FormInputNames.EMAIL],
-        firstName: formValues[RegisterContainer.FormInputNames.FIRST_NAME],
-        lastName: formValues[RegisterContainer.FormInputNames.LAST_NAME],
-        password: formValues[RegisterContainer.FormInputNames.PASSWORD],
+        email: formValues[IRegisterContainer.FormInputNames.EMAIL],
+        firstName: formValues[IRegisterContainer.FormInputNames.FIRST_NAME],
+        lastName: formValues[IRegisterContainer.FormInputNames.LAST_NAME],
+        password: formValues[IRegisterContainer.FormInputNames.PASSWORD],
       });
     }
   }

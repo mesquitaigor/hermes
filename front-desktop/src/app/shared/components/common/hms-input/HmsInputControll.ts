@@ -13,6 +13,7 @@ import ToastController from '../../../controllers/toast/toast.controller';
 
 export default class HmsInputControll {
   initialValue = '';
+  icon = '';
   validators: Array<IHmsInput.Validator<ValidatorFn>> = [];
   asyncValidators: Array<IHmsInput.Validator<AsyncValidatorFn>> = [];
   updateOn: 'change' | 'blur' | 'submit' = 'change';
@@ -29,10 +30,9 @@ export default class HmsInputControll {
 
   errorMessage = '';
   type = 'text';
-  private __toastController?: ToastController;
-
   pending$ = new BehaviorSubject(false);
 
+  private __toastController?: ToastController;
   private recoverNgControllFn?: IHmsInput.recoverFnCb;
   private ngControl?: FormControl;
   private inputRef?: ElementRef;
@@ -41,6 +41,7 @@ export default class HmsInputControll {
 
   constructor(props: IHmsInput.IHmsInputControll) {
     this.initialValue = props.initialValue;
+    this.icon = props.icon || '';
     this.validators = props.validators || [];
     this.asyncValidators = props.asyncValidators || [];
     this.updateOn = props.updateOn || 'change';
@@ -82,11 +83,11 @@ export default class HmsInputControll {
   }
 
   getValidators(): Array<ValidatorFn> {
-    return this.validators?.map((validator) => validator.fn) || [];
+    return this.validators.map((validator) => validator.fn);
   }
 
   getAsyncValidators(): Array<AsyncValidatorFn> {
-    return this.asyncValidators?.map((validator) => validator.fn) || [];
+    return this.asyncValidators.map((validator) => validator.fn);
   }
 
   recoverNgControl(cb: (props: IHmsInput.NgControlOutput) => void): void {
@@ -190,14 +191,14 @@ export default class HmsInputControll {
 
   private getValidatorStructures(
     validatorsList: Array<IHmsInput.Validator<ValidatorFn | AsyncValidatorFn>>
-  ) {
+  ): Array<void | IHmsInput.ValidatorStructure> {
     return validatorsList
       .map(
         (
           validator
         ):
           | IHmsInput.ValidatorStructure
-          | IHmsInput.ValidatorStructure[]
+          | Array<IHmsInput.ValidatorStructure>
           | void => {
           if (validator.key) {
             return validator;
@@ -212,17 +213,17 @@ export default class HmsInputControll {
 
   private getValidatorKeys(
     validators: Array<IHmsInput.Validator<ValidatorFn | AsyncValidatorFn>>
-  ): string[] {
+  ): Array<string> {
     return validators
-      .map((validator): string | string[] | void => {
+      .map((validator): string | Array<string> | void => {
         if (validator.key) {
           return validator.key;
         } else if (validator.keys?.length) {
-          return validator.keys.map((key) => key.key) as string[];
+          return validator.keys.map((key) => key.key) as Array<string>;
         }
       })
       .flat()
-      .filter((key: string | void) => typeof key == 'string') as string[];
+      .filter((key: string | void) => typeof key == 'string') as Array<string>;
   }
 
   private emitNgControll(): void {

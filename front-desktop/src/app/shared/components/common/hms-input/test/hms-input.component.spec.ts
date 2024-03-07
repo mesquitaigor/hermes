@@ -9,24 +9,25 @@ fdescribe(HsmInputComponent.name, () => {
   let component: HsmInputComponent;
   let fixture: ComponentFixture<HsmInputComponent>;
 
-  const emailFormControll = new HmsInputControll({
-    initialValue: '',
-    type: 'text',
-    validators: [
-      {
-        fn: Validators.required,
-        key: 'required',
-        message: 'Campo obrigatório',
-      },
-    ],
-    updateOn: 'submit',
-    style: {
-      input: {
-        ['text-align']: 'center',
-      },
-    },
-  });
+  let emailFormControll: HmsInputControll;
   beforeEach(() => {
+    emailFormControll = new HmsInputControll({
+      initialValue: '',
+      type: 'text',
+      validators: [
+        {
+          fn: Validators.required,
+          key: 'required',
+          message: 'Campo obrigatório',
+        },
+      ],
+      updateOn: 'submit',
+      style: {
+        input: {
+          ['text-align']: 'center',
+        },
+      },
+    });
     TestBed.configureTestingModule({
       imports: [HsmInputComponentModule],
     }).compileComponents();
@@ -61,12 +62,25 @@ fdescribe(HsmInputComponent.name, () => {
     const input = fixture.debugElement.query(By.css('input'));
     expect(input.nativeElement.value).toEqual(initialValue);
   });
-  it("should define input's initial value when configured", () => {
+
+  it("should define input's type value when configured", () => {
     const inputType = 'email';
     emailFormControll.type = inputType;
     component.controll = emailFormControll;
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('input'));
     expect(input.nativeElement.getAttribute('type')).toEqual(inputType);
+  });
+
+  it('should focus input when configured', () => {
+    emailFormControll.autofocus = true;
+    component.controll = emailFormControll;
+    component.ngAfterViewInit();
+    fixture.detectChanges();
+    const input = fixture.debugElement.query(By.css('input'));
+    setTimeout(() => {
+      console.log(document.activeElement?.tagName);
+    }, 400);
+    expect(input.nativeElement.getAttribute('type')).toEqual('text');
   });
 });

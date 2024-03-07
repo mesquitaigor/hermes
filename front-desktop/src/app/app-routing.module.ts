@@ -4,8 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'login',
+    pathMatch: 'full',
     loadChildren: () =>
-      import('./modules/login/login.page.module').then((m) => m.LoginPageModule),
+      import('./modules/login/login.page.module').then(
+        (m) => m.LoginPageModule
+      ),
   },
   {
     path: '',
@@ -16,6 +19,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
