@@ -53,9 +53,6 @@ export default class RegisterContainerComponent implements OnInit {
         );
       },
     });
-    this.contFormGroup?.statusChanges.subscribe((status) => {
-      console.log(status);
-    });
   }
 
   forEachInput(
@@ -74,12 +71,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        IRegisterContainer.FormInputNames.PASSWORD,
+        ILoginPage.InputNames.PASSWORD,
         abstractControl
       );
       this.inputs.password = {
         control: hmsControl,
-        name: IRegisterContainer.FormInputNames.PASSWORD,
+        name: ILoginPage.InputNames.PASSWORD,
       };
     }
   }
@@ -88,12 +85,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        IRegisterContainer.FormInputNames.PASSWORD,
+        ILoginPage.InputNames.PASSWORD,
         abstractControl
       );
       this.inputs.passwordConfirmation = {
         control: hmsControl,
-        name: IRegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
+        name: ILoginPage.InputNames.PASSWORD_CONFIRMATION,
       };
     }
   }
@@ -102,12 +99,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        IRegisterContainer.FormInputNames.FIRST_NAME,
+        ILoginPage.InputNames.FIRST_NAME,
         abstractControl
       );
       this.inputs.firstName = {
         control: hmsControl,
-        name: IRegisterContainer.FormInputNames.FIRST_NAME,
+        name: ILoginPage.InputNames.FIRST_NAME,
       };
     }
   }
@@ -116,12 +113,12 @@ export default class RegisterContainerComponent implements OnInit {
     const abstractControl = hmsControl.getNgControl();
     if (this.contFormGroup && abstractControl) {
       this.contFormGroup.addControl(
-        IRegisterContainer.FormInputNames.LAST_NAME,
+        ILoginPage.InputNames.LAST_NAME,
         abstractControl
       );
       this.inputs.lastName = {
         control: hmsControl,
-        name: IRegisterContainer.FormInputNames.LAST_NAME,
+        name: ILoginPage.InputNames.LAST_NAME,
       };
     }
   }
@@ -161,19 +158,19 @@ export default class RegisterContainerComponent implements OnInit {
         }
       });
       this.updateInput(
-        IRegisterContainer.FormInputNames.FIRST_NAME,
+        ILoginPage.InputNames.FIRST_NAME,
         this.contFormGroup
       );
       this.updateInput(
-        IRegisterContainer.FormInputNames.LAST_NAME,
+        ILoginPage.InputNames.LAST_NAME,
         this.contFormGroup
       );
       this.updateInput(
-        IRegisterContainer.FormInputNames.PASSWORD,
+        ILoginPage.InputNames.PASSWORD,
         this.contFormGroup
       );
       this.updateInput(
-        IRegisterContainer.FormInputNames.PASSWORD_CONFIRMATION,
+        ILoginPage.InputNames.PASSWORD_CONFIRMATION,
         this.contFormGroup
       );
       this.contFormGroup.markAllAsTouched();
@@ -182,7 +179,7 @@ export default class RegisterContainerComponent implements OnInit {
   }
 
   updateInput(
-    inputName: IRegisterContainer.FormInputNames,
+    inputName: ILoginPage.InputNames,
     registerForm: FormGroup
   ): void {
     registerForm.get(inputName)?.markAsTouched();
@@ -193,10 +190,10 @@ export default class RegisterContainerComponent implements OnInit {
     const formValues = this.contFormGroup?.value;
     if (formValues) {
       return new BasicUser({
-        email: formValues[IRegisterContainer.FormInputNames.EMAIL],
-        firstName: formValues[IRegisterContainer.FormInputNames.FIRST_NAME],
-        lastName: formValues[IRegisterContainer.FormInputNames.LAST_NAME],
-        password: formValues[IRegisterContainer.FormInputNames.PASSWORD],
+        email: formValues[ILoginPage.InputNames.EMAIL],
+        firstName: formValues[ILoginPage.InputNames.FIRST_NAME],
+        lastName: formValues[ILoginPage.InputNames.LAST_NAME],
+        password: formValues[ILoginPage.InputNames.PASSWORD],
       });
     }
   }

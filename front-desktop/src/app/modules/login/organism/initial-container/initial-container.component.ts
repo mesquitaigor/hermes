@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { AsyncValidatorFn, FormControlStatus, FormGroup } from '@angular/forms';
 import EmailValidator from '@validators/email-validator/EmailValidator';
 import AuthService from '../../../../shared/auth/auth.service';
-import { IRegisterContainer } from '../register-conteiner/IRegisterContainer';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ILoginPage } from './../../resources/ILoginPage';
 import { IEmailValidator } from '@validators/email-validator/IEmailValidator';
@@ -17,6 +16,7 @@ import HmsInputControll from '@components/common/hms-input/HmsInputControll';
 export default class InitialContainerComponent {
   @Input() contFormGroup?: FormGroup;
   @Input() contentObservable?: BehaviorSubject<ILoginPage.LoginPageEvents>;
+  @HostBinding('down') down = false
   emailHmsControl?: HmsInputControll;
   additionalValidators: Array<IHmsInput.Validator<AsyncValidatorFn>> = [
     {
@@ -52,6 +52,7 @@ export default class InitialContainerComponent {
           this.emailHmsControl.removeAsyncValidator(
             IEmailValidator.errorKeys.nonexisting
           );
+          this.down = true
         }
       });
     }
@@ -60,8 +61,9 @@ export default class InitialContainerComponent {
       this.emailHmsControl = hmsControl;
       const abstractControl = hmsControl.getNgControl();
       if (abstractControl) {
+        abstractControl.setValue('igor.mesqbessa@gmail.com')
         this.contFormGroup.addControl(
-          IRegisterContainer.FormInputNames.EMAIL,
+          ILoginPage.InputNames.EMAIL,
           abstractControl
         );
       }

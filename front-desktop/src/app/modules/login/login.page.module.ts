@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login.page';
 import { LoginRoutingPageModule } from './login-routing.page.module';
-import PasswordLevelPopupComponentModule from '../../shared/components/molecules/password-level-popup/password-level-popup.component.module';
 import InitialContainerComponentModule from './organism/initial-container/initial-container.component.module';
 import RegisterContainerComponentModule from './organism/register-conteiner/register-container.component.module';
 import LoginContainerComponentModule from './organism/login-container/login-container.component.module';
@@ -16,7 +15,6 @@ import IllustrationContentComponentModule from './molecules/illustration-content
     FormsModule,
     LoginRoutingPageModule,
     ReactiveFormsModule,
-    PasswordLevelPopupComponentModule,
     InitialContainerComponentModule,
     RegisterContainerComponentModule,
     LoginContainerComponentModule,
@@ -24,5 +22,6 @@ import IllustrationContentComponentModule from './molecules/illustration-content
     IllustrationContentComponentModule,
   ],
   declarations: [LoginPage],
+  exports: [LoginPage]
 })
 export class LoginPageModule {}

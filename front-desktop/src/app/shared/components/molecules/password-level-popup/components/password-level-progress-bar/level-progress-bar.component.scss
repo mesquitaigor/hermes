@@ -1,0 +1,40 @@
+.level-progress-bar{
+  margin-bottom: 20px;
+  .complex-bar-list{
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50px;
+    .complex-bar{
+      width: 20px;
+      height: 5px;
+      border-radius: 50px;
+      margin-right: 5px;
+      background-color: rgba(0,0,0,.2);
+      overflow: hidden;
+      position: relative;
+      &.up .progress-bar{
+        width: 100%;
+      }
+      .progress-bar{
+        height: 5px;
+        position: absolute;
+        top: 0;
+        width: 40px;
+        background: #16a487;
+        background-blend-mode: darken;
+        width: 0;
+        transition: .3s;
+      }
+    }
+  }
+  p{
+    font-weight: 600;
+    font-size: 12px;
+    margin-top: 5px;
+    height: 13px;
+    display: inline-block;
+  }
+}

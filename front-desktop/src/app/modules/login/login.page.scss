@@ -6,10 +6,12 @@
         .initial-container{
           opacity: 1;
           transition: .8s ease-in-out;
+          transform: translateY(0);
         }
         .register-container, .login-container{
           opacity: 0;
           pointer-events: none;
+          transform: translateY(-100%);
         }
       }
     }
@@ -17,17 +19,15 @@
   &.register .login-page{
     .login-form-content{
       form {
-        .initial-container{
-          opacity: 0;
-          pointer-events: none;
-        }
         .register-container{
           opacity: 1;
           transition: .8s ease-in-out;
+          transform: translateY(0);
         }
-        .login-container{
+        .login-container, .initial-container{
           opacity: 0;
           pointer-events: none;
+          transform: translateY(-100%);
         }
       }
     }
@@ -35,17 +35,15 @@
   &.login .login-page{
     .login-form-content{
       form {
-        .initial-container{
-          opacity: 0;
-          pointer-events: none;
-        }
         .login-container{
           opacity: 1;
           transition: .8s ease-in-out;
+          transform: translateY(-100%);
         }
-        .register-container{
+        .register-container, .initial-container{
           opacity: 0;
           pointer-events: none;
+          transform: translateY(0);
         }
       }
     }
@@ -83,5 +81,15 @@
         }
       }
     }
+  }
+}
+
+@keyframes slideUp {
+  0% {
+	transform: translateY(0);
+  }
+
+  100% {
+	transform: translateY(-100px);
   }
 }

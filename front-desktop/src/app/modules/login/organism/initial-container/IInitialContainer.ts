@@ -5,4 +5,9 @@ export namespace IInitialContainer {
   }
 
   export type outDisplayValue = 'display-login' | 'display-register';
+
+  export enum FormInputNames {
+    EMAIL = 'email',
+  }
+
 }

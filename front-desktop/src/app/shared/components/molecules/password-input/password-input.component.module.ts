@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import HsmInputComponentModule from '@components/common/hms-input/hms-input.component.module';
 import PasswordInputComponent from './password-input.component';
-import PasswordLevelPopupComponentModule from '../password-level-popup/password-level-popup.component.module';
+import RulesLevelPopupComponentModule from '../password-level-popup/rules-level-popup.component.module';
 
 @NgModule({
   declarations: [PasswordInputComponent],
@@ -10,7 +10,7 @@ import PasswordLevelPopupComponentModule from '../password-level-popup/password-
   imports: [
     CommonModule,
     HsmInputComponentModule,
-    PasswordLevelPopupComponentModule,
+    RulesLevelPopupComponentModule,
   ],
 })
 export default class PasswordInputComponentModule {}

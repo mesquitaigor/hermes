@@ -4,18 +4,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "prettier.tabWidth": 1,
-  "prettier.useTabs": true,
   "editor.detectIndentation": false,
-  "compile-hero.disable-compile-files-on-did-save-code": true,
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.includePackageJsonAutoImports": "auto",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "angular-schematics.schematicsDefaultOptions": {
-    "angular-*": {
-      "style": "scss",
-      "externalTemplate": true
-    }
-  }
 }

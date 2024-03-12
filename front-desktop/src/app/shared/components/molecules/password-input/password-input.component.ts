@@ -2,24 +2,30 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   ViewChild,
+  booleanAttribute,
 } from '@angular/core';
 import HmsInputControll from '@components/common/hms-input/HmsInputControll';
-import { Validators } from '@angular/forms';
+import { ValidatorFn, Validators } from '@angular/forms';
 import PasswordValidator from '@validators/password-validator/PasswordValidatior';
 import { PasswordErrors } from '@validators/password-validator/PasswordErrors';
 import PopupModel from '@controllers/popup/resources/PopupModel';
 import PopupController from '@controllers/popup/popup.controller';
-import PasswordLevelPopupComponent from '../password-level-popup/password-level-popup.component';
-import { IPasswordLevelPopup } from '../password-level-popup/IPasswordLevelPopup';
+import RulesLevelPopupComponent from '../password-level-popup/rules-level-popup.component';
+import { IRulesLevelPopup } from '../password-level-popup/resources/IRulesLevelPopup';
+import PasswordPopupDialog from './resources/PasswordPopupDialog';
+import { IHmsInput } from '../../common/hms-input/IHmsInput';
 
 @Component({
   selector: 'password-input',
   templateUrl: 'password-input.component.html',
 })
 export default class PasswordInputComponent implements OnInit {
+  @Input({transform: booleanAttribute}) applyRules = false
+  @Input({transform: booleanAttribute}) isRequired = false
   @Output() inputReady = new EventEmitter<HmsInputControll>();
   @ViewChild('') passwordInputRef?: ElementRef;
   passwordInput = new HmsInputControll({
@@ -27,49 +33,61 @@ export default class PasswordInputComponent implements OnInit {
     type: 'password',
     icon: './../../../../../assets/icons/padlock.svg',
     placeholder: 'Digite sua senha',
-    validators: [
-      {
-        fn: Validators.minLength(8),
-        key: 'minlength',
-        message: 'Senha muito curta.',
-      },
-      {
-        fn: PasswordValidator.shouldHaveNumbers,
-        key: PasswordErrors.shouldHaveNumbers,
-        message: 'Senha fraca.',
-      },
-      {
-        fn: PasswordValidator.shouldHaveLowerLetters,
-        key: PasswordErrors.shouldHaveLowerLetters,
-        message: 'Senha fraca.',
-      },
-      {
-        fn: PasswordValidator.shouldHaveUpperLetters,
-        key: PasswordErrors.shouldHaveUpperLetters,
-        message: 'Senha fraca.',
-      },
-      {
-        fn: PasswordValidator.shouldHavespecialCharacters,
-        key: PasswordErrors.shouldHavespecialCharacters,
-        message: 'Senha fraca.',
-      },
-      {
-        fn: Validators.required,
-        key: 'required',
-        message: 'Campo obrigatório.',
-      },
-    ],
+    validators: [],
     updateOn: 'change',
   });
 
-  controller = new IPasswordLevelPopup.PasswordLevelPopup();
-  popup?: PopupModel<IPasswordLevelPopup.Inputs, IPasswordLevelPopup.Output>;
+  validators: {[key: string]: IHmsInput.Validator<ValidatorFn>} = {
+    minLength: {
+      fn: Validators.minLength(8),
+      key: 'minlength',
+      message: 'Senha muito curta.',
+    },
+    shouldHaveNumbers: {
+      fn: PasswordValidator.shouldHaveNumbers,
+      key: PasswordErrors.shouldHaveNumbers,
+      message: 'Senha fraca.',
+    },
+    shouldHaveLowerLetters: {
+      fn: PasswordValidator.shouldHaveLowerLetters,
+      key: PasswordErrors.shouldHaveLowerLetters,
+      message: 'Senha fraca.',
+    },
+    shouldHaveUpperLetters: {
+      fn: PasswordValidator.shouldHaveUpperLetters,
+      key: PasswordErrors.shouldHaveUpperLetters,
+      message: 'Senha fraca.',
+    },
+    shouldHavespecialCharacters: {
+      fn: PasswordValidator.shouldHavespecialCharacters,
+      key: PasswordErrors.shouldHavespecialCharacters,
+      message: 'Senha fraca.',
+    },
+    required: {
+      fn: Validators.required,
+      key: 'required',
+      message: 'Campo obrigatório.',
+    },
+  }
+
+  controller = new PasswordPopupDialog();
+  popup?: PopupModel<IRulesLevelPopup.Inputs, IRulesLevelPopup.Output>;
   inpurPasswordElement?: ElementRef;
 
   constructor(private popupController: PopupController) {}
 
   ngOnInit(): void {
     this.passwordInput.recoverNgControl((props) => {
+      if(this.isRequired){
+        this.passwordInput.addValidator(this.validators['required'])
+      }
+      if(this.applyRules){
+        this.passwordInput.addValidator(this.validators['minLength'])
+        this.passwordInput.addValidator(this.validators[PasswordErrors.shouldHaveNumbers])
+        this.passwordInput.addValidator(this.validators[PasswordErrors.shouldHaveLowerLetters])
+        this.passwordInput.addValidator(this.validators[PasswordErrors.shouldHaveUpperLetters])
+        this.passwordInput.addValidator(this.validators[PasswordErrors.shouldHavespecialCharacters])
+      }
       this.inputReady.emit(this.passwordInput);
       this.controller.setPasswordInput(props.control);
       this.atualizePasswordPopup();
@@ -93,10 +111,10 @@ export default class PasswordInputComponent implements OnInit {
   }
 
   createPopupPasswordLevel(): void {
-    if (this.inpurPasswordElement) {
+    if (this.inpurPasswordElement && this.applyRules) {
       this.popup = this.popupController
-        .create<IPasswordLevelPopup.Inputs, IPasswordLevelPopup.Output>(
-          PasswordLevelPopupComponent
+        .create<IRulesLevelPopup.Inputs, IRulesLevelPopup.Output>(
+          RulesLevelPopupComponent
         )
         .setParent(this.inpurPasswordElement)
         .input({
@@ -105,12 +123,12 @@ export default class PasswordInputComponent implements OnInit {
         .output({
           handlePopupController: (next): void => {
             this.handleGetPasswordPopupController(
-              next as IPasswordLevelPopup.Controller
+              next as IRulesLevelPopup.Controller
             );
           },
         })
         .position({
-          left: 'calc(90% + 40px)',
+          right: 'calc(100% + 40px)',
           top: '0px',
         });
 
@@ -147,7 +165,7 @@ export default class PasswordInputComponent implements OnInit {
   }
 
   handleGetPasswordPopupController(
-    controller: IPasswordLevelPopup.Controller
+    controller: IRulesLevelPopup.Controller
   ): void {
     this.controller.setPopupController(controller);
   }

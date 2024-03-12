@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/default-project-17'),
+      dir: require('path').join(__dirname, './coverage/hermes-front-desktop'),
       subdir: '.',
       reporters: [
         { type: 'html' },

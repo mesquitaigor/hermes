@@ -102,6 +102,14 @@ export default class HmsInputControll {
     this.__onFocus = cb;
   }
 
+  addValidator(
+    hmsAsyncValidator: IHmsInput.Validator<ValidatorFn>
+  ): void {
+    this.ngControl?.addValidators(hmsAsyncValidator.fn);
+    this.validators.push(hmsAsyncValidator);
+    this.ngControl?.updateValueAndValidity();
+  }
+  
   addAsyncValidator(
     hmsAsyncValidator: IHmsInput.Validator<AsyncValidatorFn>
   ): void {
@@ -111,10 +119,12 @@ export default class HmsInputControll {
   }
 
   removeAsyncValidator(key: string): void {
-    const index = this.asyncValidators.findIndex((v) => v.key === key);
+    const index = this.asyncValidators.findIndex((v) => {
+      return (typeof v.key == 'string' && v.key === key) || (v.keys && v.keys.some((k) => k.key === key));
+    });
     if (index !== -1) {
       this.ngControl?.removeAsyncValidators(this.asyncValidators[index].fn);
-      this.asyncValidators.splice(index, 1);
+      this.asyncValidators = this.asyncValidators.splice(index, 1);
     }
   }
 

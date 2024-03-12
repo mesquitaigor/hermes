@@ -18,7 +18,7 @@
           ></register-container>
         </div>
         <div class="login-container inside-login-block">
-          <!-- <login-container></login-container> -->
+          <login-container [contentObservable]="content$" [contFormGroup]="loginPageForm"></login-container>
         </div>
       </div>
     </form>

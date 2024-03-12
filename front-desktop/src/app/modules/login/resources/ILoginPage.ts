@@ -3,4 +3,11 @@ export namespace ILoginPage {
   export interface LoginPageEvents {
     displayContent?: loginContentNames;
   }
+  export enum InputNames {
+    FIRST_NAME = 'firstName',
+    LAST_NAME = 'lastName',
+    PASSWORD = 'password',
+    PASSWORD_CONFIRMATION = 'passwordConfirmation',
+    EMAIL = 'email',
+  }
 }

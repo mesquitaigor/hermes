@@ -1,8 +1,16 @@
 <div class="login-container-component">
   <div class="container-header">
-    <content-title>Entrar</content-title>
+    <content-title (back)="handleBack()">Entrar</content-title>
+    <p>Digite sua senha:</p>
   </div>
   <div class="container-form">
     <email-input (inputReady)="handleRecoveryEmailInput($event)"></email-input>
+    <password-input isRequired (inputReady)="handleRecoverPasswordInput($event)"></password-input>
+  </div>
+  <div class="footer-buttons-content">
+    <button class="back" (click)="handleBack()">Voltar</button>
+    <button class="send" (click)="handleLogin()">
+      {{ !sending ? "Entrar" : "Entrando..." }}
+    </button>
   </div>
 </div>
