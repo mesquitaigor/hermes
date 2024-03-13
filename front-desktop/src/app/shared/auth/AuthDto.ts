@@ -17,7 +17,7 @@ export namespace AuthDto {
     user: number;
   }
   export interface AuthenticateResponse {
-    accessToken: boolean;
+    access_token: string;
   }
   export interface RegisterResponse {
     createdUser: null | number;

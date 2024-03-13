@@ -6,7 +6,7 @@
       [class.show]="item.show"
       [ngStyle]="item.contentStyle"
     >
-      <div class="popup__content-box" [ngStyle]="item.boxStyle">
+      <div #contentBox class="popup__content-box" [ngStyle]="item.boxStyle">
         <ng-template appDynamicChildLoader [uuid]="item.uuid"></ng-template>
       </div>
     </div>

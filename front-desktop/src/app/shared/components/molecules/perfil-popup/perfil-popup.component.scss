@@ -1,0 +1,11 @@
+.perfil-popup{
+  .perfil-popup__item-menu{
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    transition: .3s;
+    &:hover{
+      background-color: rgb(243, 241, 241);
+    }
+  }
+}

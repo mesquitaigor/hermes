@@ -10,7 +10,7 @@ export default class PopupComponentHelperSpec {
     mockPopupController: PopupController
   ): PopupModel<unknown, unknown> {
     const popup = new PopupModel(mockPopupController.popupStatus$!);
-    popup.setElement(TestComponentGenericComponent);
+    popup.setComponent(TestComponentGenericComponent);
     popup.setParent(new ElementRef(document.createElement('div')));
     return popup;
   }

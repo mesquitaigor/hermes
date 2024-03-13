@@ -12,10 +12,10 @@ export default class PopupController {
     IPopupController.PopupBehaviorNext | undefined
   >(undefined);
   create<I, O>(
-    element: Type<IPopupComponent.PopupChildComponent>
+    component: Type<IPopupComponent.PopupChildComponent>
   ): PopupModel<I, O> {
     const popup = new PopupModel<I, O>(this.popupStatus$);
-    popup.setElement(element);
+    popup.setComponent(component);
     return popup;
   }
 }

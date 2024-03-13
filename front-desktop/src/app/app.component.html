@@ -1,13 +1,13 @@
-<ng-container *ngIf="authenticated">
+<div class="topbar-content">
   <topbar></topbar>
-</ng-container>
-<div class="app-page-content" [class.inside-system]="true">
-  <ng-container *ngIf="authenticated">
-    <sidebar></sidebar>
-  </ng-container>
+</div>
+<div class="sidebar-content">
+  <sidebar></sidebar>
+</div>
+<div class="app-page-content">
   <div class="router-content">
     <router-outlet></router-outlet>
   </div>
-  <popup></popup>
-  <toast></toast>
 </div>
+<popup></popup>
+<toast></toast>

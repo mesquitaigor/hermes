@@ -156,10 +156,6 @@ export default class PasswordInputComponent implements OnInit {
     }
   }
 
-  handleShowPopup(): void {
-    this.controller.show = true;
-  }
-
   handleHiddenPopup(): void {
     this.controller.show = false;
   }

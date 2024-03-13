@@ -21,7 +21,7 @@ export namespace IPopupComponent {
   }
 
   export interface PopupChildDefinitions {
-    show: boolean;
+    dismiss?: () => void
     style?: {
       width?: string;
       height?: string;

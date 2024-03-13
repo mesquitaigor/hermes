@@ -13,5 +13,5 @@ export default class TestComponentGenericComponent
   @Input() test = 0;
   @Output() testOutput = new EventEmitter();
   static testComponentSelector = testComponentSelector;
-  popupDefinitions: IPopupComponent.PopupChildDefinitions = { show: false };
+  popupDefinitions: IPopupComponent.PopupChildDefinitions = {};
 }

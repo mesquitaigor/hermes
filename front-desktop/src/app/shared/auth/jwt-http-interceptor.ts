@@ -8,16 +8,14 @@ import {
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { inject } from '@angular/core';
-import StorageService from '../services/storage/storage.sevice';
-import { StorageKeys } from '../services/storage/StorageKeys';
+import AuthService from './auth.service';
 
 export default class JwtHttpInterceptor {
-  storageService = inject(StorageService);
+  authService = inject(AuthService);
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = this.storageService.get(StorageKeys.ACCESS_TOKEN);
     //Append default headers
     let headers = request.headers
       .set('Accept', `application/json`)
@@ -25,8 +23,8 @@ export default class JwtHttpInterceptor {
       .set('version', environment.version);
 
     //Append JWT Token if exists
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
+    if (this.authService.isAuthenticated()) {
+      headers = headers.set('Authorization', `Bearer ${this.authService.getToken()}`);
     }
 
     //Override API URL if header exists

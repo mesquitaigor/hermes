@@ -1,9 +1,47 @@
 @use './../theme/scss-utils.scss' as mixins;
-.app-page-content{
-  @include mixins.absolute-cover;
-  .router-content{
-    top: var(--hms-topbar-height);
-    left: var(--hms-sibar-width);
-    @include mixins.full-size;
+$negative-topbar-height: calc(var(--hms-topbar-height) - calc(var(--hms-topbar-height) * 2));
+$negative-sibar-width: calc(var(--hms-sibar-width) - calc(var(--hms-sibar-width) * 2));
+:host{
+  &.logged{
+    .topbar-content{
+      transform: translateY(0);
+    }
+    .sidebar-content{
+      transform: translateX(0);
+    }
+    .app-page-content{
+      padding-top: var(--hms-topbar-height);
+      padding-left: var(--hms-sibar-width);
+    }
+  }
+  .topbar-content{
+    position: relative;
+    height: var(--hms-topbar-height);
+    transform: translateY($negative-topbar-height);
+    transition: .3s ease-in-out;
+    z-index: 2;
+  }
+  .sidebar-content{
+    position: relative;
+    transition: .3s ease-in-out;
+    width: var(--hms-sibar-width);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transform: translateX($negative-sibar-width);
+    z-index: 3;
+  }
+  .app-page-content{
+    @include mixins.absolute-cover;
+    padding: 0;
+    background-color: rgb(235, 235, 235);
+    .router-content{
+      transition: .3s ease-in-out;
+      @include mixins.full-size;
+    }
+  }
+  toast{
+    position: relative;
+    z-index: 2;
   }
 }

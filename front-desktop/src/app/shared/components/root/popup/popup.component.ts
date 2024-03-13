@@ -2,9 +2,11 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentRef,
+  ElementRef,
   OnInit,
   QueryList,
   Type,
+  ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -22,6 +24,9 @@ export default class PopupComponent implements OnInit {
   @ViewChildren(DynamicChildLoaderDirective)
   dynamicChild?: QueryList<DynamicChildLoaderDirective>;
 
+  @ViewChild('contentBox')
+  contentBox?: ElementRef<HTMLDivElement>;
+
   list: Array<IPopupComponent.PopupRenderItem> = [];
 
   constructor(
@@ -37,8 +42,11 @@ export default class PopupComponent implements OnInit {
           if (next.action == 'present') {
             this.defineAnchor(next.popup);
             renderItem.show = true;
+            next.popup.openned = true;
+            next.popup.displayEnterAnimation();
           } else if (next.action == 'dismiss') {
             renderItem.show = false;
+            next.popup.openned = false;
           }
         }
       }
@@ -113,7 +121,7 @@ export default class PopupComponent implements OnInit {
 
   loadDynamicComponent(popup: PopupModel<unknown, unknown>): void {
     const element: Type<IPopupComponent.PopupChildComponent> | undefined =
-      popup.element;
+      popup.component;
     this.changeDetectorRef.detectChanges();
     if (element && this.dynamicChild) {
       const childElements = this.dynamicChild.toArray();
@@ -124,10 +132,16 @@ export default class PopupComponent implements OnInit {
       if (content) {
         const componentRef: ComponentRef<IPopupComponent.PopupChildComponent> =
           content.viewContainerRef.createComponent(element);
+        if(this.contentBox){
+          popup.setPopupBoxElement(this.contentBox);
+        }
         this.stilizeHost(componentRef);
         this.assignDefinitions(popup, componentRef);
         this.listenOutputs(popup, componentRef);
         this.setChildComponentInputs(popup, componentRef);
+        componentRef.instance.popupDefinitions.dismiss = (): void => {
+          popup.dismiss();
+        }
       }
     }
   }

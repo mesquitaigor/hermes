@@ -32,7 +32,6 @@ export default class RulesLevelPopupComponent
   completedLevelProgressBar = 0;
 
   popupDefinitions: IPopupComponent.PopupChildDefinitions = {
-    show: false,
     style: {
       width: '225px',
       height: '200px',
