@@ -3,7 +3,7 @@ name: Karma Tests
 # Executa apenas em Pull Requests para a branch $branch
 on:
  pull_request:
-    branches: [ 'main' ]
+    branches: [ main ]
 
 # Configuração do Job
 jobs:
