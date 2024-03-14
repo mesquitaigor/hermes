@@ -1,14 +1,12 @@
 {
-	"dependencies": {
-		"commitlint": "^19.1.0",
-		"husky": "^9.0.11"
-	},
 	"scripts": {
-		"pre-commit": "pnpm run --filter \"@hermes/*\" pre-commit",
+		"pre-push": "pnpm run --filter \"@hermes/*\" pre-push",
 		"commit-msg": "pnpm run --filter \"@hermes/*\" commit-msg",
 		"prepare": "husky"
 	},
 	"devDependencies": {
+		"commitlint": "^19.1.0",
+		"husky": "^9.0.11",
 		"@commitlint/config-conventional": "^19.1.0"
 	}
 }
