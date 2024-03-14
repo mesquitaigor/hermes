@@ -22,5 +22,6 @@ jobs:
       - name: Executa Testes Karma
         run: |
           cd front-desktop
+          npm install -g @angular/cli
           npm install
           ng test:ci
