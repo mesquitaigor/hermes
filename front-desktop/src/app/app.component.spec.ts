@@ -19,6 +19,6 @@ describe(AppComponent.name, () => {
     TestBed.resetTestingModule();
   })
   it('should create the app', () => {
-    expect(app).toBeTruthy();
+    expect(app).toBeFalse();
   })
 });
