@@ -23,5 +23,11 @@ jobs:
         run: |
           cd front-desktop
           npm install -g @angular/cli
+      - name: Instala Dependências
+        run: |
+          cd front-desktop
           npm install
-          ng test:ci
+      - name: Executa Testes
+        run: |
+          cd front-desktop
+          npm run test
