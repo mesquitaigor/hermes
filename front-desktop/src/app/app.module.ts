@@ -11,6 +11,7 @@ import SidebarComponentModule from './shared/components/root/sidebar/sidebar.com
 import PopupComponentModule from './shared/components/root/popup/popup.component.module';
 import ToastComponentModule from './shared/components/root/toast/toast.component.module';
 import JwtHttpInterceptor from './shared/auth/jwt-http-interceptor';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import JwtHttpInterceptor from './shared/auth/jwt-http-interceptor';
     SidebarComponentModule,
     PopupComponentModule,
     ToastComponentModule,
+    RouterModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true },
