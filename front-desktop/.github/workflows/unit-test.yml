@@ -2,12 +2,12 @@ name: Karma Tests
 
 # Executa apenas em Pull Requests para a branch $branch
 on:
- pull_request:
-    branches: [ 'main' ]
+  pull_request:
+    branches: [ main ]
 
 # Configuração do Job
 jobs:
- build:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 # Faz checkout do repositório
@@ -18,4 +18,4 @@ jobs:
       run: |
         npm install -g @angular/cli
         npm install
-        ng test
+        ng test:ci
