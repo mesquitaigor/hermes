@@ -19,4 +19,4 @@ jobs:
         run: |
           cd front-desktop
           npm install
-          npm run test:ci
+          ng test:ci
