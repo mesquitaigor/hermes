@@ -30,4 +30,4 @@ jobs:
       - name: Executa Testes
         run: |
           cd front-desktop
-          npm run test
+          npm run test:cli
