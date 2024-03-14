@@ -1,0 +1,9 @@
+{
+	"dependencies": {
+		"husky": "^9.0.11"
+	},
+	"scripts": {
+		"pre-commit": "pnpm run --filter \"@hermes/*\" pre-commit",
+		"prepare": "husky"
+	}
+}
