@@ -1,5 +1,5 @@
 {
-  "name": "test-2",
+  "name": "@hermes/dashboard",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
