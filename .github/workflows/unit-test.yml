@@ -17,5 +17,6 @@ jobs:
           node-version: '18.15.0'
       - name: Executa Testes Karma
         run: |
+          cd front-desktop
           npm install
           npm run test:ci
