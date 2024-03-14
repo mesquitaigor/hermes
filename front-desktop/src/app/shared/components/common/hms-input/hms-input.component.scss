@@ -1,4 +1,4 @@
-@use './../../../../../theme/scss-utils.scss' as mixins;
+@import "src/theme/utils.scss";
 $input-padding: 15px;
 .hms-input{
   .error-message{
@@ -11,7 +11,7 @@ $input-padding: 15px;
     opacity: 0;
   }
   .input-content{
-    @include mixins.f_align-center;
+    @include f_align-center;
     position: relative;
     margin-bottom: 8px;
     transition: .3s ease-in;

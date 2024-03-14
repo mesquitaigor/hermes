@@ -33,7 +33,7 @@ export class CreateBoardCards1703364824702 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'datetime',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

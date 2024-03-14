@@ -34,7 +34,7 @@ export class CreateCardChecklists1706122622216 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'datetime',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

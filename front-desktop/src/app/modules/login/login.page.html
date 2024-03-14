@@ -12,14 +12,17 @@
         </div>
         <div class="register-container inside-login-block">
           <register-container
+            #registerContainer
             [contFormGroup]="loginPageForm"
             [contentObservable]="content$"
             (formReady)="handleRegisterFormReady($event)"
           ></register-container>
         </div>
-        <div class="login-container inside-login-block">
-          <login-container [contentObservable]="content$" [contFormGroup]="loginPageForm"></login-container>
-        </div>
+        @defer(when showLoginContainer){
+          <div #loginContainer class="login-container inside-login-block">
+            <login-container [contentObservable]="content$" [contFormGroup]="loginPageForm"></login-container>
+          </div>
+        }
       </div>
     </form>
   </div>

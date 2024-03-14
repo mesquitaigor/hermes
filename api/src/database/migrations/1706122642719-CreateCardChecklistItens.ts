@@ -36,7 +36,7 @@ export class CreateCardChecklistItens1706122642719
           {
             name: 'deletedAt',
             type: 'datetime',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

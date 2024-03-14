@@ -8,7 +8,7 @@ import AuthService from './shared/auth/auth.service';
 export class AppComponent implements OnInit{
   @HostBinding('class.logged') authenticated = false;
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
   ){}
 
   ngOnInit(): void{

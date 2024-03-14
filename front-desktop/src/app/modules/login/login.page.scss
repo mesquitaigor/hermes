@@ -1,17 +1,16 @@
-@use './../../../theme/scss-utils.scss' as mixins;
+@import "src/theme/utils.scss";
 :host{
   &.initial .login-page{
     .login-form-content{
       form {
         .initial-container{
           opacity: 1;
-          
-          transform: translateY(0);
+          transform: translateX(0);
         }
         .register-container, .login-container{
           opacity: 0;
           pointer-events: none;
-          transform: translateY(-100%);
+          transform: translateX(100%) scale(.8);
         }
       }
     }
@@ -21,17 +20,17 @@
       form {
         .register-container{
           opacity: 1;
-          transform: translateY(0);
+          transform: translateX(0);
         }
         .initial-container, .login-container{
           opacity: 0;
           pointer-events: none;
         }
         .login-container{
-          transform: translateY(-100%);
+          transform: translateX(100%) scale(.8);
         }
         .initial-container{
-          transform: translateY(100%);
+          transform: translateX(100%) scale(.8);
         }
       }
     }
@@ -41,17 +40,17 @@
       form {
         .login-container{
           opacity: 1;
-          transform: translateY(0);
+          transform: translateX(0);
         }
         .initial-container, .register-container{
           opacity: 0;
           pointer-events: none;
         }
         .register-container{
-          transform: translateY(-100%);
+          transform: translateX(100%) scale(.8);
         }
         .initial-container{
-          transform: translateY(100%);
+          transform: translateX(100%) scale(.8);
         }
       }
     }
@@ -59,19 +58,24 @@
   .login-page{
     height: 100%;
     background-color: #ffb95c;
-    @include mixins.f_full-center;
+    @include f_full-center;
     logo-content{
       position: absolute;
       top: 20px;
       left: 20px;
+      z-index: 2;
     }
     illustration-content{
       position: absolute;
       left: 0;
-      width: 50%;
+      width: 55%;
+      height: 100%;
+      overflow: hidden;
+      @include f_full-center;
     }
     .login-form-content{
       flex: 1;
+      z-index: 3;
       transition: .8s ease-in-out;
       background: white;
       width: 45%;
@@ -80,6 +84,7 @@
       overflow: hidden;
       height: 100%;
       right: 0;
+      animation: slide-in-top 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
       >form{
         .inside-login-block{
           position: absolute;
@@ -93,12 +98,11 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes slide-in-top {
   0% {
-	transform: translateY(0);
+    width: 40%;
   }
-
   100% {
-	transform: translateY(-100px);
+    width: 45%;
   }
 }

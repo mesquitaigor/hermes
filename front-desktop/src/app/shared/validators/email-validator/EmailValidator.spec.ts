@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 import EmailValidator from './EmailValidator';
 import AuthService from '../../auth/auth.service';
-import AuthServiceMock from '../../auth/AuthServiceMock.spec';
+import AuthServiceMock from '../../auth/test/AuthServiceMock.spec';
 import { waitForAsync } from '@angular/core/testing';
 
 describe(EmailValidator.name, () => {

@@ -18,7 +18,7 @@ export class AddSpaceFolderIdToSpaceBoard1706128629061
     const fkReferenceColumn = new TableColumn({
       name: this.fkColumnName,
       type: 'int',
-      isNullable: false,
+      isNullable: true,
       unsigned: true,
     });
     await queryRunner.addColumn(this.targetTableName, fkReferenceColumn);

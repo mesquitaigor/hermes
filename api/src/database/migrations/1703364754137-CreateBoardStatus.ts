@@ -33,7 +33,7 @@ export class CreateBoardStatus1703364754137 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'datetime',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

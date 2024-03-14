@@ -1,0 +1,46 @@
+@mixin f_full-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin f_col_full-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@mixin f_align-center{
+  display: flex;
+  align-items: center;
+}
+@mixin f_col_align-center{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+@mixin f_betweeen-centered{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@mixin f_start-centered{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+@mixin f_end-centered{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+@mixin absolute-cover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+@mixin full-size{
+  height: 100%;
+  width: 100%;
+}

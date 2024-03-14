@@ -5,7 +5,6 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
   booleanAttribute,
 } from '@angular/core';
 import HmsInputControll from '@components/common/hms-input/HmsInputControll';
@@ -27,7 +26,6 @@ export default class PasswordInputComponent implements OnInit {
   @Input({transform: booleanAttribute}) applyRules = false
   @Input({transform: booleanAttribute}) isRequired = false
   @Output() inputReady = new EventEmitter<HmsInputControll>();
-  @ViewChild('') passwordInputRef?: ElementRef;
   passwordInput = new HmsInputControll({
     initialValue: '',
     type: 'password',

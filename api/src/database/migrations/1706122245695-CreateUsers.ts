@@ -53,6 +53,7 @@ export class CreateUsers1706122245695 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'datetime',
+            isNullable: true,
           },
         ],
       }),

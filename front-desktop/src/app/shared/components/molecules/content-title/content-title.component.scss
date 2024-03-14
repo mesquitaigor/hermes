@@ -1,7 +1,7 @@
-@use './../../../../../theme/scss-utils.scss' as mixins;
+@import "src/theme/utils.scss";
 .content-title-component{
   .title-box{
-    @include mixins.f_start-centered;
+    @include f_start-centered;
     width: 100%;
     transition: .8s ease-in;
     img{

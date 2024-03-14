@@ -35,6 +35,7 @@ export class CreateWorkspaces1706122235266 implements MigrationInterface {
             name: 'deletedAt',
             type: 'datetime',
             default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

@@ -34,7 +34,7 @@ export class CreateSpaces1706122229213 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'datetime',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

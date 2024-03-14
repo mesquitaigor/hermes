@@ -1,4 +1,4 @@
-@use './../theme/scss-utils.scss' as mixins;
+@import "src/theme/utils.scss";
 $negative-topbar-height: calc(var(--hms-topbar-height) - calc(var(--hms-topbar-height) * 2));
 $negative-sibar-width: calc(var(--hms-sibar-width) - calc(var(--hms-sibar-width) * 2));
 :host{
@@ -32,12 +32,12 @@ $negative-sibar-width: calc(var(--hms-sibar-width) - calc(var(--hms-sibar-width)
     z-index: 3;
   }
   .app-page-content{
-    @include mixins.absolute-cover;
+    @include absolute-cover;
     padding: 0;
     background-color: rgb(235, 235, 235);
     .router-content{
       transition: .3s ease-in-out;
-      @include mixins.full-size;
+      @include full-size;
     }
   }
   toast{

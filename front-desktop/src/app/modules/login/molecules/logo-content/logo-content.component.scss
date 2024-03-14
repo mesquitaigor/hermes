@@ -1,9 +1,9 @@
-@use './../../../../../theme/scss-utils.scss' as mixins;
+@import "src/theme/utils.scss";
 .logo{
   position: absolute;
   top: 20px;
   left: 20px;
-  @include mixins.f_align-center;
+  @include f_align-center;
   img{
     width: 50px;
     margin-right: 20px;

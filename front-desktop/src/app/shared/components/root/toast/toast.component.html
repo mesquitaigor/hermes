@@ -1,10 +1,16 @@
 <div class="toast-component">
   <ng-container *ngFor="let toast of toasts">
     <div
+      draggable="true"
       class="toast-item"
       [style.top]="toast.positionY + 'px'"
+      [style.right]="toast.positionX + 'px'"
+      [style.transition]="toast.transition"
       [class.show]="toast.show"
       [ngClass]="toast.ngClass"
+      (dragstart)="handleDragstartToast($event, toast)"
+      (drag)="handleDragToast($event, toast)"
+      (dragend)="handleDragendToast(toast)"
     >
       <div class="toast-close">
         <button>

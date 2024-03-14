@@ -32,6 +32,8 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/theme/reset.scss",
+              "src/theme/utils.scss",
               "src/theme/variables.scss"
             ],
             "scripts": []

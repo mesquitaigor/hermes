@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import UserDto from './controller/dto/UserDto';
 import * as bcrypt from 'bcrypt';
+import { Workspace } from '../workspace/workspace.entity';
 
 @Injectable()
 export class UserService {
@@ -18,10 +19,10 @@ export class UserService {
     user.password = hash;
     return await this.userRepository.save(user);
   }
-  async find(email: string): Promise<User | undefined> {
+  async find(id: number): Promise<User | undefined> {
     return await this.userRepository.findOne({
       where: {
-        email,
+        id,
       },
     });
   }
@@ -29,5 +30,13 @@ export class UserService {
     return await this.userRepository.findOne({
       where: { email },
     });
+  }
+  async userWorkspaces(userId: number): Promise<Workspace[]> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['workspaces'],
+    });
+    console.log(userId, user);
+    return user.workspaces;
   }
 }

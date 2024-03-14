@@ -34,7 +34,7 @@ export class CreateCardRows1706122612412 implements MigrationInterface {
           {
             name: 'deletedAt',
             type: 'datetime',
-            default: 'CURRENT_TIMESTAMP',
+            isNullable: true,
           },
         ],
       }),

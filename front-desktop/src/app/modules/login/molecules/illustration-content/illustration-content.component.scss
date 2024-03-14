@@ -1,10 +1,21 @@
-@use './../../../../../theme/scss-utils.scss' as mixins;
+@import "src/theme/utils.scss";
 .illustration-content{
-  @include mixins.f_full-center;
+  @include f_full-center;
   transition: .8s ease-in-out;
-  padding: 20px;
   img{
     transition: .8s ease-in-out;
     width: 100%;
+    animation: slide-in-top 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+  }
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: scale(5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }

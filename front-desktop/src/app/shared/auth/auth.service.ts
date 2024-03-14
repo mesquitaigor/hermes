@@ -25,10 +25,7 @@ export default class AuthService {
     return this.hmsStorageService.get(IHmsStorage.keys.ACCESS_TOKEN)?.value;
   }
 
-  authUser(token: string): void{
-    this.hmsStorageService.set(IHmsStorage.keys.ACCESS_TOKEN, token);
-  }
-
+  
   register(newUser: BasicUser): Observable<AuthDto.RegisterResponse> {
     return this.authApiService.register({
       email: newUser.email,
@@ -37,20 +34,20 @@ export default class AuthService {
       password: newUser.password,
     });
   }
-
+  
   validateEmail(email: string): Observable<AuthDto.EmailValidateResponse> {
     return this.authApiService.validateEmail({ email });
   }
-
+  
   login(
     email: string,
     password: string
-  ): Observable<AuthDto.AuthenticateResponse> {
-    return this.authApiService.authenticate({ email, password })
+    ): Observable<AuthDto.AuthenticateResponse> {
+      return this.authApiService.authenticate({ email, password })
       .pipe(tap((res) => {
-        if(res.access_token){
+        if(res.accessToken){
           this.auth$.next({authenticated: true});
-          this.authUser(res.access_token)
+          this.authUser(res.userId,res.accessToken)
         }
       }))
   }
@@ -59,4 +56,9 @@ export default class AuthService {
     this.hmsStorageService.remove(IHmsStorage.keys.ACCESS_TOKEN);
     this.auth$.next({authenticated: false});
   }
+  private authUser(id: number, token: string): void{
+    this.hmsStorageService.set(IHmsStorage.keys.ACCESS_TOKEN, token);
+    this.hmsStorageService.set(IHmsStorage.keys.USER, {id});
+  }
+
 }

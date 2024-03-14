@@ -1,10 +1,10 @@
+@import "src/theme/utils.scss";
 .password-requisite-item{
   .require-password-item{
     font-size: 12px;
     opacity: .8;
     margin-bottom: 10px;
-    display: flex;
-    align-items: center;
+    @include f_align-center;
     &.ok{
       color: #16a487;
       .status-item-circle{

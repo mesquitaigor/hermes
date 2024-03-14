@@ -12,6 +12,10 @@ export namespace IToastComponent {
   export class RenderItem extends IToast.ToastModel {
     ngClass: itemNgClass = {};
     positionY = 0;
+    positionX = 20;
+    transition = '.5s ease-in-out'
+    dragStartEvent?: DragEvent;
+    dragEvent?: DragEvent;
     icon: icons = '';
     defineStyle(): void {
       this.defineIcon();

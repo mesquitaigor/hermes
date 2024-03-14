@@ -1,3 +1,4 @@
+@import "src/theme/utils.scss";
 :host{
   .toast-component{
     position: fixed;
@@ -19,8 +20,10 @@
       padding: 20px 40px 20px 20px;
       box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
       margin-top: 10px;
-      transition: .5s ease-in-out;
+      user-select: none;
+      cursor: pointer;
       &.show{
+        transition: .5s ease-in-out;
         transform: translateX(0%);
       }
       &.toast-success{
@@ -36,8 +39,7 @@
         border-color: #675E87;
       }
       .toast-title{
-        display: flex;
-        align-items: center;
+        @include f_align-center;
         img{
           width: 18px;
           margin-right: 10px;

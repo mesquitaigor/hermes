@@ -35,7 +35,8 @@ describe(PopupComponent.name, () => {
 
   afterAll(() => {
     fixture.destroy();
-  });
+    TestBed.resetTestingModule();
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();

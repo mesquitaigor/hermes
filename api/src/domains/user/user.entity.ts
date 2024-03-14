@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Workspace } from '../workspace/workspace.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -23,6 +25,12 @@ export class User {
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   password: string;
+
+  @ManyToMany(() => Workspace, (workspace) => workspace.users, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  workspaces: Workspace[];
 
   @CreateDateColumn()
   createdAt: string;

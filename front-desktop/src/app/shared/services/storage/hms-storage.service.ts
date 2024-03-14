@@ -28,7 +28,7 @@ export default class HmsStorageService{
   * Returns null if no value is found for the provided key.
   */
   get<T extends keyof IHmsStorage.storage>(key: T): IHmsStorage.StorageItem<T> | void{
-    const itemValue = localStorage.getItem(key)
+    const itemValue = JSON.parse(localStorage.getItem(key) || 'null');
     return new IHmsStorage.StorageItem<T>(
       key,
       itemValue as IHmsStorage.storage[T]

@@ -5,6 +5,7 @@ export namespace IHmsStorage {
    */
   export enum keys{
     ACCESS_TOKEN = 'access_token',
+    USER = 'user',
   }
 
   /**
@@ -13,6 +14,7 @@ export namespace IHmsStorage {
    */
   export interface storage{
     [keys.ACCESS_TOKEN]: string,
+    [keys.USER]: {id: number},
   }
 
   export class StorageItem<storageKey extends keyof IHmsStorage.storage>{

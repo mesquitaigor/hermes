@@ -6,6 +6,7 @@ import {
   Query,
   Res,
   UnauthorizedException,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -14,13 +15,14 @@ import UserDto from '../domains/user/controller/dto/UserDto';
 import { UserService } from '../domains/user/user.service';
 import AuthService from './auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { JwtGuard } from './jwt.guard';
 
 @Controller('')
 export class AuthController {
   constructor(
     private readonly userService: UserService,
-    private authService: AuthService,
-    private jwtService: JwtService,
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
   ) {}
   @Post('register')
   async register(@Body(ValidationPipe) userDto: UserDto, @Res() res: Response) {
@@ -49,10 +51,7 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
-    const payload = { email: user.email, id: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return await this.authService.login(user);
   }
   @Get('validate-email')
   async verifyExistingEmail(
@@ -64,5 +63,10 @@ export class AuthController {
       existing: user !== null,
       user: user?.id,
     });
+  }
+  @UseGuards(JwtGuard) // Aplique o Guard JWT aqui
+  @Get('auth')
+  verifyToken() {
+    return { message: 'Valid token' };
   }
 }

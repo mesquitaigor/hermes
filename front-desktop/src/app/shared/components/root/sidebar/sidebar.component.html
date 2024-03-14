@@ -1,1 +1,15 @@
-<section class="sidebar-component"></section>
+<section class="sidebar">
+  @defer(when (loggedIn$ | async)){
+    <div class="sidebar_content">
+      <div class="sidebar_workspaces">
+        @for(workspace of (workspaces$ | async); track workspace.id){
+          <div class="sidebar_workspace-item">
+            <img src="assets/icons/workspace.svg">
+            <p>{{workspace.name}}</p>
+            <img class="down" src="assets/icons/down.svg">
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>

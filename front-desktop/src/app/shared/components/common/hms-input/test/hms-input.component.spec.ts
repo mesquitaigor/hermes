@@ -5,7 +5,7 @@ import HmsInputControll from '../HmsInputControll';
 import { Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-fdescribe(HsmInputComponent.name, () => {
+describe(HsmInputComponent.name, () => {
   let component: HsmInputComponent;
   let fixture: ComponentFixture<HsmInputComponent>;
 
@@ -37,6 +37,11 @@ fdescribe(HsmInputComponent.name, () => {
     component.controll = emailFormControll;
     fixture.detectChanges();
   });
+
+  afterAll(() => {
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();

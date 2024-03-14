@@ -1,3 +1,4 @@
+@import "src/theme/utils.scss";
 :host {
   display: block;
   .topbar-component{
@@ -7,9 +8,7 @@
     background-color: rgb(59, 66, 75);
     position: relative;
     z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include f_betweeen-centered;
     .topbar__left-side{
       width: 20px;
       height: 20px;
