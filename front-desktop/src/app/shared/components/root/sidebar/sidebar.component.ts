@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import AuthService from '../../../auth/auth.service';
 import { map, skip } from 'rxjs';
 import WorkspaceService from '../../../../domains/workspace/workspace.service';
 import PopupController from '../../../controllers/popup/popup.controller';
+import WorkspacePopupMenuComponent from '../../molecules/workspace-popup-menu/workspace-popup-menu.component';
+import PopupModel from '../../../controllers/popup/resources/PopupModel';
 
 @Component({
   selector: 'sidebar',
@@ -11,6 +13,8 @@ import PopupController from '../../../controllers/popup/popup.controller';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit{
+  @ViewChild('workspaceMenu') workspaceMenu?: ElementRef<HTMLElement>;
+  workspacePopup?: PopupModel<unknown, unknown>;
   readonly loggedIn$ = this.authService.auth$
     .pipe(map((auth) => auth?.authenticated));
   readonly workspaces$ = this.workspaceService.workspaces$;
@@ -31,7 +35,19 @@ export class SidebarComponent implements OnInit{
       }
     })
   }
-  /* handleClickWorkspaceMenu(): void{
-    this.popupController.create();
-  } */
+  handleClickWorkspaceMenu(): void{
+    if(this.workspaceMenu){
+      if(!this.workspacePopup){
+        this.workspacePopup = this.popupController.create(WorkspacePopupMenuComponent)
+          .setParent(this.workspaceMenu)
+          .position({
+            left: '0',
+            top: 'calc(100% + 20px)',
+          })
+        this.workspacePopup.present()
+      }else{
+
+      }
+    }
+  }
 }

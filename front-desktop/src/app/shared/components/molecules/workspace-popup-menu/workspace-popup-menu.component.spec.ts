@@ -12,7 +12,7 @@ fdescribe(WorkspacePopupMenuComponent.name, () => {
     fixture = TestBed.createComponent(WorkspacePopupMenuComponent);
     componet = fixture.componentInstance;
   });
-  it('should create', () => {
+  it('should be created', () => {
     expect(componet).toBeTruthy();
   })
 })

@@ -17,9 +17,6 @@
           display: flex;
           align-items: center;
           cursor: pointer;
-          &:hover{
-            background-color: rgba(0,0,0,.05);
-          }
           img{
             width: 16px;
             margin-right: 12px;
@@ -28,6 +25,11 @@
             position: absolute;
             right: 15px;
             width: 14px;
+            padding: 10px;
+            border-radius: 50%;
+            &:hover{
+              background-color: rgba(0,0,0,.05);
+            }
           }
           p{
             font-weight: bold;
