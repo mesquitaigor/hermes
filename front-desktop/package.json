@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
-    "pre-commit": "lint-staged",
+    "pre-commit": "npm run test:ci",
     "serve:ssr:test-2": "node dist/test-2/server/server.mjs",
     "storybook": "ng run hermes-front-desktop:storybook",
     "build-storybook": "ng run hermes-front-desktop:build-storybook"

@@ -1,1 +1,1 @@
-npx husky add .husky/pre-commit "pnpm pre-commit"
+npm test
