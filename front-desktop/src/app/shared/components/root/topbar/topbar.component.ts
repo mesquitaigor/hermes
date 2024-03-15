@@ -24,7 +24,7 @@ export class TopbarComponent implements AfterViewInit{
           right: '0',
           top: 'calc(100% + 20px)',
         })
-        .entersAnimation((element) => {
+        .enterAnimation((element) => {
           const nativeElement: HTMLElement = element.nativeElement
           nativeElement.animate([
             {transform: 'translateY(-100px)'},

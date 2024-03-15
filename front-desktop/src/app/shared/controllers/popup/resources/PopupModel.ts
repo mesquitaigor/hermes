@@ -31,7 +31,7 @@ export default class PopupModel<I, O> {
     return this;
   }
 
-  entersAnimation(animationFn: (element: ElementRef<HTMLDivElement>) => void): this{
+  enterAnimation(animationFn: (element: ElementRef<HTMLDivElement>) => void): this{
     this._enterAnimation = animationFn;
     return this
   }
